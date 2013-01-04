@@ -13,12 +13,12 @@ namespace DeveMazeGenerator
     {
         private static Random r = new Random();
 
-        public static List<MazePoint> GoFind(InnerMap[] map)
+        public static List<MazePoint> GoFind(InnerMap map)
         {
             return GoFind(new MazePoint(1, 1), new MazePoint(map.Length - 3, map[0].Length - 3), map);
         }
 
-        public static List<MazePoint> GoFind(MazePoint start, MazePoint end, InnerMap[] map)
+        public static List<MazePoint> GoFind(MazePoint start, MazePoint end, InnerMap map)
         {
             //Swap them so we don't have to reverse at the end ;)
             MazePoint temp = start;
@@ -33,11 +33,11 @@ namespace DeveMazeGenerator
             {
                 int width = map[0].Length;
 
-
-                BitArreintjeFast[] visited = new BitArreintjeFast[width];
+                //@todo Controleer dit
+                InnerMap visited = new BitArreintjeFastInnerMap(width, height);
                 for (int x = 0; x < width; x++)
                 {
-                    visited[x] = new BitArreintjeFast(height);
+                    //visited[x] = new BitArreintjeFast(height);
                     for (int y = 0; y < height; y++)
                     {
                         if (x == 0 || y == 0 || x == width || y == height)
@@ -137,7 +137,7 @@ namespace DeveMazeGenerator
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Boolean isValid(int x, int y, InnerMap[] map, InnerMap[] visitedmap, int width, int height)
+        private static Boolean isValid(int x, int y, InnerMap map, InnerMap visitedmap, int width, int height)
         {
             if (x > 0 && x < width - 1 && y > 0 && y < height - 1)
             {

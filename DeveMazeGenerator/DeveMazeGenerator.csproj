@@ -67,13 +67,18 @@
   <ItemGroup>
     <Compile Include="BitArrayMappedOnHardDisk.cs" />
     <Compile Include="BitArreintjeFast.cs" />
-    <Compile Include="BooleanArray.cs" />
-    <Compile Include="DotNetBitArray.cs" />
+    <Compile Include="BitArreintjeFastInnerMap.cs" />
+    <Compile Include="BitArreintjeFastInnerMapArray.cs" />
+    <Compile Include="BooleanInnerMap.cs" />
+    <Compile Include="BooleanInnerMapArray.cs" />
+    <Compile Include="DotNetBitArrayInnerMapArray.cs" />
+    <Compile Include="DotNetBitArrayInnerMap.cs" />
     <Compile Include="Generators\Algorithm.cs" />
     <Compile Include="Generators\AlgorithmBacktrack.cs" />
     <Compile Include="Generators\AlgorithmBacktrackNoInlining.cs" />
     <Compile Include="Generators\AlgorithmBacktrackWithCallback.cs" />
     <Compile Include="InnerMap.cs" />
+    <Compile Include="InnerMapArray.cs" />
     <Compile Include="Maze.cs" />
     <Compile Include="MazeWall.cs" />
     <Compile Include="PathFinderDepthFirst.cs" />

@@ -32,7 +32,7 @@ namespace DeveMazeGenerator.Generators
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static bool isValid(int x, int y, InnerMap[] map, Maze maze)
+        private static bool isValid(int x, int y, InnerMap map, Maze maze)
         {
             //Console.WriteLine(System.Reflection.MethodBase.GetCurrentMethod().Name);
             if (x > 0 && x < maze.Width - 1 && y > 0 && y < maze.Height - 1)
@@ -42,7 +42,7 @@ namespace DeveMazeGenerator.Generators
             return false;
         }
 
-        private void GoGenerate(InnerMap[] map, Maze maze, Random r, Action<int, int> pixelChangedCallback)
+        private void GoGenerate(InnerMap map, Maze maze, Random r, Action<int, int> pixelChangedCallback)
         {
 
             int x = 1;

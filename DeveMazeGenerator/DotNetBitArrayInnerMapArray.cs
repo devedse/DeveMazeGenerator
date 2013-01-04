@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DeveMazeGenerator
 {
-    public class DotNetBitArray : InnerMap
+    class DotNetBitArrayInnerMapArray : InnerMapArray
     {
         public BitArray innerData;
 
@@ -17,22 +17,22 @@ namespace DeveMazeGenerator
             get { return innerData.Length; }
         }
 
-        public DotNetBitArray(int size)
+        public DotNetBitArrayInnerMapArray(int height)
         {
-            innerData = new BitArray(size);
+            innerData = new BitArray(height);
         }
 
-        public override bool this[int thePosition]
+        public override Boolean this[int y]
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
-                innerData[thePosition] = value;
+                innerData[y] = value;
             }
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                return innerData[thePosition];
+                return innerData[y];
             }
         }
     }

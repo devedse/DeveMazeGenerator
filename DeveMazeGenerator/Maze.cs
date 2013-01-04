@@ -40,8 +40,8 @@ namespace DeveMazeGenerator
             get { return height; }
         }
 
-        internal InnerMap[] innerMap;
-        public InnerMap[] InnerMap
+        internal InnerMap innerMap;
+        public InnerMap InnerMap
         {
             get { return innerMap; }
         }
@@ -54,37 +54,22 @@ namespace DeveMazeGenerator
             switch (innerMapType)
             {
                 case InnerMapType.BitArreintjeFast:
-                    innerMap = new BitArreintjeFast[width];
-
-                    for (int x = 0; x < width; x++)
-                    {
-                        innerMap[x] = new BitArreintjeFast(height);
-                    }
+                    innerMap = new BitArreintjeFastInnerMap(width, height);
                     break;
                 case InnerMapType.BooleanArray:
-                    innerMap = new BooleanArray[width];
-
-                    for (int x = 0; x < width; x++)
-                    {
-                        innerMap[x] = new BooleanArray(height);
-                    }
+                    innerMap = new BooleanInnerMap(width, height);
                     break;
                 case InnerMapType.DotNetBitArray:
-                    innerMap = new DotNetBitArray[width];
-
-                    for (int x = 0; x < width; x++)
-                    {
-                        innerMap[x] = new DotNetBitArray(height);
-                    }
+                    innerMap = new DotNetBitArrayInnerMap(width, height);
                     break;
-                case InnerMapType.BitArrayMappedOnHardDisk:
-                    innerMap = new BitArrayMappedOnHardDisk[width];
+                //case InnerMapType.BitArrayMappedOnHardDisk:
+                //    innerMap = new BitArrayMappedOnHardDisk[width];
 
-                    for (int x = 0; x < width; x++)
-                    {
-                        innerMap[x] = new BitArrayMappedOnHardDisk(height);
-                    }
-                    break;
+                //    for (int x = 0; x < width; x++)
+                //    {
+                //        innerMap[x] = new BitArrayMappedOnHardDisk(height);
+                //    }
+                //    break;
                 default:
                     break;
             }

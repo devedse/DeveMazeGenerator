@@ -7,31 +7,28 @@ using System.Threading.Tasks;
 
 namespace DeveMazeGenerator
 {
-    public class BooleanArray : InnerMap
+    class BooleanInnerMap : InnerMap
     {
-        public Boolean[] innerData;
-
         public override int Length
         {
             get { return innerData.Length; }
         }
 
-        public BooleanArray(int size)
+        public BooleanInnerMap(int width, int height)
         {
-            innerData = new Boolean[size];
+            innerData = new InnerMapArray[width];
+            for (int i = 0; i < width; i++)
+            {
+                innerData[i] = new BooleanInnerMapArray(height);
+            }
         }
 
-        public override bool this[int thePosition]
+        public override InnerMapArray this[int x]
         {
-            [MethodImpl(MethodImplOptions.AggressiveInlining)]
-            set
-            {
-                innerData[thePosition] = value;
-            }
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                return innerData[thePosition];
+                return innerData[x];
             }
         }
     }
