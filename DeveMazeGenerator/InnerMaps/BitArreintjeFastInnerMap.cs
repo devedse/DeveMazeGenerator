@@ -5,14 +5,10 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DeveMazeGenerator
+namespace DeveMazeGenerator.InnerMaps
 {
     public class BitArreintjeFastInnerMap : InnerMap
     {
-        public override int Length
-        {
-            get { return innerData.Length; }
-        }
 
         public BitArreintjeFastInnerMap(int width, int height)
         {

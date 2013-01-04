@@ -1,4 +1,5 @@
-﻿namespace DeveMazeGeneratorGui
+﻿using System;
+namespace DeveMazeGeneratorGui
 {
     partial class Form1
     {
@@ -45,6 +46,9 @@
             this.button14 = new System.Windows.Forms.Button();
             this.button15 = new System.Windows.Forms.Button();
             this.button16 = new System.Windows.Forms.Button();
+            this.button17 = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.button18 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -156,14 +160,14 @@
             // listBox1
             // 
             this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(315, 368);
+            this.listBox1.Location = new System.Drawing.Point(315, 430);
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(482, 173);
             this.listBox1.TabIndex = 10;
             // 
             // button11
             // 
-            this.button11.Location = new System.Drawing.Point(173, 42);
+            this.button11.Location = new System.Drawing.Point(159, 18);
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(150, 67);
             this.button11.TabIndex = 11;
@@ -221,11 +225,44 @@
             this.button16.UseVisualStyleBackColor = true;
             this.button16.Click += new System.EventHandler(this.button16_Click);
             // 
+            // button17
+            // 
+            this.button17.Location = new System.Drawing.Point(159, 98);
+            this.button17.Name = "button17";
+            this.button17.Size = new System.Drawing.Size(150, 65);
+            this.button17.TabIndex = 17;
+            this.button17.Text = "The Test: HDBitArray, BitArreintjeFast, Walls, Loading, Pathfinding, Saving path " +
+    "etc";
+            this.button17.UseVisualStyleBackColor = true;
+            this.button17.Click += new System.EventHandler(this.button17_Click);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(503, 324);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(291, 100);
+            this.textBox1.TabIndex = 18;
+            this.textBox1.Text = "Info about mazes:\r\n0 = False = Wall = Black\r\n1 = True = Empty = White";
+            // 
+            // button18
+            // 
+            this.button18.Location = new System.Drawing.Point(224, 354);
+            this.button18.Name = "button18";
+            this.button18.Size = new System.Drawing.Size(149, 56);
+            this.button18.TabIndex = 19;
+            this.button18.Text = "MazeWalls saven vs gewone maze grootte";
+            this.button18.UseVisualStyleBackColor = true;
+            this.button18.Click += new System.EventHandler(this.button18_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(806, 558);
+            this.ClientSize = new System.Drawing.Size(806, 615);
+            this.Controls.Add(this.button18);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.button17);
             this.Controls.Add(this.button16);
             this.Controls.Add(this.button15);
             this.Controls.Add(this.button14);
@@ -247,6 +284,7 @@
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -269,6 +307,9 @@
         private System.Windows.Forms.Button button14;
         private System.Windows.Forms.Button button15;
         private System.Windows.Forms.Button button16;
+        private System.Windows.Forms.Button button17;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Button button18;
     }
 }
 

@@ -384,6 +384,7 @@ namespace DeveMazeGeneratorGui
         {
             listBox1.Invoke(new Action(() =>
             {
+                str = DateTime.Now.ToLongTimeString() + ":    " + str;
                 listBox1.Items.Insert(0, str);
             }));
         }
@@ -411,7 +412,7 @@ namespace DeveMazeGeneratorGui
                 Console.WriteLine("New wall found: " + wall.xstart + ":" + wall.ystart + "  " + wall.xend + ":" + wall.yend);
             }
 
-            Maze loadedfromwall = Maze.LoadMazeFromWalls(walls);
+            Maze loadedfromwall = Maze.LoadMazeFromWalls(walls, width, height);
             loadedfromwall.SaveMazeAsBmp("maze2.bmp");
 
             DebugMSG("Ok done");
@@ -609,6 +610,128 @@ namespace DeveMazeGeneratorGui
         private void button16_Click(object sender, EventArgs e)
         {
             forceesStoppenEnzo = true;
+        }
+
+        private void button17_Click(object sender, EventArgs e)
+        {
+            Task.Run(() =>
+            {
+                AlgorithmBacktrack back = new AlgorithmBacktrack();
+
+                int width = 1024 * 1;
+                int height = 1024 * 1;
+
+                DebugMSG("Generating maze of size: " + width + " * " + height);
+                Maze maze = back.Generate(width, height, InnerMapType.BitArrayMappedOnHardDisk);
+
+                DebugMSG("Generating done :)");
+
+
+                maze.SaveMazeAsBmp("maze1.bmp");
+                DebugMSG("Maze saved");
+
+
+                //foreach (var v in maze.InnerMap)
+                //{
+                //    v.Print();
+                //}
+
+                DebugMSG("Finding walls...");
+                var walls = maze.GenerateListOfMazeWalls();
+                DebugMSG("Walls found");
+
+                DebugMSG("Creating new Maze from walls...");
+
+                Maze loadedfromwall = Maze.LoadMazeFromWalls(walls, width, height);
+
+                DebugMSG("Created :), saving this maze...");
+                loadedfromwall.SaveMazeAsBmp("maze2.bmp");
+
+                DebugMSG("Done saving, creating path for this maze...");
+
+                var path = PathFinderDepthFirst.GoFind(new MazePoint(1, 1), new MazePoint(width - 3, height - 3), loadedfromwall.InnerMap);
+
+                DebugMSG("Pathfinding done, saving this maze + path...");
+
+                loadedfromwall.SaveMazeAsBmpWithPath4bpp("mazePath.bmp", path);
+
+                DebugMSG("Saving done :)");
+
+                DebugMSG("Generating walls from this thing again...");
+
+                var walls2 = loadedfromwall.GenerateListOfMazeWalls();
+
+                DebugMSG("Done with walls2");
+
+                DebugMSG("Creating and saving new maze for this...");
+                Maze mmmmmm = Maze.LoadMazeFromWalls(walls2, width, height);
+                mmmmmm.SaveMazeAsBmp("maze3.bmp");
+
+                DebugMSG("Ok done :), comparing maze 1 and 3...");
+
+                Boolean thesame = true;
+
+                for (int x = 0; x < width; x++)
+                {
+                    for (int y = 0; y < height; y++)
+                    {
+                        if (maze.InnerMap[x][y] != mmmmmm.InnerMap[x][y])
+                        {
+                            thesame = false;
+                        }
+                    }
+                }
+
+                DebugMSG("Done checking, mazes are the same: " + thesame);
+
+                DebugMSG("Ok done :D");
+            });
+        }
+
+        private void button18_Click(object sender, EventArgs e)
+        {
+            Task.Run(() =>
+            {
+                AlgorithmBacktrack back = new AlgorithmBacktrack();
+
+                int width = 1024 * 8;
+                int height = 1024 * 8;
+
+                DebugMSG("Generating maze of size: " + width + " * " + height);
+                Maze maze = back.Generate(width, height, InnerMapType.BitArreintjeFast);
+
+                DebugMSG("Generating done");
+
+                DebugMSG("Saving as bmp");
+
+                maze.SaveMazeAsBmp("mazeSavedDirectly.bmp");
+
+                DebugMSG("Saving done :)");
+
+                DebugMSG("Generating walls...");
+
+                var walls = maze.GenerateListOfMazeWalls();
+
+                DebugMSG("Generating walls done :)");
+
+                DebugMSG("Saving walls to file...");
+
+                using (FileStream stream = new FileStream("mazeSavedAsWalls.txt", FileMode.Create))
+                {
+                    using (StreamWriter writer = new StreamWriter(stream))
+                    {
+                        foreach (MazeWall w in walls)
+                        {
+                            writer.Write(w.xstart);
+                            writer.Write(w.xend);
+                            writer.Write(w.ystart);
+                            writer.Write(w.yend);
+                        }
+                    }
+                }
+
+                DebugMSG("Everything done \\o/");
+            });
         }
     }
 

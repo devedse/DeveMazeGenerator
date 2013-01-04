@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DeveMazeGenerator
+namespace DeveMazeGenerator.InnerMaps
 {
     public abstract class InnerMapArray
     {

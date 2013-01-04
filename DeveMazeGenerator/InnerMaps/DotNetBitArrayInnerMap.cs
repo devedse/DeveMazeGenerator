@@ -5,15 +5,10 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DeveMazeGenerator
+namespace DeveMazeGenerator.InnerMaps
 {
     class DotNetBitArrayInnerMap : InnerMap
     {
-        public override int Length
-        {
-            get { return innerData.Length; }
-        }
-
         public DotNetBitArrayInnerMap(int width, int height)
         {
             innerData = new InnerMapArray[width];

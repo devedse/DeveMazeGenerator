@@ -9,6 +9,7 @@ using System.Drawing.Imaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DeveMazeGenerator.InnerMaps;
 
 namespace DeveMazeGenerator
 {
@@ -27,6 +28,11 @@ namespace DeveMazeGenerator
         BitArrayMappedOnHardDisk
     }
 
+    /// <summary>
+    /// Info about mazes:
+    /// 0 = False = Wall = Black
+    /// 1 = True = Empty = White
+    /// </summary>
     public class Maze
     {
         private int width;
@@ -62,14 +68,9 @@ namespace DeveMazeGenerator
                 case InnerMapType.DotNetBitArray:
                     innerMap = new DotNetBitArrayInnerMap(width, height);
                     break;
-                //case InnerMapType.BitArrayMappedOnHardDisk:
-                //    innerMap = new BitArrayMappedOnHardDisk[width];
-
-                //    for (int x = 0; x < width; x++)
-                //    {
-                //        innerMap[x] = new BitArrayMappedOnHardDisk(height);
-                //    }
-                //    break;
+                case InnerMapType.BitArrayMappedOnHardDisk:
+                    innerMap = new BitArrayMappedOnHardDiskInnerMap(width, height);
+                    break;
                 default:
                     break;
             }
@@ -387,12 +388,14 @@ namespace DeveMazeGenerator
             return walls;
         }
 
-        public static Maze LoadMazeFromWalls(List<MazeWall> walls)
+        public static Maze LoadMazeFromWalls(List<MazeWall> walls, int width, int height)
         {
-            Maze m = new Maze(16, 16, InnerMapType.BitArreintjeFast);
-            for (int y = 0; y < m.height; y++)
+            Maze m = new Maze(width, height, InnerMapType.BitArreintjeFast);
+
+            //-1 for stupid black pixel thing :o
+            for (int y = 0; y < m.height - 1; y++)
             {
-                for (int x = 0; x < m.width; x++)
+                for (int x = 0; x < m.width - 1; x++)
                 {
                     m.innerMap[x][y] = true;
                 }
