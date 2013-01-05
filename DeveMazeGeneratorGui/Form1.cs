@@ -369,57 +369,62 @@ namespace DeveMazeGeneratorGui
 
         private void button9_Click(object sender, EventArgs e)
         {
-            Stopwatch w = new Stopwatch();
-
-            for (int y = 0; y < 100; y++)
+            Task.Run(() =>
             {
-                DebugMSG("----------------------");
-                AlgorithmBacktrack alg = new AlgorithmBacktrack();
-                w.Start();
-                for (int i = 0; i < 10000; i++)
-                {
-                    //if (i % 50 == 0)
-                    //{
-                    //    DebugMSG(i / 10 + "%");
-                    //}
-                    int size = 256;
-                    Maze maze = alg.Generate(size, size, InnerMapType.BitArreintjeFast, i);
-                    //var path = PathFinderDepthFirst.GoFind(new MazePoint(1, 1), new MazePoint(size - 3, size - 3), maze.InnerMap);
-                    //maze.SaveMazeAsBmpWithPath2("mazes\\" + i + ".bmp", path);
-                }
-                w.Stop();
-                DebugMSG("Time AlgorithmBacktrack1: " + w.Elapsed.TotalSeconds);
-                w.Reset();
+                Stopwatch w = new Stopwatch();
 
-                AlgorithmBacktrack alg2 = new AlgorithmBacktrack();
-                w.Start();
-                for (int i = 0; i < 10000; i++)
+                for (int y = 0; y < 10; y++)
                 {
-                    //if (i % 50 == 0)
-                    //{
-                    //    DebugMSG(i / 10 + "%");
-                    //}
-                    int size = 256;
-                    Maze maze = alg2.Generate(size, size, InnerMapType.BitArreintjeFast, i);
-                    //var path = PathFinderDepthFirst.GoFind(new MazePoint(1, 1), new MazePoint(size - 3, size - 3), maze.InnerMap);
-                    //maze.SaveMazeAsBmpWithPath2("mazes\\" + i + ".bmp", path);
-                }
-                w.Stop();
+                    DebugMSG("----------------------");
+                    AlgorithmBacktrack alg = new AlgorithmBacktrack();
+                    w.Start();
+                    for (int i = 0; i < 800; i++)
+                    {
+                        //if (i % 50 == 0)
+                        //{
+                        //    DebugMSG(i / 10 + "%");
+                        //}
+                        int size = 256;
+                        Maze maze = alg.Generate(size, size, InnerMapType.BitArreintjeFast, i);
+                        //var path = PathFinderDepthFirst.GoFind(new MazePoint(1, 1), new MazePoint(size - 3, size - 3), maze.InnerMap);
+                        //maze.SaveMazeAsBmpWithPath2("mazes\\" + i + ".bmp", path);
+                    }
+                    w.Stop();
+                    DebugMSG("Time AlgorithmBacktrack1: " + w.Elapsed.TotalSeconds);
+                    w.Reset();
 
-                DebugMSG("Time AlgorithmBacktrack2: " + w.Elapsed.TotalSeconds);
-                w.Reset();
-            }
+                    AlgorithmBacktrack alg2 = new AlgorithmBacktrack();
+                    w.Start();
+                    for (int i = 0; i < 800; i++)
+                    {
+                        //if (i % 50 == 0)
+                        //{
+                        //    DebugMSG(i / 10 + "%");
+                        //}
+                        int size = 256;
+                        Maze maze = alg2.Generate(size, size, InnerMapType.BitArreintjeFast, i);
+                        //var path = PathFinderDepthFirst.GoFind(new MazePoint(1, 1), new MazePoint(size - 3, size - 3), maze.InnerMap);
+                        //maze.SaveMazeAsBmpWithPath2("mazes\\" + i + ".bmp", path);
+                    }
+                    w.Stop();
+
+                    DebugMSG("Time AlgorithmBacktrack2: " + w.Elapsed.TotalSeconds);
+                    w.Reset();
+                }
+            });
         }
 
         private void button10_Click(object sender, EventArgs e)
         {
-            Stopwatch w = new Stopwatch();
-            AlgorithmBacktrack algje = new AlgorithmBacktrack();
-            w.Start();
-            algje.Generate(20000, 20000, InnerMapType.BitArreintjeFast);
-            w.Stop();
-            DebugMSG("Seconds it took: " + w.Elapsed.TotalSeconds);
-
+            Task.Run(() =>
+            {
+                Stopwatch w = new Stopwatch();
+                AlgorithmBacktrack algje = new AlgorithmBacktrack();
+                w.Start();
+                algje.Generate(20000, 20000, InnerMapType.BitArreintjeFast);
+                w.Stop();
+                DebugMSG("Seconds it took: " + w.Elapsed.TotalSeconds);
+            });
         }
 
 
