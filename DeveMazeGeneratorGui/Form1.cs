@@ -12,12 +12,14 @@ using System.Windows.Forms;
 using DeveMazeGenerator;
 using DeveMazeGenerator.Generators;
 using System.IO;
+using System.Threading;
 
 namespace DeveMazeGeneratorGui
 {
     public partial class Form1 : Form
     {
         private Boolean forceesStoppenEnzo = false;
+        private Random r = new Random();
 
         public Form1()
         {
@@ -792,6 +794,28 @@ namespace DeveMazeGeneratorGui
                     DebugMSG(eee.ToString());
                 }
             }));
+        }
+
+        private void button20_Click(object sender, EventArgs e)
+        {
+            this.BackColor = Color.Black;
+
+            Task.Run(() =>
+            {
+                var g = this.CreateGraphics();
+
+                int width = this.Width / 2 * 2;
+                int height = this.Height / 2 * 2;
+
+                g.FillRectangle(Brushes.Black, 0, 0, width + 1, height + 1);
+
+                Maze m = new AlgorithmBacktrackWithCallback().SpecialGenerate(width, height, InnerMapType.BitArreintjeFast, r.Next(), new Action<int, int>((x, y) =>
+                {
+
+                    g.FillRectangle(Brushes.White, x * 5, y * 5, 5, 5);
+                    //Thread.Sleep(200);
+                }));
+            });
         }
     }
 

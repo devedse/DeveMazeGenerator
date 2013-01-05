@@ -1,11 +1,11 @@
-﻿using System;
+﻿using DeveMazeGenerator.InnerMaps;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using DeveMazeGenerator.InnerMaps;
 
 namespace DeveMazeGenerator.Generators
 {
@@ -52,6 +52,7 @@ namespace DeveMazeGenerator.Generators
             Stack<MazePoint> stackje = new Stack<MazePoint>();
             stackje.Push(new MazePoint(x, y));
             map[x][y] = true;
+            pixelChangedCallback.Invoke(x, y);
             //form.drawPixel(x, y, brushThisUses);
             while (stackje.Count != 0)
             {
@@ -112,7 +113,7 @@ namespace DeveMazeGenerator.Generators
                         pixelChangedCallback.Invoke(x, y + 1);
                         //form.drawPixel(x, y + 1, brushThisUses);
                     }
-
+                    pixelChangedCallback.Invoke(target.X, target.Y);
                     //form.drawPixel(target.X, target.Y, brushThisUses);
                 }
                 else
