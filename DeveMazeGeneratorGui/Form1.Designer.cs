@@ -49,44 +49,46 @@ namespace DeveMazeGeneratorGui
             this.button17 = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.button18 = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.button19 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(648, 11);
+            this.button1.Location = new System.Drawing.Point(158, 211);
             this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(149, 53);
+            this.button1.Size = new System.Drawing.Size(141, 74);
             this.button1.TabIndex = 0;
-            this.button1.Text = "Gewoon een testje met speed";
+            this.button1.Text = "Just a speed test";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(648, 79);
+            this.button2.Location = new System.Drawing.Point(651, 11);
             this.button2.Margin = new System.Windows.Forms.Padding(2);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(122, 74);
+            this.button2.Size = new System.Drawing.Size(146, 58);
             this.button2.TabIndex = 1;
-            this.button2.Text = "Random testje met inlining";
+            this.button2.Text = "Some testing with inlining";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(351, 11);
+            this.button3.Location = new System.Drawing.Point(398, 11);
             this.button3.Margin = new System.Windows.Forms.Padding(2);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(214, 128);
             this.button3.TabIndex = 2;
-            this.button3.Text = "Generate 1k grote mazes multithreaded";
+            this.button3.Text = "Generate 1k big mazes multithreaded";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(424, 155);
+            this.button4.Location = new System.Drawing.Point(441, 143);
             this.button4.Margin = new System.Windows.Forms.Padding(2);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(116, 103);
@@ -97,7 +99,7 @@ namespace DeveMazeGeneratorGui
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(584, 190);
+            this.button5.Location = new System.Drawing.Point(608, 201);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(186, 117);
             this.button5.TabIndex = 4;
@@ -119,7 +121,7 @@ namespace DeveMazeGeneratorGui
             // 
             this.button7.Location = new System.Drawing.Point(13, 98);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(115, 65);
+            this.button7.Size = new System.Drawing.Size(115, 78);
             this.button7.TabIndex = 6;
             this.button7.Text = "Bovenstaande single threaded";
             this.button7.UseVisualStyleBackColor = true;
@@ -127,33 +129,33 @@ namespace DeveMazeGeneratorGui
             // 
             // button8
             // 
-            this.button8.Location = new System.Drawing.Point(212, 190);
+            this.button8.Location = new System.Drawing.Point(651, 73);
             this.button8.Margin = new System.Windows.Forms.Padding(2);
             this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(178, 63);
+            this.button8.Size = new System.Drawing.Size(146, 46);
             this.button8.TabIndex = 7;
-            this.button8.Text = "TestMetCallBack";
+            this.button8.Text = "Test with callback";
             this.button8.UseVisualStyleBackColor = true;
             this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
             // button9
             // 
-            this.button9.Location = new System.Drawing.Point(335, 281);
+            this.button9.Location = new System.Drawing.Point(333, 282);
             this.button9.Margin = new System.Windows.Forms.Padding(2);
             this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(151, 63);
+            this.button9.Size = new System.Drawing.Size(151, 48);
             this.button9.TabIndex = 8;
-            this.button9.Text = "2x dezelfde";
+            this.button9.Text = "Generate 2x the same";
             this.button9.UseVisualStyleBackColor = true;
             this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
             // button10
             // 
-            this.button10.Location = new System.Drawing.Point(60, 265);
+            this.button10.Location = new System.Drawing.Point(158, 296);
             this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(141, 97);
+            this.button10.Size = new System.Drawing.Size(141, 87);
             this.button10.TabIndex = 9;
-            this.button10.Text = "Gewoon een speed testje";
+            this.button10.Text = "Just another speed test thingy";
             this.button10.UseVisualStyleBackColor = true;
             this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
@@ -167,9 +169,9 @@ namespace DeveMazeGeneratorGui
             // 
             // button11
             // 
-            this.button11.Location = new System.Drawing.Point(159, 18);
+            this.button11.Location = new System.Drawing.Point(159, 11);
             this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(150, 67);
+            this.button11.Size = new System.Drawing.Size(150, 80);
             this.button11.TabIndex = 11;
             this.button11.Text = "Generate a simple maze";
             this.button11.UseVisualStyleBackColor = true;
@@ -177,9 +179,9 @@ namespace DeveMazeGeneratorGui
             // 
             // button12
             // 
-            this.button12.Location = new System.Drawing.Point(26, 182);
+            this.button12.Location = new System.Drawing.Point(12, 205);
             this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(150, 79);
+            this.button12.Size = new System.Drawing.Size(115, 87);
             this.button12.TabIndex = 12;
             this.button12.Text = "InnerMapType comparisson";
             this.button12.UseVisualStyleBackColor = true;
@@ -187,7 +189,7 @@ namespace DeveMazeGeneratorGui
             // 
             // button13
             // 
-            this.button13.Location = new System.Drawing.Point(26, 443);
+            this.button13.Location = new System.Drawing.Point(12, 487);
             this.button13.Name = "button13";
             this.button13.Size = new System.Drawing.Size(150, 37);
             this.button13.TabIndex = 13;
@@ -197,7 +199,7 @@ namespace DeveMazeGeneratorGui
             // 
             // button14
             // 
-            this.button14.Location = new System.Drawing.Point(168, 497);
+            this.button14.Location = new System.Drawing.Point(168, 487);
             this.button14.Name = "button14";
             this.button14.Size = new System.Drawing.Size(141, 37);
             this.button14.TabIndex = 14;
@@ -207,7 +209,7 @@ namespace DeveMazeGeneratorGui
             // 
             // button15
             // 
-            this.button15.Location = new System.Drawing.Point(224, 430);
+            this.button15.Location = new System.Drawing.Point(224, 580);
             this.button15.Name = "button15";
             this.button15.Size = new System.Drawing.Size(75, 23);
             this.button15.TabIndex = 15;
@@ -217,7 +219,7 @@ namespace DeveMazeGeneratorGui
             // 
             // button16
             // 
-            this.button16.Location = new System.Drawing.Point(26, 497);
+            this.button16.Location = new System.Drawing.Point(12, 549);
             this.button16.Name = "button16";
             this.button16.Size = new System.Drawing.Size(75, 54);
             this.button16.TabIndex = 16;
@@ -227,9 +229,9 @@ namespace DeveMazeGeneratorGui
             // 
             // button17
             // 
-            this.button17.Location = new System.Drawing.Point(159, 98);
+            this.button17.Location = new System.Drawing.Point(159, 97);
             this.button17.Name = "button17";
-            this.button17.Size = new System.Drawing.Size(150, 65);
+            this.button17.Size = new System.Drawing.Size(150, 79);
             this.button17.TabIndex = 17;
             this.button17.Text = "The Test: HDBitArray, BitArreintjeFast, Walls, Loading, Pathfinding, Saving path " +
     "etc";
@@ -247,19 +249,40 @@ namespace DeveMazeGeneratorGui
             // 
             // button18
             // 
-            this.button18.Location = new System.Drawing.Point(224, 354);
+            this.button18.Location = new System.Drawing.Point(333, 335);
             this.button18.Name = "button18";
-            this.button18.Size = new System.Drawing.Size(149, 56);
+            this.button18.Size = new System.Drawing.Size(151, 38);
             this.button18.TabIndex = 19;
-            this.button18.Text = "MazeWalls saven vs gewone maze grootte";
+            this.button18.Text = "Size comparison, walls vs normal";
             this.button18.UseVisualStyleBackColor = true;
             this.button18.Click += new System.EventHandler(this.button18_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(315, 410);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(96, 13);
+            this.label1.TabIndex = 20;
+            this.label1.Text = "Debug information:";
+            // 
+            // button19
+            // 
+            this.button19.Location = new System.Drawing.Point(12, 295);
+            this.button19.Name = "button19";
+            this.button19.Size = new System.Drawing.Size(116, 78);
+            this.button19.TabIndex = 21;
+            this.button19.Text = "InnerMapType comparisson without HardDiskArray";
+            this.button19.UseVisualStyleBackColor = true;
+            this.button19.Click += new System.EventHandler(this.button19_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(806, 615);
+            this.Controls.Add(this.button19);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.button18);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button17);
@@ -282,7 +305,7 @@ namespace DeveMazeGeneratorGui
             this.Controls.Add(this.button1);
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "DeveMazeGeneratorTestGUIAppThing";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -310,6 +333,8 @@ namespace DeveMazeGeneratorGui
         private System.Windows.Forms.Button button17;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button button18;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button button19;
     }
 }
 
