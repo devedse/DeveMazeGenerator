@@ -826,6 +826,30 @@ namespace DeveMazeGeneratorGui
                 }));
             });
         }
+
+        private void button21_Click(object sender, EventArgs e)
+        {
+            Task.Run(() =>
+            {
+                int size = 2048 * 2;
+                DebugMSG("Generating...");
+                Maze m = new AlgorithmBacktrack().Generate(size, size, InnerMapType.BitArreintjeFast);
+                var path = PathFinderDepthFirst.GoFind(m.InnerMap);
+
+                DebugMSG("Saving...");
+                DebugMSG("0/4");
+                m.SaveMazeAsImage("zz4bitpath.bmp", ImageFormat.Bmp, path, MazeSaveType.ColorDepth4Bits);
+                DebugMSG("1/4");
+                m.SaveMazeAsImage("zz32bitpath.bmp", ImageFormat.Bmp, path, MazeSaveType.ColorDepth32Bits);
+                DebugMSG("2/4");
+                m.SaveMazeAsImage("zz4bitpath.png", ImageFormat.Png, path, MazeSaveType.ColorDepth4Bits);
+                DebugMSG("3/4");
+                m.SaveMazeAsImage("zz32bitpath.png", ImageFormat.Png, path, MazeSaveType.ColorDepth32Bits);
+                DebugMSG("4/4");
+
+                DebugMSG("Done :)");
+            });
+        }
     }
 
 
