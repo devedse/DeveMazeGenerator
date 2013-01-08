@@ -770,7 +770,7 @@ namespace DeveMazeGeneratorGui
 
                 using (FileStream stream = new FileStream("mazeSavedAsWalls.txt", FileMode.Create))
                 {
-                    using (StreamWriter writer = new StreamWriter(stream))
+                    using (BinaryWriter writer = new BinaryWriter(stream))
                     {
                         foreach (MazeWall w in walls)
                         {
@@ -821,7 +821,7 @@ namespace DeveMazeGeneratorGui
                 Maze m = new AlgorithmBacktrackWithCallback().SpecialGenerate(width, height, InnerMapType.BitArreintjeFast, r.Next(), new Action<int, int>((x, y) =>
                 {
 
-                    g.FillRectangle(Brushes.White, x * 5, y * 5, 5, 5);
+                    g.FillRectangle(Brushes.White, x, y, 1, 1);
                     //Thread.Sleep(200);
                 }));
             });
@@ -847,7 +847,29 @@ namespace DeveMazeGeneratorGui
                 m.SaveMazeAsImage("zz32bitpath.png", ImageFormat.Png, path, MazeSaveType.ColorDepth32Bits);
                 DebugMSG("4/4");
 
-                DebugMSG("Done :)");
+                DebugMSG("Done with images :)");
+                DebugMSG("Just saving the maze as walls...");
+
+                var walls = m.GenerateListOfMazeWalls();
+
+
+
+                using (FileStream stream = new FileStream("mazeSavedAsWalls.txt", FileMode.Create))
+                {
+                    using (BinaryWriter writer = new BinaryWriter(stream))
+                    {
+                        foreach (MazeWall w in walls)
+                        {
+                            writer.Write(w.xstart);
+                            writer.Write(w.xend);
+                            writer.Write(w.ystart);
+                            writer.Write(w.yend);
+                        }
+                    }
+                }
+
+                DebugMSG("Done with all :)");
+
             });
         }
     }

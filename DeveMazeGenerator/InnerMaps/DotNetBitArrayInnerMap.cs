@@ -14,7 +14,7 @@ namespace DeveMazeGenerator.InnerMaps
             innerData = new InnerMapArray[width];
             for (int i = 0; i < width; i++)
             {
-                innerData[i] = new BooleanInnerMapArray(height);
+                innerData[i] = new DotNetBitArrayInnerMapArray(height);
             }
         }
 
