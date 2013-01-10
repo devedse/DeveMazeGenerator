@@ -75,8 +75,6 @@
     <Compile Include="InnerMaps\DotNetBitArrayInnerMap.cs" />
     <Compile Include="Generators\Algorithm.cs" />
     <Compile Include="Generators\AlgorithmBacktrack.cs" />
-    <Compile Include="Generators\AlgorithmBacktrackNoInlining.cs" />
-    <Compile Include="Generators\AlgorithmBacktrackWithCallback.cs" />
     <Compile Include="InnerMaps\InnerMap.cs" />
     <Compile Include="InnerMaps\InnerMapArray.cs" />
     <Compile Include="Maze.cs" />

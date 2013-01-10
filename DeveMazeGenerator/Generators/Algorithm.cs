@@ -8,8 +8,8 @@ namespace DeveMazeGenerator.Generators
 {
     public interface Algorithm
     {
-        Maze Generate(int width, int height, InnerMapType innerMapType);
-        Maze Generate(int width, int height, InnerMapType innerMapType, int seed);
+        Maze Generate(int width, int height, InnerMapType innerMapType, Action<int, int> pixelChangedCallback);
+        Maze Generate(int width, int height, InnerMapType innerMapType, int seed, Action<int, int> pixelChangedCallback);
     }
 
     public struct MazePoint

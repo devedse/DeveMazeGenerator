@@ -11,19 +11,31 @@ namespace DeveMazeGenerator.Generators
 {
     public class AlgorithmBacktrack : Algorithm
     {
-        public Maze Generate(int width, int height, InnerMapType innerMapType)
+        public Maze Generate(int width, int height, InnerMapType innerMapType, Action<int, int> pixelChangedCallback)
         {
+            if (pixelChangedCallback == null)
+            {
+                pixelChangedCallback = (x, y) => { };
+            }
+
             Maze maze = new Maze(width, height, innerMapType);
-            GoGenerate(maze.InnerMap, maze, new Random());
+            GoGenerate(maze.InnerMap, maze, new Random(), pixelChangedCallback);
+            return maze;
+
+        }
+
+        public Maze Generate(int width, int height, InnerMapType innerMapType, int seed, Action<int, int> pixelChangedCallback)
+        {
+            if (pixelChangedCallback == null)
+            {
+                pixelChangedCallback = (x, y) => { };
+            }
+
+            Maze maze = new Maze(width, height, innerMapType);
+            GoGenerate(maze.InnerMap, maze, new Random(), pixelChangedCallback);
             return maze;
         }
 
-        public Maze Generate(int width, int height, InnerMapType innerMapType, int seed)
-        {
-            Maze maze = new Maze(width, height, innerMapType);
-            GoGenerate(maze.InnerMap, maze, new Random(seed));
-            return maze;
-        }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         private static bool isValid(int x, int y, InnerMap map, Maze maze)
@@ -36,7 +48,8 @@ namespace DeveMazeGenerator.Generators
             return false;
         }
 
-        private void GoGenerate(InnerMap map, Maze maze, Random r)
+
+        private void GoGenerate(InnerMap map, Maze maze, Random r, Action<int, int> pixelChangedCallback)
         {
 
             int x = 1;
@@ -45,6 +58,7 @@ namespace DeveMazeGenerator.Generators
             Stack<MazePoint> stackje = new Stack<MazePoint>();
             stackje.Push(new MazePoint(x, y));
             map[x][y] = true;
+            pixelChangedCallback.Invoke(x, y);
             //form.drawPixel(x, y, brushThisUses);
             while (stackje.Count != 0)
             {
@@ -84,24 +98,28 @@ namespace DeveMazeGenerator.Generators
                     if (target.X < x)
                     {
                         map[x - 1][y] = true;
+                        pixelChangedCallback.Invoke(x - 1, y);
                         //form.drawPixel(x - 1, y, brushThisUses);
                     }
                     else if (target.X > x)
                     {
                         map[x + 1][y] = true;
+                        pixelChangedCallback.Invoke(x + 1, y);
                         //form.drawPixel(x + 1, y, brushThisUses);
                     }
                     else if (target.Y < y)
                     {
                         map[x][y - 1] = true;
+                        pixelChangedCallback.Invoke(x, y - 1);
                         //form.drawPixel(x, y - 1, brushThisUses);
                     }
                     else if (target.Y > y)
                     {
                         map[x][y + 1] = true;
+                        pixelChangedCallback.Invoke(x, y + 1);
                         //form.drawPixel(x, y + 1, brushThisUses);
                     }
-
+                    pixelChangedCallback.Invoke(target.X, target.Y);
                     //form.drawPixel(target.X, target.Y, brushThisUses);
                 }
                 else
@@ -112,5 +130,7 @@ namespace DeveMazeGenerator.Generators
 
             }
         }
+
+
     }
 }

@@ -37,7 +37,7 @@ namespace DeveMazeGeneratorGui
                 int size = (int)Math.Pow(2.0, 10.0);
                 DebugMSG("Generating maze of size: " + size);
                 DebugMSG("Saved size it should be: " + Math.Pow((double)size, 2.0) / 1024.0 / 1024.0 / 8.0 + " mb");
-                Maze maze = curalg.Generate(size, size, InnerMapType.BitArreintjeFast, 1337);
+                Maze maze = curalg.Generate(size, size, InnerMapType.BitArreintjeFast, 1337, null);
                 w.Stop();
                 DebugMSG("Generating time: " + w.Elapsed.TotalSeconds);
                 DebugMSG("Finding path...");
@@ -126,7 +126,7 @@ namespace DeveMazeGeneratorGui
                             DebugMSG(i / 10 + "%");
                         }
                         int size = 1024;
-                        Maze maze = alg.Generate(size, size, InnerMapType.BitArreintjeFast, i);
+                        Maze maze = alg.Generate(size, size, InnerMapType.BitArreintjeFast, i, null);
                         var path = PathFinderDepthFirst.GoFind(new MazePoint(1, 1), new MazePoint(size - 3, size - 3), maze.InnerMap);
                         maze.SaveMazeAsImage("bigmazes\\" + i + ".bmp", ImageFormat.Bmp, path, MazeSaveType.ColorDepth4Bits);
                     }));
@@ -155,7 +155,7 @@ namespace DeveMazeGeneratorGui
                         DebugMSG(i / 10 + "%");
                     }
                     int size = 256;
-                    Maze maze = alg.Generate(size, size, InnerMapType.BitArreintjeFast, i);
+                    Maze maze = alg.Generate(size, size, InnerMapType.BitArreintjeFast, i, null);
                     var path = PathFinderDepthFirst.GoFind(new MazePoint(1, 1), new MazePoint(size - 3, size - 3), maze.InnerMap);
                     maze.SaveMazeAsImage("mazes\\" + i + ".bmp", ImageFormat.Bmp, path, MazeSaveType.ColorDepth4Bits);
                 };
@@ -175,7 +175,7 @@ namespace DeveMazeGeneratorGui
                 int size = (int)Math.Pow(2.0, 17.0);
                 DebugMSG("Generating maze of size: " + size);
                 DebugMSG("Saved size it should be: " + Math.Pow((double)size, 2.0) / 1024.0 / 1024.0 / 8.0 + " mb");
-                Maze maze = curalg.Generate(size, size, InnerMapType.BitArreintjeFast, 1337);
+                Maze maze = curalg.Generate(size, size, InnerMapType.BitArreintjeFast, 1337, null);
                 w.Stop();
                 DebugMSG("Generating time: " + w.Elapsed.TotalSeconds);
                 //DebugMSG("Finding path...");
@@ -201,167 +201,167 @@ namespace DeveMazeGeneratorGui
             t.Start();
         }
 
-        private void button6_Click(object sender, EventArgs e)
-        {
-            Task.Run(() =>
-            {
-                Stopwatch w = new Stopwatch();
+        //private void button6_Click(object sender, EventArgs e)
+        //{
+        //    Task.Run(() =>
+        //    {
+        //        Stopwatch w = new Stopwatch();
 
-                ParallelOptions options = new ParallelOptions();
-                //options.MaxDegreeOfParallelism = 8;
-                Algorithm alg;
+        //        ParallelOptions options = new ParallelOptions();
+        //        //options.MaxDegreeOfParallelism = 8;
+        //        Algorithm alg;
 
-                w.Start();
-                alg = new AlgorithmBacktrack();
-                Parallel.For(0, 1000, options, new Action<int>((i) =>
-                {
-                    //if (i % 50 == 0)
-                    //{
-                    //    DebugMSG(i / 10 + "%");
-                    //}
-                    int size = 256;
-                    Maze maze = alg.Generate(size, size, InnerMapType.BitArreintjeFast, i);
-                    //var path = PathFinderDepthFirst.GoFind(new MazePoint(1, 1), new MazePoint(size - 3, size - 3), maze.InnerMap);
-                    //maze.SaveMazeAsBmpWithPath2("mazes\\" + i + ".bmp", path);
-                }));
-                w.Stop();
-                DebugMSG("Time aggressive: " + w.Elapsed.TotalSeconds);
-                w.Reset();
+        //        w.Start();
+        //        alg = new AlgorithmBacktrack();
+        //        Parallel.For(0, 1000, options, new Action<int>((i) =>
+        //        {
+        //            //if (i % 50 == 0)
+        //            //{
+        //            //    DebugMSG(i / 10 + "%");
+        //            //}
+        //            int size = 256;
+        //            Maze maze = alg.Generate(size, size, InnerMapType.BitArreintjeFast, i, null);
+        //            //var path = PathFinderDepthFirst.GoFind(new MazePoint(1, 1), new MazePoint(size - 3, size - 3), maze.InnerMap);
+        //            //maze.SaveMazeAsBmpWithPath2("mazes\\" + i + ".bmp", path);
+        //        }));
+        //        w.Stop();
+        //        DebugMSG("Time aggressive: " + w.Elapsed.TotalSeconds);
+        //        w.Reset();
 
-                w.Start();
-                alg = new AlgorithmBacktrackNoInlining();
-                Parallel.For(0, 1000, options, new Action<int>((i) =>
-                {
-                    //if (i % 50 == 0)
-                    //{
-                    //    DebugMSG(i / 10 + "%");
-                    //}
-                    int size = 256;
-                    Maze maze = alg.Generate(size, size, InnerMapType.BitArreintjeFast, i);
-                    //var path = PathFinderDepthFirst.GoFind(new MazePoint(1, 1), new MazePoint(size - 3, size - 3), maze.InnerMap);
-                    //maze.SaveMazeAsBmpWithPath2("mazes\\" + i + ".bmp", path);
-                }));
-                w.Stop();
-                DebugMSG("Time noinlining: " + w.Elapsed.TotalSeconds);
-            });
-        }
+        //        w.Start();
+        //        alg = new AlgorithmBacktrackNoInlining();
+        //        Parallel.For(0, 1000, options, new Action<int>((i) =>
+        //        {
+        //            //if (i % 50 == 0)
+        //            //{
+        //            //    DebugMSG(i / 10 + "%");
+        //            //}
+        //            int size = 256;
+        //            Maze maze = alg.Generate(size, size, InnerMapType.BitArreintjeFast, i);
+        //            //var path = PathFinderDepthFirst.GoFind(new MazePoint(1, 1), new MazePoint(size - 3, size - 3), maze.InnerMap);
+        //            //maze.SaveMazeAsBmpWithPath2("mazes\\" + i + ".bmp", path);
+        //        }));
+        //        w.Stop();
+        //        DebugMSG("Time noinlining: " + w.Elapsed.TotalSeconds);
+        //    });
+        //}
 
-        private void button7_Click(object sender, EventArgs e)
-        {
-            Task.Run(() =>
-            {
-                Stopwatch w = new Stopwatch();
+        //private void button7_Click(object sender, EventArgs e)
+        //{
+        //    Task.Run(() =>
+        //    {
+        //        Stopwatch w = new Stopwatch();
 
-                ParallelOptions options = new ParallelOptions();
-                //options.MaxDegreeOfParallelism = 8;
-                Algorithm alg;
+        //        ParallelOptions options = new ParallelOptions();
+        //        //options.MaxDegreeOfParallelism = 8;
+        //        Algorithm alg;
 
-                for (int y = 0; y < 100; y++)
-                {
-                    DebugMSG("----------------------");
-                    w.Start();
-                    alg = new AlgorithmBacktrack();
-                    for (int i = 0; i < 1000; i++)
-                    {
-                        //if (i % 50 == 0)
-                        //{
-                        //    DebugMSG(i / 10 + "%");
-                        //}
-                        int size = 256;
-                        Maze maze = alg.Generate(size, size, InnerMapType.BitArreintjeFast, i);
-                        //var path = PathFinderDepthFirst.GoFind(new MazePoint(1, 1), new MazePoint(size - 3, size - 3), maze.InnerMap);
-                        //maze.SaveMazeAsBmpWithPath2("mazes\\" + i + ".bmp", path);
-                    }
-                    w.Stop();
-                    DebugMSG("Time aggressive: " + w.Elapsed.TotalSeconds);
-                    w.Reset();
+        //        for (int y = 0; y < 100; y++)
+        //        {
+        //            DebugMSG("----------------------");
+        //            w.Start();
+        //            alg = new AlgorithmBacktrack();
+        //            for (int i = 0; i < 1000; i++)
+        //            {
+        //                //if (i % 50 == 0)
+        //                //{
+        //                //    DebugMSG(i / 10 + "%");
+        //                //}
+        //                int size = 256;
+        //                Maze maze = alg.Generate(size, size, InnerMapType.BitArreintjeFast, i);
+        //                //var path = PathFinderDepthFirst.GoFind(new MazePoint(1, 1), new MazePoint(size - 3, size - 3), maze.InnerMap);
+        //                //maze.SaveMazeAsBmpWithPath2("mazes\\" + i + ".bmp", path);
+        //            }
+        //            w.Stop();
+        //            DebugMSG("Time aggressive: " + w.Elapsed.TotalSeconds);
+        //            w.Reset();
 
-                    w.Start();
-                    alg = new AlgorithmBacktrackNoInlining();
-                    for (int i = 0; i < 1000; i++)
-                    {
-                        //if (i % 50 == 0)
-                        //{
-                        //    DebugMSG(i / 10 + "%");
-                        //}
-                        int size = 256;
-                        Maze maze = alg.Generate(size, size, InnerMapType.BitArreintjeFast, i);
-                        //var path = PathFinderDepthFirst.GoFind(new MazePoint(1, 1), new MazePoint(size - 3, size - 3), maze.InnerMap);
-                        //maze.SaveMazeAsBmpWithPath2("mazes\\" + i + ".bmp", path);
-                    }
-                    w.Stop();
+        //            w.Start();
+        //            alg = new AlgorithmBacktrackNoInlining();
+        //            for (int i = 0; i < 1000; i++)
+        //            {
+        //                //if (i % 50 == 0)
+        //                //{
+        //                //    DebugMSG(i / 10 + "%");
+        //                //}
+        //                int size = 256;
+        //                Maze maze = alg.Generate(size, size, InnerMapType.BitArreintjeFast, i);
+        //                //var path = PathFinderDepthFirst.GoFind(new MazePoint(1, 1), new MazePoint(size - 3, size - 3), maze.InnerMap);
+        //                //maze.SaveMazeAsBmpWithPath2("mazes\\" + i + ".bmp", path);
+        //            }
+        //            w.Stop();
 
-                    DebugMSG("Time noinlining: " + w.Elapsed.TotalSeconds);
-                    w.Reset();
-                }
-            });
-        }
+        //            DebugMSG("Time noinlining: " + w.Elapsed.TotalSeconds);
+        //            w.Reset();
+        //        }
+        //    });
+        //}
 
-        private void button8_Click(object sender, EventArgs e)
-        {
-            Task.Run(() =>
-            {
-                Stopwatch w = new Stopwatch();
-                int loops = 1000;
+        //private void button8_Click(object sender, EventArgs e)
+        //{
+        //    Task.Run(() =>
+        //    {
+        //        Stopwatch w = new Stopwatch();
+        //        int loops = 1000;
 
-                for (int y = 0; y < 1; y++)
-                {
-                    DebugMSG("----------------------");
-                    AlgorithmBacktrack alg = new AlgorithmBacktrack();
-                    w.Start();
-                    for (int i = 0; i < loops; i++)
-                    {
-                        //if (i % 50 == 0)
-                        //{
-                        //    DebugMSG(i / 10 + "%");
-                        //}
-                        int size = 256;
-                        Maze maze = alg.Generate(size, size, InnerMapType.BitArreintjeFast, i);
-                        //var path = PathFinderDepthFirst.GoFind(new MazePoint(1, 1), new MazePoint(size - 3, size - 3), maze.InnerMap);
-                        //maze.SaveMazeAsBmpWithPath2("mazes\\" + i + ".bmp", path);
-                    }
-                    w.Stop();
-                    DebugMSG("Time AlgorithmBacktrack: " + w.Elapsed.TotalSeconds);
-                    w.Reset();
+        //        for (int y = 0; y < 1; y++)
+        //        {
+        //            DebugMSG("----------------------");
+        //            AlgorithmBacktrack alg = new AlgorithmBacktrack();
+        //            w.Start();
+        //            for (int i = 0; i < loops; i++)
+        //            {
+        //                //if (i % 50 == 0)
+        //                //{
+        //                //    DebugMSG(i / 10 + "%");
+        //                //}
+        //                int size = 256;
+        //                Maze maze = alg.Generate(size, size, InnerMapType.BitArreintjeFast, i);
+        //                //var path = PathFinderDepthFirst.GoFind(new MazePoint(1, 1), new MazePoint(size - 3, size - 3), maze.InnerMap);
+        //                //maze.SaveMazeAsBmpWithPath2("mazes\\" + i + ".bmp", path);
+        //            }
+        //            w.Stop();
+        //            DebugMSG("Time AlgorithmBacktrack: " + w.Elapsed.TotalSeconds);
+        //            w.Reset();
 
-                    AlgorithmBacktrackWithCallback alg2 = new AlgorithmBacktrackWithCallback();
-                    w.Start();
-                    for (int i = 0; i < loops; i++)
-                    {
-                        //if (i % 50 == 0)
-                        //{
-                        //    DebugMSG(i / 10 + "%");
-                        //}
-                        int size = 256;
-                        Maze maze = alg2.SpecialGenerate(size, size, InnerMapType.BitArreintjeFast, i, (xx, yy) => { ChangeEenPixel(xx, yy); });
-                        //var path = PathFinderDepthFirst.GoFind(new MazePoint(1, 1), new MazePoint(size - 3, size - 3), maze.InnerMap);
-                        //maze.SaveMazeAsBmpWithPath2("mazes\\" + i + ".bmp", path);
-                    }
-                    w.Stop();
+        //            AlgorithmBacktrackWithCallback alg2 = new AlgorithmBacktrackWithCallback();
+        //            w.Start();
+        //            for (int i = 0; i < loops; i++)
+        //            {
+        //                //if (i % 50 == 0)
+        //                //{
+        //                //    DebugMSG(i / 10 + "%");
+        //                //}
+        //                int size = 256;
+        //                Maze maze = alg2.SpecialGenerate(size, size, InnerMapType.BitArreintjeFast, i, (xx, yy) => { ChangeEenPixel(xx, yy); });
+        //                //var path = PathFinderDepthFirst.GoFind(new MazePoint(1, 1), new MazePoint(size - 3, size - 3), maze.InnerMap);
+        //                //maze.SaveMazeAsBmpWithPath2("mazes\\" + i + ".bmp", path);
+        //            }
+        //            w.Stop();
 
-                    DebugMSG("Time AlgorithmBacktrackWithCallback: " + w.Elapsed.TotalSeconds);
-                    w.Reset();
+        //            DebugMSG("Time AlgorithmBacktrackWithCallback: " + w.Elapsed.TotalSeconds);
+        //            w.Reset();
 
-                    AlgorithmBacktrackWithCallback alg3 = new AlgorithmBacktrackWithCallback();
-                    w.Start();
-                    for (int i = 0; i < loops; i++)
-                    {
-                        //if (i % 50 == 0)
-                        //{
-                        //    DebugMSG(i / 10 + "%");
-                        //}
-                        int size = 256;
-                        Maze maze = alg3.SpecialGenerate(size, size, InnerMapType.BitArreintjeFast, i, null);
-                        //var path = PathFinderDepthFirst.GoFind(new MazePoint(1, 1), new MazePoint(size - 3, size - 3), maze.InnerMap);
-                        //maze.SaveMazeAsBmpWithPath2("mazes\\" + i + ".bmp", path);
-                    }
-                    w.Stop();
+        //            AlgorithmBacktrackWithCallback alg3 = new AlgorithmBacktrackWithCallback();
+        //            w.Start();
+        //            for (int i = 0; i < loops; i++)
+        //            {
+        //                //if (i % 50 == 0)
+        //                //{
+        //                //    DebugMSG(i / 10 + "%");
+        //                //}
+        //                int size = 256;
+        //                Maze maze = alg3.SpecialGenerate(size, size, InnerMapType.BitArreintjeFast, i, null);
+        //                //var path = PathFinderDepthFirst.GoFind(new MazePoint(1, 1), new MazePoint(size - 3, size - 3), maze.InnerMap);
+        //                //maze.SaveMazeAsBmpWithPath2("mazes\\" + i + ".bmp", path);
+        //            }
+        //            w.Stop();
 
-                    DebugMSG("Time AlgorithmBacktrackWithCallback met nullcallback: " + w.Elapsed.TotalSeconds);
-                    w.Reset();
-                }
-            });
-        }
+        //            DebugMSG("Time AlgorithmBacktrackWithCallback met nullcallback: " + w.Elapsed.TotalSeconds);
+        //            w.Reset();
+        //        }
+        //    });
+        //}
 
         public void ChangeEenPixel(int x, int y)
         {
@@ -386,7 +386,7 @@ namespace DeveMazeGeneratorGui
                         //    DebugMSG(i / 10 + "%");
                         //}
                         int size = 256;
-                        Maze maze = alg.Generate(size, size, InnerMapType.BitArreintjeFast, i);
+                        Maze maze = alg.Generate(size, size, InnerMapType.BitArreintjeFast, i, null);
                         //var path = PathFinderDepthFirst.GoFind(new MazePoint(1, 1), new MazePoint(size - 3, size - 3), maze.InnerMap);
                         //maze.SaveMazeAsBmpWithPath2("mazes\\" + i + ".bmp", path);
                     }
@@ -403,7 +403,7 @@ namespace DeveMazeGeneratorGui
                         //    DebugMSG(i / 10 + "%");
                         //}
                         int size = 256;
-                        Maze maze = alg2.Generate(size, size, InnerMapType.BitArreintjeFast, i);
+                        Maze maze = alg2.Generate(size, size, InnerMapType.BitArreintjeFast, i, null);
                         //var path = PathFinderDepthFirst.GoFind(new MazePoint(1, 1), new MazePoint(size - 3, size - 3), maze.InnerMap);
                         //maze.SaveMazeAsBmpWithPath2("mazes\\" + i + ".bmp", path);
                     }
@@ -422,7 +422,7 @@ namespace DeveMazeGeneratorGui
                 Stopwatch w = new Stopwatch();
                 AlgorithmBacktrack algje = new AlgorithmBacktrack();
                 w.Start();
-                algje.Generate(20000, 20000, InnerMapType.BitArreintjeFast);
+                algje.Generate(20000, 20000, InnerMapType.BitArreintjeFast, null);
                 w.Stop();
                 DebugMSG("Seconds it took: " + w.Elapsed.TotalSeconds);
             });
@@ -446,7 +446,7 @@ namespace DeveMazeGeneratorGui
 
                 int width = 16;
                 int height = 16;
-                Maze maze = back.Generate(width, height, InnerMapType.BitArreintjeFast);
+                Maze maze = back.Generate(width, height, InnerMapType.BitArreintjeFast, null);
                 var path = PathFinderDepthFirst.GoFind(new MazePoint(1, 1), new MazePoint(width - 3, height - 3), maze.InnerMap);
                 maze.SaveMazeAsImage("mazePath.bmp", ImageFormat.Bmp, path, MazeSaveType.ColorDepth4Bits);
                 maze.SaveMazeAsImage("maze1.bmp", ImageFormat.Bmp);
@@ -479,7 +479,7 @@ namespace DeveMazeGeneratorGui
 
             AlgorithmBacktrack back = new AlgorithmBacktrack();
             DebugMSG("Generating maze of type: " + type + " of size: " + size);
-            Maze maze = back.Generate(size, size, type);
+            Maze maze = back.Generate(size, size, type, null);
             //var path = PathFinderDepthFirst.GoFind(new MazePoint(1, 1), new MazePoint(size - 3, size - 3), maze.InnerMap);
             //maze.SaveMazeAsBmpWithPath4bpp("maze.bmp", path);
             DebugMSG("Ok done, time: " + w.Elapsed.TotalSeconds);
@@ -548,7 +548,7 @@ namespace DeveMazeGeneratorGui
                     }
                     else
                     {
-                        Maze m = alg.Generate(size, size, InnerMapType.BitArreintjeFast, i);
+                        Maze m = alg.Generate(size, size, InnerMapType.BitArreintjeFast, i, null);
                         var path = PathFinderDepthFirst.GoFind(m.InnerMap);
 
                         DebugMSG("Weer een maze done, path length: " + path.Count);
@@ -623,7 +623,7 @@ namespace DeveMazeGeneratorGui
                     }
                     else
                     {
-                        Maze m = alg.Generate(size, size, InnerMapType.BitArreintjeFast, i);
+                        Maze m = alg.Generate(size, size, InnerMapType.BitArreintjeFast, i, null);
                         var path = PathFinderDepthFirst.GoFind(m.InnerMap);
 
                         if (path.Count < curLongest)
@@ -674,7 +674,7 @@ namespace DeveMazeGeneratorGui
                 int height = 1024 * 1;
 
                 DebugMSG("Generating maze of size: " + width + " * " + height);
-                Maze maze = back.Generate(width, height, InnerMapType.BitArrayMappedOnHardDisk);
+                Maze maze = back.Generate(width, height, InnerMapType.BitArrayMappedOnHardDisk, null);
 
                 DebugMSG("Generating done :)");
 
@@ -750,7 +750,7 @@ namespace DeveMazeGeneratorGui
                 int height = 1024 * 8;
 
                 DebugMSG("Generating maze of size: " + width + " * " + height);
-                Maze maze = back.Generate(width, height, InnerMapType.BitArreintjeFast);
+                Maze maze = back.Generate(width, height, InnerMapType.BitArreintjeFast, null);
 
                 DebugMSG("Generating done");
 
@@ -818,7 +818,7 @@ namespace DeveMazeGeneratorGui
 
                 g.FillRectangle(Brushes.Black, 0, 0, width + 1, height + 1);
 
-                Maze m = new AlgorithmBacktrackWithCallback().SpecialGenerate(width, height, InnerMapType.BitArreintjeFast, r.Next(), new Action<int, int>((x, y) =>
+                Maze m = new AlgorithmBacktrack().Generate(width, height, InnerMapType.BitArreintjeFast, r.Next(), new Action<int, int>((x, y) =>
                 {
 
                     g.FillRectangle(Brushes.White, x, y, 1, 1);
@@ -833,7 +833,7 @@ namespace DeveMazeGeneratorGui
             {
                 int size = 2048 * 2;
                 DebugMSG("Generating...");
-                Maze m = new AlgorithmBacktrack().Generate(size, size, InnerMapType.BitArreintjeFast);
+                Maze m = new AlgorithmBacktrack().Generate(size, size, InnerMapType.BitArreintjeFast, null);
                 var path = PathFinderDepthFirst.GoFind(m.InnerMap);
 
                 DebugMSG("Saving...");
