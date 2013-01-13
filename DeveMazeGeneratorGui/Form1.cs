@@ -22,11 +22,14 @@ namespace DeveMazeGeneratorGui
         private Boolean forceesStoppenEnzo = false;
         private Random r = new Random();
 
+        private int curDelay;
+
         public Form1()
         {
             InitializeComponent();
             comboBox1.SelectedIndex = 1;
             comboBox2.SelectedIndex = 0;
+            curDelay = int.Parse(comboBox2.SelectedItem.ToString());
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -797,7 +800,7 @@ namespace DeveMazeGeneratorGui
                 });
 
 
-                PathFinderDepthFirst.GoFind(m.InnerMap, (x, y, pathThing) =>
+                var path = PathFinderDepthFirst.GoFind(m.InnerMap, (x, y, pathThing) =>
                 {
                     if (pathThing)
                     {
@@ -809,6 +812,11 @@ namespace DeveMazeGeneratorGui
                     }
 
                 });
+
+                foreach (var pathnode in path)
+                {
+                    g.FillRectangle(Brushes.Red, pathnode.X * 1, pathnode.Y * 1, 1, 1);
+                }
             });
         }
 
@@ -865,62 +873,82 @@ namespace DeveMazeGeneratorGui
 
             Task.Run(() =>
             {
-                var g = panel1.CreateGraphics();
-
-                int sizemodifier = 1;
-                int delay = 0;
-
-                this.Invoke(new Action(() =>
-                {
-                    sizemodifier = int.Parse(comboBox1.SelectedItem.ToString());
-                    delay = int.Parse(comboBox2.SelectedItem.ToString());
-                }));
-
-                int width = panel1.Width;
-                int height = panel1.Height;
-
-                int mazeWidth = width / sizemodifier / 2 * 2;
-                int mazeHeight = height / sizemodifier / 2 * 2;
-
-                //int width = 100;
-                //int height = 150;
-
-                g.FillRectangle(Brushes.Black, 0, 0, width + 1, height + 1);
-
-                Maze m = new AlgorithmBacktrack().Generate(mazeWidth, mazeHeight, InnerMapType.BitArreintjeFast, r.Next(), (x, y) =>
-                {
-                    this.Invoke(new Action(() =>
-                    {
-                        delay = int.Parse(comboBox2.SelectedItem.ToString());
-                    }));
-                    Thread.Sleep(delay);
-
-                    g.FillRectangle(Brushes.White, x * sizemodifier, y * sizemodifier, sizemodifier, sizemodifier);
-
-                    //Thread.Sleep(200);
-                });
-
-
-                PathFinderDepthFirst.GoFind(m.InnerMap, (x, y, pathThing) =>
-                {
-                    this.Invoke(new Action(() =>
-                    {
-                        delay = int.Parse(comboBox2.SelectedItem.ToString());
-                    }));
-                    Thread.Sleep(delay);
-
-                    if (pathThing)
-                    {
-                        g.FillRectangle(Brushes.Green, x * sizemodifier, y * sizemodifier, sizemodifier, sizemodifier);
-                    }
-                    else
-                    {
-                        g.FillRectangle(Brushes.Gray, x * sizemodifier, y * sizemodifier, sizemodifier, sizemodifier);
-                    }
-
-                });
+                GenerateMazeInPanel1();
             });
 
+        }
+
+        private void GenerateMazeInPanel1()
+        {
+            var g = panel1.CreateGraphics();
+
+            int sizemodifier = 1;
+
+            this.Invoke(new Action(() =>
+            {
+                sizemodifier = int.Parse(comboBox1.SelectedItem.ToString());
+            }));
+
+            int width = panel1.Width;
+            int height = panel1.Height;
+
+            int mazeWidth = width / sizemodifier / 2 * 2;
+            int mazeHeight = height / sizemodifier / 2 * 2;
+
+            //int width = 100;
+            //int height = 150;
+
+            g.FillRectangle(Brushes.Black, 0, 0, width + 1, height + 1);
+
+            Maze m = new AlgorithmBacktrack().Generate(mazeWidth, mazeHeight, InnerMapType.BitArreintjeFast, r.Next(), (x, y) =>
+            {
+     
+                Thread.Sleep(curDelay);
+
+                g.FillRectangle(Brushes.White, x * sizemodifier, y * sizemodifier, sizemodifier, sizemodifier);
+
+                //Thread.Sleep(200);
+            });
+
+
+            var path = PathFinderDepthFirst.GoFind(m.InnerMap, (x, y, pathThing) =>
+            {
+   
+                Thread.Sleep(curDelay);
+
+                if (pathThing)
+                {
+                    g.FillRectangle(Brushes.Green, x * sizemodifier, y * sizemodifier, sizemodifier, sizemodifier);
+                }
+                else
+                {
+                    g.FillRectangle(Brushes.Gray, x * sizemodifier, y * sizemodifier, sizemodifier, sizemodifier);
+                }
+
+            });
+
+            foreach (var pathnode in path)
+            {
+                g.FillRectangle(Brushes.Red, pathnode.X * sizemodifier, pathnode.Y * sizemodifier, sizemodifier, sizemodifier);
+            }
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            Task.Run(() =>
+              {
+                  while (true)
+                  {
+
+                      GenerateMazeInPanel1();
+
+                  }
+              });
+        }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            curDelay = int.Parse(comboBox2.SelectedItem.ToString());
         }
     }
 
