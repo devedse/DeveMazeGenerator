@@ -14,13 +14,32 @@ namespace DeveMazeGenerator
     {
         private static Random r = new Random();
 
-        public static List<MazePoint> GoFind(InnerMap map)
+        /// <summary>
+        /// Finds the path between the start and the endpoint in a maze
+        /// </summary>
+        /// <param name="map">The maze.InnerMap</param>
+        /// <param name="callBack"></param>
+        /// <returns></returns>
+        public static List<MazePoint> GoFind(InnerMap map, Action<int, int, Boolean> callBack)
         {
-            return GoFind(new MazePoint(1, 1), new MazePoint(map.Length - 3, map[0].Length - 3), map);
+            return GoFind(new MazePoint(1, 1), new MazePoint(map[0].Length - 3, map.Length - 3), map, callBack);
         }
 
-        public static List<MazePoint> GoFind(MazePoint start, MazePoint end, InnerMap map)
+        /// <summary>
+        /// Finds the path between the start and the endpoint in a maze
+        /// </summary>
+        /// <param name="start">The start point</param>
+        /// <param name="end">The end point</param>
+        /// <param name="map">The maze.InnerMap</param>
+        /// <param name="callBack">The callback that can be used to see what the pathfinder is doing (or null), the boolean true = a new path find thingy or false when it determined that path is not correct</param>
+        /// <returns></returns>
+        public static List<MazePoint> GoFind(MazePoint start, MazePoint end, InnerMap map, Action<int, int, Boolean> callBack)
         {
+            if (callBack == null)
+            {
+                callBack = (x, y, z) => { };
+            }
+
             //Swap them so we don't have to reverse at the end ;)
             MazePoint temp = start;
             start = end;
@@ -57,6 +76,7 @@ namespace DeveMazeGenerator
                 Stack<MazePoint> stackje = new Stack<MazePoint>();
                 stackje.Push(start);
                 visited[start.X][start.Y] = true;
+                callBack.Invoke(start.X, start.Y, true);
                 //form.pixelDraw(x, y, Brushes.White);
                 while (stackje.Count != 0)
                 {
@@ -65,9 +85,11 @@ namespace DeveMazeGenerator
                     int x = cur.X;
                     int y = cur.Y;
 
+                    callBack.Invoke(x, y, true);
 
                     if (end.X == x && end.Y == y)
                     {
+                        callBack.Invoke(x, y, true);
                         break;
                     }
 
@@ -121,6 +143,7 @@ namespace DeveMazeGenerator
                     }
                     else
                     {
+                        callBack.Invoke(x, y, false);
                         stackje.Pop();
                     }
 

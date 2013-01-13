@@ -43,7 +43,7 @@ namespace DeveMazeGeneratorGui
                 DebugMSG("Finding path...");
                 w.Reset();
                 w.Start();
-                var path = PathFinderDepthFirst.GoFind(new MazePoint(1, 1), new MazePoint(size - 3, size - 3), maze.InnerMap);
+                var path = PathFinderDepthFirst.GoFind(new MazePoint(1, 1), new MazePoint(size - 3, size - 3), maze.InnerMap, null);
                 w.Stop();
                 DebugMSG("Time it took to find path: " + w.Elapsed.TotalSeconds);
 
@@ -127,7 +127,7 @@ namespace DeveMazeGeneratorGui
                         }
                         int size = 1024;
                         Maze maze = alg.Generate(size, size, InnerMapType.BitArreintjeFast, i, null);
-                        var path = PathFinderDepthFirst.GoFind(new MazePoint(1, 1), new MazePoint(size - 3, size - 3), maze.InnerMap);
+                        var path = PathFinderDepthFirst.GoFind(new MazePoint(1, 1), new MazePoint(size - 3, size - 3), maze.InnerMap, null);
                         maze.SaveMazeAsImage("bigmazes\\" + i + ".bmp", ImageFormat.Bmp, path, MazeSaveType.ColorDepth4Bits);
                     }));
 
@@ -156,7 +156,7 @@ namespace DeveMazeGeneratorGui
                     }
                     int size = 256;
                     Maze maze = alg.Generate(size, size, InnerMapType.BitArreintjeFast, i, null);
-                    var path = PathFinderDepthFirst.GoFind(new MazePoint(1, 1), new MazePoint(size - 3, size - 3), maze.InnerMap);
+                    var path = PathFinderDepthFirst.GoFind(new MazePoint(1, 1), new MazePoint(size - 3, size - 3), maze.InnerMap, null);
                     maze.SaveMazeAsImage("mazes\\" + i + ".bmp", ImageFormat.Bmp, path, MazeSaveType.ColorDepth4Bits);
                 };
 
@@ -447,7 +447,7 @@ namespace DeveMazeGeneratorGui
                 int width = 16;
                 int height = 16;
                 Maze maze = back.Generate(width, height, InnerMapType.BitArreintjeFast, null);
-                var path = PathFinderDepthFirst.GoFind(new MazePoint(1, 1), new MazePoint(width - 3, height - 3), maze.InnerMap);
+                var path = PathFinderDepthFirst.GoFind(new MazePoint(1, 1), new MazePoint(width - 3, height - 3), maze.InnerMap, null);
                 maze.SaveMazeAsImage("mazePath.bmp", ImageFormat.Bmp, path, MazeSaveType.ColorDepth4Bits);
                 maze.SaveMazeAsImage("maze1.bmp", ImageFormat.Bmp);
 
@@ -549,7 +549,7 @@ namespace DeveMazeGeneratorGui
                     else
                     {
                         Maze m = alg.Generate(size, size, InnerMapType.BitArreintjeFast, i, null);
-                        var path = PathFinderDepthFirst.GoFind(m.InnerMap);
+                        var path = PathFinderDepthFirst.GoFind(m.InnerMap, null);
 
                         DebugMSG("Weer een maze done, path length: " + path.Count);
 
@@ -624,7 +624,7 @@ namespace DeveMazeGeneratorGui
                     else
                     {
                         Maze m = alg.Generate(size, size, InnerMapType.BitArreintjeFast, i, null);
-                        var path = PathFinderDepthFirst.GoFind(m.InnerMap);
+                        var path = PathFinderDepthFirst.GoFind(m.InnerMap, null);
 
                         if (path.Count < curLongest)
                         {
@@ -701,7 +701,7 @@ namespace DeveMazeGeneratorGui
 
                 DebugMSG("Done saving, creating path for this maze...");
 
-                var path = PathFinderDepthFirst.GoFind(new MazePoint(1, 1), new MazePoint(width - 3, height - 3), loadedfromwall.InnerMap);
+                var path = PathFinderDepthFirst.GoFind(new MazePoint(1, 1), new MazePoint(width - 3, height - 3), loadedfromwall.InnerMap, null);
 
                 DebugMSG("Pathfinding done, saving this maze + path...");
 
@@ -818,12 +818,18 @@ namespace DeveMazeGeneratorGui
 
                 g.FillRectangle(Brushes.Black, 0, 0, width + 1, height + 1);
 
-                Maze m = new AlgorithmBacktrack().Generate(width, height, InnerMapType.BitArreintjeFast, r.Next(), new Action<int, int>((x, y) =>
+                Maze m = new AlgorithmBacktrack().Generate(width, height, InnerMapType.BitArreintjeFast, r.Next(), (x, y) =>
                 {
 
                     g.FillRectangle(Brushes.White, x, y, 1, 1);
                     //Thread.Sleep(200);
-                }));
+                });
+
+
+                PathFinderDepthFirst.GoFind(m.InnerMap, (x, y, pathThing) =>
+                {
+
+                });
             });
         }
 
@@ -834,7 +840,7 @@ namespace DeveMazeGeneratorGui
                 int size = 2048 * 2;
                 DebugMSG("Generating...");
                 Maze m = new AlgorithmBacktrack().Generate(size, size, InnerMapType.BitArreintjeFast, null);
-                var path = PathFinderDepthFirst.GoFind(m.InnerMap);
+                var path = PathFinderDepthFirst.GoFind(m.InnerMap, null);
 
                 DebugMSG("Saving...");
                 DebugMSG("0/4");
