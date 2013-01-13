@@ -15,6 +15,7 @@ namespace DeveMazeGenerator.InnerMaps
         private long totalLength;
 
         public BitArrayMappedOnHardDiskInnerMap(int width, int height)
+            : base(width, height)
         {
             totalLength = (long)width * (long)height;
             inthdarray = new IntHDArray(totalLength / 8 + 1);

@@ -9,6 +9,26 @@ namespace DeveMazeGenerator.InnerMaps
 {
     public abstract class InnerMap
     {
+        private int width;
+
+        public int Width
+        {
+            get { return width; }
+        }
+        private int height;
+
+        public int Height
+        {
+            get { return height; }
+        }
+
+
+        public InnerMap(int width, int height)
+        {
+            this.width = width;
+            this.height = height;
+        }
+
         //virtual can be overidden
         public virtual void Print()
         {

@@ -10,6 +10,7 @@ namespace DeveMazeGenerator.InnerMaps
     class BooleanInnerMap : InnerMap
     {
         public BooleanInnerMap(int width, int height)
+            : base(width, height)
         {
             innerData = new InnerMapArray[width];
             for (int i = 0; i < width; i++)
