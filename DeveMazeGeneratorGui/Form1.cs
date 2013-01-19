@@ -138,7 +138,7 @@ namespace DeveMazeGeneratorGui
 
         private void button5_Click(object sender, EventArgs e)
         {
-            Task t = new Task(new Action(() =>
+            Task.Run(new Action(() =>
             {
                 Algorithm curalg = new AlgorithmBacktrack();
                 Stopwatch w = new Stopwatch();
@@ -168,8 +168,6 @@ namespace DeveMazeGeneratorGui
                 maze = null;
                 GC.Collect();
             }));
-
-            t.Start();
         }
 
         //private void button6_Click(object sender, EventArgs e)
@@ -902,7 +900,7 @@ namespace DeveMazeGeneratorGui
 
             Maze m = new AlgorithmBacktrack().Generate(mazeWidth, mazeHeight, InnerMapType.BitArreintjeFast, r.Next(), (x, y) =>
             {
-     
+
                 Thread.Sleep(curDelay);
 
                 g.FillRectangle(Brushes.White, x * sizemodifier, y * sizemodifier, sizemodifier, sizemodifier);
@@ -913,7 +911,7 @@ namespace DeveMazeGeneratorGui
 
             var path = PathFinderDepthFirst.GoFind(m.InnerMap, (x, y, pathThing) =>
             {
-   
+
                 Thread.Sleep(curDelay);
 
                 if (pathThing)
@@ -949,6 +947,41 @@ namespace DeveMazeGeneratorGui
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
         {
             curDelay = int.Parse(comboBox2.SelectedItem.ToString());
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            Task.Run(new Action(() =>
+            {
+                Algorithm curalg = new AlgorithmBacktrack();
+                Stopwatch w = new Stopwatch();
+                w.Start();
+                int size = (int)Math.Pow(2.0, 17.0);
+                DebugMSG("Generating maze of size: " + size);
+                DebugMSG("Saved size it should be: " + Math.Pow((double)size, 2.0) / 1024.0 / 1024.0 / 8.0 + " mb");
+                DebugMSG("Or in GB: " + Math.Pow((double)size, 2.0) / 1024.0 / 1024.0 / 1024.0 / 8.0 + " gb");
+                Maze maze = curalg.Generate(size, size, InnerMapType.BitArreintjeFast, 1337, null);
+                w.Stop();
+                DebugMSG("Generating time: " + w.Elapsed.TotalSeconds);
+                //DebugMSG("Finding path...");
+                //w.Reset();
+                //w.Start();
+                //var path = PathfinderDepthFirst.GoFind(new MazePoint(1, 1), new MazePoint(size - 3, size - 3), maze.InnerMap);
+                //w.Stop();
+                //DebugMSG("Time it took to find path: " + w.Elapsed.TotalSeconds);
+
+                //GC.Collect();
+
+                //DebugMSG("Saving...");
+                //w.Reset();
+                //w.Start();
+
+                //maze.SaveMazeAsImage("bigmazeetc.bmp", ImageFormat.Bmp);
+                //DebugMSG("Done saving, saving time: " + w.Elapsed.TotalSeconds);
+                //DebugMSG("Location: " + System.IO.Directory.GetCurrentDirectory());
+                //maze = null;
+                //GC.Collect();
+            }));
         }
     }
 
