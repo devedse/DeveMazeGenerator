@@ -9,13 +9,13 @@ using DeveMazeGenerator.InnerMaps;
 
 namespace DeveMazeGenerator.Generators
 {
-    public class AlgorithmBacktrack : Algorithm
+    public class AlgorithmBacktrackTest
     {
-        public Maze Generate(int width, int height, InnerMapType innerMapType, Action<int, int> pixelChangedCallback)
+        public Maze Generate(int width, int height, InnerMapType innerMapType, Action<int, int, long, long> pixelChangedCallback)
         {
             if (pixelChangedCallback == null)
             {
-                pixelChangedCallback = (x, y) => { };
+                pixelChangedCallback = (x, y, z, u) => { };
             }
 
             Maze maze = new Maze(width, height, innerMapType);
@@ -24,11 +24,11 @@ namespace DeveMazeGenerator.Generators
 
         }
 
-        public Maze Generate(int width, int height, InnerMapType innerMapType, int seed, Action<int, int> pixelChangedCallback)
+        public Maze Generate(int width, int height, InnerMapType innerMapType, int seed, Action<int, int, long, long> pixelChangedCallback)
         {
             if (pixelChangedCallback == null)
             {
-                pixelChangedCallback = (x, y) => { };
+                pixelChangedCallback = (x, y, z, u) => { };
             }
 
             Maze maze = new Maze(width, height, innerMapType);
@@ -49,8 +49,10 @@ namespace DeveMazeGenerator.Generators
         }
 
 
-        private void GoGenerate(InnerMap map, Maze maze, Random r, Action<int, int> pixelChangedCallback)
+        private void GoGenerate(InnerMap map, Maze maze, Random r, Action<int, int, long, long> pixelChangedCallback)
         {
+            long totSteps = (((long)maze.Width - 1L) / 2L) * (((long)maze.Height - 1L) / 2L);
+            long currentStep = 0;
 
             int x = 1;
             int y = 1;
@@ -58,7 +60,7 @@ namespace DeveMazeGenerator.Generators
             Stack<MazePoint> stackje = new Stack<MazePoint>();
             stackje.Push(new MazePoint(x, y));
             map[x][y] = true;
-            pixelChangedCallback.Invoke(x, y);
+            pixelChangedCallback.Invoke(x, y, currentStep, totSteps);
 
             MazePoint[] targets = new MazePoint[4];
 
@@ -104,33 +106,33 @@ namespace DeveMazeGenerator.Generators
                     stackje.Push(target);
                     map[target.X][target.Y] = true;
 
-
+                    currentStep++;
 
                     if (target.X < x)
                     {
                         map[x - 1][y] = true;
-                        pixelChangedCallback.Invoke(x - 1, y);
+                        pixelChangedCallback.Invoke(x - 1, y, currentStep, totSteps);
                         //form.drawPixel(x - 1, y, brushThisUses);
                     }
                     else if (target.X > x)
                     {
                         map[x + 1][y] = true;
-                        pixelChangedCallback.Invoke(x + 1, y);
+                        pixelChangedCallback.Invoke(x + 1, y, currentStep, totSteps);
                         //form.drawPixel(x + 1, y, brushThisUses);
                     }
                     else if (target.Y < y)
                     {
                         map[x][y - 1] = true;
-                        pixelChangedCallback.Invoke(x, y - 1);
+                        pixelChangedCallback.Invoke(x, y - 1, currentStep, totSteps);
                         //form.drawPixel(x, y - 1, brushThisUses);
                     }
                     else if (target.Y > y)
                     {
                         map[x][y + 1] = true;
-                        pixelChangedCallback.Invoke(x, y + 1);
+                        pixelChangedCallback.Invoke(x, y + 1, currentStep, totSteps);
                         //form.drawPixel(x, y + 1, brushThisUses);
                     }
-                    pixelChangedCallback.Invoke(target.X, target.Y);
+                    pixelChangedCallback.Invoke(target.X, target.Y, currentStep, totSteps);
                     //form.drawPixel(target.X, target.Y, brushThisUses);
                 }
                 else

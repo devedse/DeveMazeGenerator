@@ -65,6 +65,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Generators\AlgorithmBacktrackTest.cs" />
     <Compile Include="InnerMaps\BitArrayMappedOnHardDiskInnerMap.cs" />
     <Compile Include="InnerMaps\BitArrayMappedOnHardDiskInnerMapArray.cs" />
     <Compile Include="InnerMaps\BitArreintjeFastInnerMap.cs" />

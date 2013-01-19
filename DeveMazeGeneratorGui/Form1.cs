@@ -953,34 +953,32 @@ namespace DeveMazeGeneratorGui
         {
             Task.Run(new Action(() =>
             {
-                Algorithm curalg = new AlgorithmBacktrack();
+                AlgorithmBacktrack curalg = new AlgorithmBacktrack();
                 Stopwatch w = new Stopwatch();
                 w.Start();
-                int size = (int)Math.Pow(2.0, 17.0);
+                int size = (int)Math.Pow(2.0, 15.0);
                 DebugMSG("Generating maze of size: " + size);
                 DebugMSG("Saved size it should be: " + Math.Pow((double)size, 2.0) / 1024.0 / 1024.0 / 8.0 + " mb");
                 DebugMSG("Or in GB: " + Math.Pow((double)size, 2.0) / 1024.0 / 1024.0 / 1024.0 / 8.0 + " gb");
-                Maze maze = curalg.Generate(size, size, InnerMapType.BitArreintjeFast, 1337, null);
+                Maze maze = curalg.Generate(size, size, InnerMapType.BitArreintjeFast, 1337, new Action<int, int>((x, y) =>
+                {
+
+                }));
                 w.Stop();
                 DebugMSG("Generating time: " + w.Elapsed.TotalSeconds);
-                //DebugMSG("Finding path...");
-                //w.Reset();
-                //w.Start();
-                //var path = PathfinderDepthFirst.GoFind(new MazePoint(1, 1), new MazePoint(size - 3, size - 3), maze.InnerMap);
-                //w.Stop();
-                //DebugMSG("Time it took to find path: " + w.Elapsed.TotalSeconds);
 
-                //GC.Collect();
+                AlgorithmBacktrackTest curalgtest = new AlgorithmBacktrackTest();
+                w.Reset();
+                w.Start();
+                DebugMSG("Generating maze of size test: " + size);
+                DebugMSG("Saved size it should be test: " + Math.Pow((double)size, 2.0) / 1024.0 / 1024.0 / 8.0 + " mb");
+                DebugMSG("Or in GB test: " + Math.Pow((double)size, 2.0) / 1024.0 / 1024.0 / 1024.0 / 8.0 + " gb");
+                Maze mazetest = curalgtest.Generate(size, size, InnerMapType.BitArreintjeFast, 1337, new Action<int, int, long, long>((x, y, cur, tot) =>
+                {
 
-                //DebugMSG("Saving...");
-                //w.Reset();
-                //w.Start();
-
-                //maze.SaveMazeAsImage("bigmazeetc.bmp", ImageFormat.Bmp);
-                //DebugMSG("Done saving, saving time: " + w.Elapsed.TotalSeconds);
-                //DebugMSG("Location: " + System.IO.Directory.GetCurrentDirectory());
-                //maze = null;
-                //GC.Collect();
+                }));
+                w.Stop();
+                DebugMSG("Generating time: " + w.Elapsed.TotalSeconds);
             }));
         }
     }
