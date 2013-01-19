@@ -24,6 +24,9 @@ namespace DeveMazeGeneratorGui
 
         private int curDelay;
 
+        private long totalStepsToCalcPercentage = 100;
+        private long currentStepsToCalcPercentage = 0;
+
         public Form1()
         {
             InitializeComponent();
@@ -388,6 +391,7 @@ namespace DeveMazeGeneratorGui
         {
             Task.Run(() =>
             {
+                DebugMSG("Generating...");
                 Stopwatch w = new Stopwatch();
                 AlgorithmBacktrack algje = new AlgorithmBacktrack();
                 w.Start();
@@ -488,7 +492,7 @@ namespace DeveMazeGeneratorGui
                 object lockertje = new object();
                 int curLongest = 0;
                 Maze curLongestMaze = null;
-                List<MazePoint> pathshortest = null;
+                List<MazePoint> pathlongest = null;
 
                 Directory.CreateDirectory("longestpath");
 
@@ -531,8 +535,8 @@ namespace DeveMazeGeneratorGui
                                     DebugMSG("New longest maze found, length: " + path.Count);
                                     curLongest = path.Count;
                                     curLongestMaze = m;
-                                    pathshortest = path;
-                                    //m.SaveMazeAsBmpWithPath2("longestpath\\" + path.Count.ToString() + ".bmp", path);
+                                    pathlongest = path;
+                                    m.SaveMazeAsImage("longestpath\\" + path.Count.ToString() + ".bmp", ImageFormat.Bmp, path, MazeSaveType.ColorDepth4Bits);
                                 }
                             }
 
@@ -790,9 +794,10 @@ namespace DeveMazeGeneratorGui
 
                 g.FillRectangle(Brushes.Black, 0, 0, width + 1, height + 1);
 
-                Maze m = new AlgorithmBacktrack().Generate(width, height, InnerMapType.BitArreintjeFast, r.Next(), (x, y) =>
+                Maze m = new AlgorithmBacktrack().Generate(width, height, InnerMapType.BitArreintjeFast, r.Next(), (x, y, cur, tot) =>
                 {
-
+                    currentStepsToCalcPercentage = cur;
+                    totalStepsToCalcPercentage = tot;
                     g.FillRectangle(Brushes.White, x, y, 1, 1);
                     //Thread.Sleep(200);
                 });
@@ -898,12 +903,15 @@ namespace DeveMazeGeneratorGui
 
             g.FillRectangle(Brushes.Black, 0, 0, width + 1, height + 1);
 
-            Maze m = new AlgorithmBacktrack().Generate(mazeWidth, mazeHeight, InnerMapType.BitArreintjeFast, r.Next(), (x, y) =>
+            Maze m = new AlgorithmBacktrack().Generate(mazeWidth, mazeHeight, InnerMapType.BitArreintjeFast, r.Next(), (x, y, cur, tot) =>
             {
 
                 Thread.Sleep(curDelay);
 
                 g.FillRectangle(Brushes.White, x * sizemodifier, y * sizemodifier, sizemodifier, sizemodifier);
+
+                this.currentStepsToCalcPercentage = cur;
+                this.totalStepsToCalcPercentage = tot;
 
                 //Thread.Sleep(200);
             });
@@ -960,26 +968,21 @@ namespace DeveMazeGeneratorGui
                 DebugMSG("Generating maze of size: " + size);
                 DebugMSG("Saved size it should be: " + Math.Pow((double)size, 2.0) / 1024.0 / 1024.0 / 8.0 + " mb");
                 DebugMSG("Or in GB: " + Math.Pow((double)size, 2.0) / 1024.0 / 1024.0 / 1024.0 / 8.0 + " gb");
-                Maze maze = curalg.Generate(size, size, InnerMapType.BitArreintjeFast, 1337, new Action<int, int>((x, y) =>
+                Maze maze = curalg.Generate(size, size, InnerMapType.BitArreintjeFast, 1337, (x, y, cur, tot) =>
                 {
-
-                }));
+                    currentStepsToCalcPercentage = cur;
+                    totalStepsToCalcPercentage = tot;
+                });
                 w.Stop();
                 DebugMSG("Generating time: " + w.Elapsed.TotalSeconds);
 
-                AlgorithmBacktrackTest curalgtest = new AlgorithmBacktrackTest();
-                w.Reset();
-                w.Start();
-                DebugMSG("Generating maze of size test: " + size);
-                DebugMSG("Saved size it should be test: " + Math.Pow((double)size, 2.0) / 1024.0 / 1024.0 / 8.0 + " mb");
-                DebugMSG("Or in GB test: " + Math.Pow((double)size, 2.0) / 1024.0 / 1024.0 / 1024.0 / 8.0 + " gb");
-                Maze mazetest = curalgtest.Generate(size, size, InnerMapType.BitArreintjeFast, 1337, new Action<int, int, long, long>((x, y, cur, tot) =>
-                {
-
-                }));
-                w.Stop();
-                DebugMSG("Generating time: " + w.Elapsed.TotalSeconds);
             }));
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            double percentage = (double)currentStepsToCalcPercentage / (double)totalStepsToCalcPercentage * 100.0;
+            label5.Text = Math.Round(percentage, 2).ToString();
         }
     }
 

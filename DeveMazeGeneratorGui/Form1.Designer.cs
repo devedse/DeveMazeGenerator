@@ -29,6 +29,7 @@ namespace DeveMazeGeneratorGui
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.button1 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
@@ -57,6 +58,9 @@ namespace DeveMazeGeneratorGui
             this.label3 = new System.Windows.Forms.Label();
             this.button6 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.label4 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // button1
@@ -95,7 +99,7 @@ namespace DeveMazeGeneratorGui
             // button5
             // 
             this.button5.Location = new System.Drawing.Point(444, 252);
-            this.button5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button5.Margin = new System.Windows.Forms.Padding(4);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(128, 89);
             this.button5.TabIndex = 4;
@@ -117,7 +121,7 @@ namespace DeveMazeGeneratorGui
             // button10
             // 
             this.button10.Location = new System.Drawing.Point(195, 410);
-            this.button10.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button10.Margin = new System.Windows.Forms.Padding(4);
             this.button10.Name = "button10";
             this.button10.Size = new System.Drawing.Size(188, 50);
             this.button10.TabIndex = 9;
@@ -130,7 +134,7 @@ namespace DeveMazeGeneratorGui
             this.listBox1.FormattingEnabled = true;
             this.listBox1.ItemHeight = 16;
             this.listBox1.Location = new System.Drawing.Point(420, 529);
-            this.listBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.listBox1.Margin = new System.Windows.Forms.Padding(4);
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(641, 212);
             this.listBox1.TabIndex = 10;
@@ -138,7 +142,7 @@ namespace DeveMazeGeneratorGui
             // button11
             // 
             this.button11.Location = new System.Drawing.Point(17, 15);
-            this.button11.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button11.Margin = new System.Windows.Forms.Padding(4);
             this.button11.Name = "button11";
             this.button11.Size = new System.Drawing.Size(200, 98);
             this.button11.TabIndex = 11;
@@ -149,7 +153,7 @@ namespace DeveMazeGeneratorGui
             // button12
             // 
             this.button12.Location = new System.Drawing.Point(16, 252);
-            this.button12.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button12.Margin = new System.Windows.Forms.Padding(4);
             this.button12.Name = "button12";
             this.button12.Size = new System.Drawing.Size(153, 107);
             this.button12.TabIndex = 12;
@@ -160,7 +164,7 @@ namespace DeveMazeGeneratorGui
             // button13
             // 
             this.button13.Location = new System.Drawing.Point(16, 599);
-            this.button13.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button13.Margin = new System.Windows.Forms.Padding(4);
             this.button13.Name = "button13";
             this.button13.Size = new System.Drawing.Size(200, 46);
             this.button13.TabIndex = 13;
@@ -171,7 +175,7 @@ namespace DeveMazeGeneratorGui
             // button14
             // 
             this.button14.Location = new System.Drawing.Point(224, 599);
-            this.button14.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button14.Margin = new System.Windows.Forms.Padding(4);
             this.button14.Name = "button14";
             this.button14.Size = new System.Drawing.Size(188, 46);
             this.button14.TabIndex = 14;
@@ -182,7 +186,7 @@ namespace DeveMazeGeneratorGui
             // button15
             // 
             this.button15.Location = new System.Drawing.Point(299, 714);
-            this.button15.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button15.Margin = new System.Windows.Forms.Padding(4);
             this.button15.Name = "button15";
             this.button15.Size = new System.Drawing.Size(100, 28);
             this.button15.TabIndex = 15;
@@ -193,7 +197,7 @@ namespace DeveMazeGeneratorGui
             // button16
             // 
             this.button16.Location = new System.Drawing.Point(16, 676);
-            this.button16.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button16.Margin = new System.Windows.Forms.Padding(4);
             this.button16.Name = "button16";
             this.button16.Size = new System.Drawing.Size(100, 66);
             this.button16.TabIndex = 16;
@@ -204,7 +208,7 @@ namespace DeveMazeGeneratorGui
             // button17
             // 
             this.button17.Location = new System.Drawing.Point(16, 121);
-            this.button17.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button17.Margin = new System.Windows.Forms.Padding(4);
             this.button17.Name = "button17";
             this.button17.Size = new System.Drawing.Size(200, 97);
             this.button17.TabIndex = 17;
@@ -216,7 +220,7 @@ namespace DeveMazeGeneratorGui
             // textBox1
             // 
             this.textBox1.Location = new System.Drawing.Point(671, 399);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(4);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(387, 122);
@@ -226,7 +230,7 @@ namespace DeveMazeGeneratorGui
             // button18
             // 
             this.button18.Location = new System.Drawing.Point(444, 412);
-            this.button18.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button18.Margin = new System.Windows.Forms.Padding(4);
             this.button18.Name = "button18";
             this.button18.Size = new System.Drawing.Size(201, 47);
             this.button18.TabIndex = 19;
@@ -247,7 +251,7 @@ namespace DeveMazeGeneratorGui
             // button19
             // 
             this.button19.Location = new System.Drawing.Point(16, 363);
-            this.button19.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button19.Margin = new System.Windows.Forms.Padding(4);
             this.button19.Name = "button19";
             this.button19.Size = new System.Drawing.Size(155, 96);
             this.button19.TabIndex = 21;
@@ -258,7 +262,7 @@ namespace DeveMazeGeneratorGui
             // button20
             // 
             this.button20.Location = new System.Drawing.Point(17, 505);
-            this.button20.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button20.Margin = new System.Windows.Forms.Padding(4);
             this.button20.Name = "button20";
             this.button20.Size = new System.Drawing.Size(153, 59);
             this.button20.TabIndex = 22;
@@ -281,7 +285,7 @@ namespace DeveMazeGeneratorGui
             // 
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Location = new System.Drawing.Point(579, 16);
-            this.panel1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(511, 324);
             this.panel1.TabIndex = 24;
@@ -289,7 +293,7 @@ namespace DeveMazeGeneratorGui
             // button2
             // 
             this.button2.Location = new System.Drawing.Point(448, 16);
-            this.button2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button2.Margin = new System.Windows.Forms.Padding(4);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(100, 48);
             this.button2.TabIndex = 25;
@@ -322,7 +326,7 @@ namespace DeveMazeGeneratorGui
             "19",
             "20"});
             this.comboBox1.Location = new System.Drawing.Point(448, 87);
-            this.comboBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.comboBox1.Margin = new System.Windows.Forms.Padding(4);
             this.comboBox1.Name = "comboBox1";
             this.comboBox1.Size = new System.Drawing.Size(99, 24);
             this.comboBox1.TabIndex = 26;
@@ -343,7 +347,7 @@ namespace DeveMazeGeneratorGui
             "5000",
             "10000"});
             this.comboBox2.Location = new System.Drawing.Point(448, 158);
-            this.comboBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.comboBox2.Margin = new System.Windows.Forms.Padding(4);
             this.comboBox2.Name = "comboBox2";
             this.comboBox2.Size = new System.Drawing.Size(99, 24);
             this.comboBox2.TabIndex = 27;
@@ -372,7 +376,7 @@ namespace DeveMazeGeneratorGui
             // button6
             // 
             this.button6.Location = new System.Drawing.Point(448, 191);
-            this.button6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.button6.Margin = new System.Windows.Forms.Padding(4);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(100, 28);
             this.button6.TabIndex = 30;
@@ -390,11 +394,36 @@ namespace DeveMazeGeneratorGui
             this.button7.UseVisualStyleBackColor = true;
             this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
+            // timer1
+            // 
+            this.timer1.Enabled = true;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(249, 224);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(24, 17);
+            this.label4.TabIndex = 32;
+            this.label4.Text = "%:";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(280, 224);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(16, 17);
+            this.label5.TabIndex = 33;
+            this.label5.Text = "0";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1107, 757);
+            this.Controls.Add(this.label5);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.button7);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.label3);
@@ -461,6 +490,9 @@ namespace DeveMazeGeneratorGui
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
     }
 }
 
