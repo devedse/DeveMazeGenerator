@@ -780,8 +780,6 @@ namespace DeveMazeGeneratorGui
 
         private void button20_Click(object sender, EventArgs e)
         {
-            //this.BackColor = Color.Black;
-
             Task.Run(() =>
             {
                 var g = this.CreateGraphics();
@@ -984,7 +982,154 @@ namespace DeveMazeGeneratorGui
             double percentage = (double)currentStepsToCalcPercentage / (double)totalStepsToCalcPercentage * 100.0;
             label5.Text = Math.Round(percentage, 2).ToString();
         }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            Task.Run(() =>
+            {
+                var g = this.CreateGraphics();
+
+                int width = this.Width / 2 * 2 - 2;
+                int height = this.Height / 2 * 2 - 2;
+
+                //int width = 100;
+                //int height = 150;
+
+                g.FillRectangle(Brushes.White, 0, 0, width + 1, height + 1);
+
+                Maze m = new AlgorithmBacktrack().Generate(width, height, InnerMapType.BitArreintjeFast, r.Next(), (x, y, cur, tot) =>
+                {
+                    currentStepsToCalcPercentage = cur;
+                    totalStepsToCalcPercentage = tot;
+                    //g.FillRectangle(Brushes.White, x, y, 1, 1);
+                    //Thread.Sleep(200);
+                });
+
+                //Random sorting stuff for cool drawing effects :)
+                int a = r.Next(12);
+                var walls = m.GenerateListOfMazeWalls();
+                if (a == 0)
+                {
+                    //Normal
+                }
+                else if (a == 1)
+                {
+                    //Create diamond
+                    walls = walls.OrderBy(x => Math.Abs(width / 2 - x.xstart) + Math.Abs(height / 2 - x.ystart)).ToList();
+                }
+                else if (a == 2)
+                {
+                    //Random stuff
+                    walls = walls.RandomPermutation().ToList();
+                }
+                else if (a == 3)
+                {
+                    //Circles everywhere
+                    walls = walls.OrderBy(x => Math.Sin((double)x.xstart * 0.03) + Math.Sin((double)x.ystart * 0.03)).ToList();
+                }
+                else if (a == 4)
+                {
+                    //Thingy from top left
+                    walls = walls.OrderBy(x => (Math.Atan2((double)x.xstart * 0.03, (double)x.ystart * 0.03))).ToList();
+                }
+                else if (a == 5)
+                {
+                    //Double thingy from mid
+                    walls = walls.OrderBy(x => Math.Abs((Math.Atan2((double)x.xstart - width / 2, (double)x.ystart - height / 2)))).ToList();
+                }
+                else if (a == 6)
+                {
+                    //360 degrees thingy
+                    walls = walls.OrderBy(x => ((Math.Atan2((double)x.xstart - width / 2, (double)x.ystart - height / 2)))).ToList();
+                }
+                else if (a == 7)
+                {
+                    //Bezier thingy or something from left top to right bot
+                    walls = walls.OrderBy(x => Math.Log(x.xstart, Math.E) + Math.Log(x.ystart, Math.E)).ToList();
+                }
+                else if (a == 8)
+                {
+                    //Random arctan stuff
+                    walls = walls.OrderBy(x => Math.Sin(Math.Atan2(Math.Sin(Math.Log(x.xstart, Math.E) + Math.Log(x.ystart, Math.E)) * 0.01, Math.Tan(x.xstart + x.ystart)))).ToList();
+                }
+                else if (a == 9)
+                {
+                    //Strange behaviour
+                    walls = walls.OrderBy(x => Math.Pow(Math.E, x.xstart) + Math.Pow(x.ystart, x.xstart)).ToList();
+                }
+                else if (a == 10)
+                {
+                    //Random arctan stuff
+                    walls = walls.OrderBy(x => Math.Atan2(Math.Sin(Math.Atan2(Math.Sin(Math.Log(x.xstart, Math.E) + Math.Log(x.ystart, Math.E)) * 0.01, Math.Tan(x.xstart + x.ystart))), Math.Log(Math.E, Math.Atan2(x.xstart, x.ystart)))).ToList();
+                }
+                else if (a == 11)
+                {
+                    //Circle
+                    walls = walls.OrderBy(x => Math.Pow(x.xstart - width / 2, 2) + Math.Pow(x.ystart - height / 2, 2)).ToList();
+                }
+
+
+
+                foreach (var wall in walls)
+                {
+                    if (wall.xstart == wall.xend)
+                    {
+                        //Verticale wall
+                        g.FillRectangle(Brushes.Black, wall.xstart, wall.ystart, 1, wall.yend - wall.ystart);
+                    }
+                    else
+                    {
+                        //Horizontale wall
+                        g.FillRectangle(Brushes.Black, wall.xstart, wall.ystart, wall.xend - wall.xstart, 1);
+                    }
+                }
+
+                var path = PathFinderDepthFirst.GoFind(m.InnerMap, (x, y, pathThing) =>
+                {
+                    if (pathThing)
+                    {
+                        g.FillRectangle(Brushes.Green, x, y, 1, 1);
+                    }
+                    else
+                    {
+                        g.FillRectangle(Brushes.Gray, x, y, 1, 1);
+                    }
+
+                });
+
+                foreach (var pathnode in path)
+                {
+                    g.FillRectangle(Brushes.Red, pathnode.X * 1, pathnode.Y * 1, 1, 1);
+                }
+            });
+        }
+
     }
 
+    public static class ListExtension
+    {
+        private static Random random = new Random();
 
+        /// <summary>
+        /// Method to randomly sort a list
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="sequence"></param>
+        /// <returns></returns>
+        public static IEnumerable<T> RandomPermutation<T>(this IEnumerable<T> sequence)
+        {
+            T[] retArray = sequence.ToArray();
+
+
+            for (int i = 0; i < retArray.Length - 1; i += 1)
+            {
+                int swapIndex = random.Next(i + 1, retArray.Length);
+                T temp = retArray[i];
+                retArray[i] = retArray[swapIndex];
+                retArray[swapIndex] = temp;
+            }
+
+            return retArray;
+        }
+    }
 }

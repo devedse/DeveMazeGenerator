@@ -61,6 +61,7 @@ namespace DeveMazeGeneratorGui
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.button8 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -261,10 +262,10 @@ namespace DeveMazeGeneratorGui
             // 
             // button20
             // 
-            this.button20.Location = new System.Drawing.Point(17, 505);
+            this.button20.Location = new System.Drawing.Point(13, 493);
             this.button20.Margin = new System.Windows.Forms.Padding(4);
             this.button20.Name = "button20";
-            this.button20.Size = new System.Drawing.Size(153, 59);
+            this.button20.Size = new System.Drawing.Size(153, 39);
             this.button20.TabIndex = 22;
             this.button20.Text = "Maze to background";
             this.button20.UseVisualStyleBackColor = true;
@@ -417,11 +418,22 @@ namespace DeveMazeGeneratorGui
             this.label5.TabIndex = 33;
             this.label5.Text = "0";
             // 
+            // button8
+            // 
+            this.button8.Location = new System.Drawing.Point(12, 539);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(154, 43);
+            this.button8.TabIndex = 34;
+            this.button8.Text = "Maze walls to background";
+            this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1107, 757);
+            this.Controls.Add(this.button8);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.button7);
@@ -493,6 +505,7 @@ namespace DeveMazeGeneratorGui
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button button8;
     }
 }
 
