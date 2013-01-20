@@ -1,7 +1,7 @@
 # DeveMazeGenerator
 =================
 
-My maze generator written in C#, highly optimized to generate huge mazes (128.000x128.000 for example)
+My maze generator written in C#, highly optimized to generate huge mazes (128.000x128.000 for example), find the shortest path and then save it all to an image.
 
 ## Current functionality:
 * Generate mazes
@@ -32,3 +32,7 @@ SQRT(2000000000000*8)=4000000, so a maze of about 4 million * 4 million
 * That the Random class is not Thread safe :/.
 * How to write my own pathfinder that's faster then A* (It finds "a path" which is always the shortest since the mazes have only 1 path)
 * How the garbage collector won't collect all garbage sometimes (when generating loads of mazes multithreaded for a long time)
+* Lot's more
+
+## Me
+My nickname is Devedse, I did this project for fun and to learn more about C#. If anyone is interested or has any questions you can send me a message :).
