@@ -4,7 +4,7 @@
 My maze generator written in C#, highly optimized to generate huge mazes (128.000x128.000 for example), find the shortest path and then save it all to an image.
 
 ![Maze](/devedse/devemazegenerator/raw/master/maze.png)
-Above, a 4095*4095 maze
+Above, a 4095*4095 maze (Generated in 0,5 seconds)
 
 ## Current functionality:
 * Generate mazes
