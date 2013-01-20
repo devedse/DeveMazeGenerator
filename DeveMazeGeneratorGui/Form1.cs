@@ -145,10 +145,10 @@ namespace DeveMazeGeneratorGui
             {
                 Algorithm curalg = new AlgorithmBacktrack();
                 Stopwatch w = new Stopwatch();
-                w.Start();
                 int size = (int)Math.Pow(2.0, 17.0);
                 DebugMSG("Generating maze of size: " + size);
                 DebugMSG("Saved size it should be: " + Math.Pow((double)size, 2.0) / 1024.0 / 1024.0 / 8.0 + " mb");
+                w.Start();
                 Maze maze = curalg.Generate(size, size, InnerMapType.BitArreintjeFast, 1337, null);
                 w.Stop();
                 DebugMSG("Generating time: " + w.Elapsed.TotalSeconds);
