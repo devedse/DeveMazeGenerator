@@ -32,6 +32,7 @@ namespace DeveMazeGeneratorGui
             InitializeComponent();
             comboBox1.SelectedIndex = 1;
             comboBox2.SelectedIndex = 0;
+            comboBox3.SelectedIndex = 1;
             curDelay = int.Parse(comboBox2.SelectedItem.ToString());
         }
 
@@ -780,44 +781,38 @@ namespace DeveMazeGeneratorGui
 
         private void button20_Click(object sender, EventArgs e)
         {
+            int size = int.Parse(comboBox3.Text);
+
             Task.Run(() =>
             {
                 var g = this.CreateGraphics();
 
-                int width = this.Width / 2 * 2 - 2;
-                int height = this.Height / 2 * 2 - 2;
+                int width = (this.Width / size - 12 / size) / 2 * 2;
+                int height = (this.Height / size - 40 / size) / 2 * 2;
 
-                //int width = 100;
-                //int height = 150;
-
-                g.FillRectangle(Brushes.Black, 0, 0, width + 1, height + 1);
+                g.FillRectangle(Brushes.Black, 0, 0, this.Width + 1, this.Height + 1);
 
                 Maze m = new AlgorithmBacktrack().Generate(width, height, InnerMapType.BitArreintjeFast, r.Next(), (x, y, cur, tot) =>
                 {
                     currentStepsToCalcPercentage = cur;
                     totalStepsToCalcPercentage = tot;
-                    g.FillRectangle(Brushes.White, x, y, 1, 1);
+                    g.FillRectangle(Brushes.White, x * size, y * size, size, size);
                     //Thread.Sleep(200);
                 });
-
 
                 var path = PathFinderDepthFirst.GoFind(m.InnerMap, (x, y, pathThing) =>
                 {
                     if (pathThing)
                     {
-                        g.FillRectangle(Brushes.Green, x, y, 1, 1);
+                        g.FillRectangle(Brushes.Green, x * size, y * size, size, size);
                     }
                     else
                     {
-                        g.FillRectangle(Brushes.Gray, x, y, 1, 1);
+                        g.FillRectangle(Brushes.Gray, x * size, y * size, size, size);
                     }
 
                 });
 
-                foreach (var pathnode in path)
-                {
-                    g.FillRectangle(Brushes.Red, pathnode.X * 1, pathnode.Y * 1, 1, 1);
-                }
             });
         }
 
@@ -985,17 +980,16 @@ namespace DeveMazeGeneratorGui
 
         private void button8_Click(object sender, EventArgs e)
         {
+            int size = int.Parse(comboBox3.Text);
+
             Task.Run(() =>
             {
                 var g = this.CreateGraphics();
 
-                int width = this.Width / 2 * 2 - 2;
-                int height = this.Height / 2 * 2 - 2;
+                int width = (this.Width / size - 12 / size) / 2 * 2;
+                int height = (this.Height / size - 40 / size) / 2 * 2;
 
-                //int width = 100;
-                //int height = 150;
-
-                g.FillRectangle(Brushes.White, 0, 0, width + 1, height + 1);
+                g.FillRectangle(Brushes.White, 0, 0, this.Width + 1, this.Height + 1);
 
                 Maze m = new AlgorithmBacktrack().Generate(width, height, InnerMapType.BitArreintjeFast, r.Next(), (x, y, cur, tot) =>
                 {
@@ -1068,19 +1062,17 @@ namespace DeveMazeGeneratorGui
                     walls = walls.OrderBy(x => Math.Pow(x.xstart - width / 2, 2) + Math.Pow(x.ystart - height / 2, 2)).ToList();
                 }
 
-
-
                 foreach (var wall in walls)
                 {
                     if (wall.xstart == wall.xend)
                     {
                         //Verticale wall
-                        g.FillRectangle(Brushes.Black, wall.xstart, wall.ystart, 1, wall.yend - wall.ystart);
+                        g.FillRectangle(Brushes.Black, wall.xstart * size, wall.ystart * size, size, (wall.yend - wall.ystart) * size);
                     }
                     else
                     {
                         //Horizontale wall
-                        g.FillRectangle(Brushes.Black, wall.xstart, wall.ystart, wall.xend - wall.xstart, 1);
+                        g.FillRectangle(Brushes.Black, wall.xstart * size, wall.ystart * size, (wall.xend - wall.xstart) * size, size);
                     }
                 }
 
@@ -1088,19 +1080,14 @@ namespace DeveMazeGeneratorGui
                 {
                     if (pathThing)
                     {
-                        g.FillRectangle(Brushes.Green, x, y, 1, 1);
+                        g.FillRectangle(Brushes.Green, x * size, y * size, size, size);
                     }
                     else
                     {
-                        g.FillRectangle(Brushes.Gray, x, y, 1, 1);
+                        g.FillRectangle(Brushes.Gray, x * size, y * size, size, size);
                     }
 
                 });
-
-                foreach (var pathnode in path)
-                {
-                    g.FillRectangle(Brushes.Red, pathnode.X * 1, pathnode.Y * 1, 1, 1);
-                }
             });
         }
 
