@@ -6,7 +6,7 @@ My maze generator written in C#, highly optimized to generate huge mazes (128.00
 Currently the fastest algorithm it uses is "AlgorithmBacktrack". If you want a fast maze, use that ;).
 
 ![Maze](/devedse/devemazegenerator/raw/master/maze.png)
-Above, a 4095*4095 maze (Generated in 0,5 seconds)
+Above, a 4096*4096 maze (Generated in 0,5 seconds)
 
 ## Current functionality:
 * Generate mazes
