@@ -65,6 +65,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="Generators\AlgorithmKruskal.cs" />
     <Compile Include="Generators\AlgorithmBacktrackTest.cs" />
     <Compile Include="InnerMaps\BitArrayMappedOnHardDiskInnerMap.cs" />
     <Compile Include="InnerMaps\BitArrayMappedOnHardDiskInnerMapArray.cs" />

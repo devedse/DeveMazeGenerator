@@ -792,7 +792,19 @@ namespace DeveMazeGeneratorGui
 
                 g.FillRectangle(Brushes.Black, 0, 0, this.Width + 1, this.Height + 1);
 
-                Maze m = new AlgorithmBacktrack().Generate(width, height, InnerMapType.BitArreintjeFast, r.Next(), (x, y, cur, tot) =>
+                Algorithm curalg;
+                if (r.Next(2) == 0)
+                {
+                    curalg = new AlgorithmBacktrack();
+                }
+                else
+                {
+                    curalg = new AlgorithmKruskal();
+                }
+
+
+
+                Maze m = curalg.Generate(width, height, InnerMapType.BitArreintjeFast, r.Next(), (x, y, cur, tot) =>
                 {
                     currentStepsToCalcPercentage = cur;
                     totalStepsToCalcPercentage = tot;
@@ -1091,32 +1103,41 @@ namespace DeveMazeGeneratorGui
             });
         }
 
-    }
-
-    public static class ListExtension
-    {
-        private static Random random = new Random();
-
-        /// <summary>
-        /// Method to randomly sort a list
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="sequence"></param>
-        /// <returns></returns>
-        public static IEnumerable<T> RandomPermutation<T>(this IEnumerable<T> sequence)
+        private void button22_Click(object sender, EventArgs e)
         {
-            T[] retArray = sequence.ToArray();
 
 
-            for (int i = 0; i < retArray.Length - 1; i += 1)
+            Task.Run(new Action(() =>
             {
-                int swapIndex = random.Next(i + 1, retArray.Length);
-                T temp = retArray[i];
-                retArray[i] = retArray[swapIndex];
-                retArray[swapIndex] = temp;
-            }
+                List<Algorithm> algjes = new List<Algorithm>();
+                algjes.Add(new AlgorithmBacktrack());
+                algjes.Add(new AlgorithmKruskal());
 
-            return retArray;
+                for (int i = 0; i < algjes.Count; i++)
+                {
+                    Algorithm curalg = algjes[i];
+
+                    Stopwatch w = new Stopwatch();
+                    w.Start();
+                    int size = (int)Math.Pow(2.0, 12.0);
+                    DebugMSG("Generating maze of size " + curalg.GetType().ToString() + ": " + size);
+                    DebugMSG("Saved size it should be: " + Math.Pow((double)size, 2.0) / 1024.0 / 1024.0 / 8.0 + " mb");
+                    DebugMSG("Or in GB: " + Math.Pow((double)size, 2.0) / 1024.0 / 1024.0 / 1024.0 / 8.0 + " gb");
+                    Maze maze = curalg.Generate(size, size, InnerMapType.BitArreintjeFast, 1337, (x, y, cur, tot) =>
+                    {
+                        currentStepsToCalcPercentage = cur;
+                        totalStepsToCalcPercentage = tot;
+                    });
+
+                    w.Stop();
+                    DebugMSG("Generating time " + curalg.GetType().ToString() + ": " + w.Elapsed.TotalSeconds);
+
+                }
+
+            }));
         }
+
     }
+
+
 }
