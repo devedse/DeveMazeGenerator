@@ -3,6 +3,8 @@
 
 My maze generator written in C#, highly optimized to generate huge mazes (128.000x128.000 for example), find the shortest path and then save it all to an image.
 
+Currently the fastest algorithm it uses is "AlgorithmBacktrack". If you want a fast maze, use that ;).
+
 ![Maze](/devedse/devemazegenerator/raw/master/maze.png)
 Above, a 4095*4095 maze (Generated in 0,5 seconds)
 
