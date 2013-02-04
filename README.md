@@ -9,7 +9,7 @@ Currently the fastest algorithm it uses is "AlgorithmBacktrack". If you want a f
 
 Above, a 4096*4096 maze (Generated in 0,5 seconds)
 
-## Current functionality:
+### Current functionality:
 * Generate mazes
 * See them being generated live
 * See pathfinding live
