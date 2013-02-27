@@ -18,8 +18,8 @@ namespace DeveMazeGenerator
         /// Finds the path between the start and the endpoint in a maze
         /// </summary>
         /// <param name="map">The maze.InnerMap</param>
-        /// <param name="callBack"></param>
-        /// <returns></returns>
+        /// <param name="callBack">The callback that can be used to see what the pathfinder is doing (or null), the boolean true = a new path find thingy or false when it determined that path is not correct</param>
+        /// <returns>The shortest path in a list of points</returns>
         public static List<MazePoint> GoFind(InnerMap map, Action<int, int, Boolean> callBack)
         {
             return GoFind(new MazePoint(1, 1), new MazePoint(map.Width - 3, map.Height - 3), map, callBack);
@@ -32,7 +32,7 @@ namespace DeveMazeGenerator
         /// <param name="end">The end point</param>
         /// <param name="map">The maze.InnerMap</param>
         /// <param name="callBack">The callback that can be used to see what the pathfinder is doing (or null), the boolean true = a new path find thingy or false when it determined that path is not correct</param>
-        /// <returns></returns>
+        /// <returns>The shortest path in a list of points</returns>
         public static List<MazePoint> GoFind(MazePoint start, MazePoint end, InnerMap map, Action<int, int, Boolean> callBack)
         {
             if (callBack == null)
