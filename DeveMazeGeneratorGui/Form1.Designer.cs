@@ -65,6 +65,7 @@ namespace DeveMazeGeneratorGui
             this.label6 = new System.Windows.Forms.Label();
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.button22 = new System.Windows.Forms.Button();
+            this.button23 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -460,11 +461,22 @@ namespace DeveMazeGeneratorGui
             this.button22.UseVisualStyleBackColor = true;
             this.button22.Click += new System.EventHandler(this.button22_Click);
             // 
+            // button23
+            // 
+            this.button23.Location = new System.Drawing.Point(593, 284);
+            this.button23.Name = "button23";
+            this.button23.Size = new System.Drawing.Size(84, 34);
+            this.button23.TabIndex = 38;
+            this.button23.Text = "16k maze on this thread";
+            this.button23.UseVisualStyleBackColor = true;
+            this.button23.Click += new System.EventHandler(this.button23_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(830, 615);
+            this.Controls.Add(this.button23);
             this.Controls.Add(this.button22);
             this.Controls.Add(this.comboBox3);
             this.Controls.Add(this.label6);
@@ -544,6 +556,7 @@ namespace DeveMazeGeneratorGui
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.ComboBox comboBox3;
         private System.Windows.Forms.Button button22;
+        private System.Windows.Forms.Button button23;
     }
 }
 

@@ -1146,6 +1146,19 @@ namespace DeveMazeGeneratorGui
             }));
         }
 
+        private void button23_Click(object sender, EventArgs e)
+        {
+            int size = (int)Math.Pow(2.0, 14.0);
+
+            AlgorithmBacktrack alg = new AlgorithmBacktrack();
+
+            Stopwatch w = new Stopwatch();
+            w.Start();
+            var maze = alg.Generate(size, size, InnerMapType.BitArreintjeFast, null);
+            w.Stop();
+            DebugMSG("Time it took: " + w.Elapsed.TotalSeconds);
+        }
+
     }
 
 
