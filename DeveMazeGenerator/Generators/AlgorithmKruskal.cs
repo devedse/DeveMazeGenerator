@@ -60,7 +60,7 @@ namespace DeveMazeGenerator.Generators
             //Console.WriteLine(System.Reflection.MethodBase.GetCurrentMethod().Name);
             if (x > 0 && x < maze.Width - 1 && y > 0 && y < maze.Height - 1)
             {
-                return !map[x][y];
+                return !map[x, y];
             }
             return false;
         }
@@ -190,11 +190,11 @@ namespace DeveMazeGenerator.Generators
                     int ding = (int)theMap[x][y].kruskalTileType;
                     if (ding == 0)
                     {
-                        map[x][y] = false;
+                        map[x, y] = false;
                     }
                     else
                     {
-                        map[x][y] = true;
+                        map[x, y] = true;
                     }
 
                 }

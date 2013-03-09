@@ -33,24 +33,19 @@ namespace DeveMazeGenerator.InnerMaps
         public virtual void Print()
         {
             StringBuilder build = new StringBuilder();
-            for (int x = 0; x < this.Length; x++)
+            for (int y = 0; y < this.height; y++)
             {
-                InnerMapArray curInnerMapArray = this[x];
-                for (int i = 0; i < curInnerMapArray.Length / 8; i++)
+                for (int x = 0; x < this.width; x++)
                 {
-                    for (int y = 0; y < 8; y++)
+                    Boolean b = this[x, y];
+                    if (b)
                     {
-                        Boolean b = curInnerMapArray[i * 8 + y];
-                        if (b)
-                        {
-                            build.Append('1');
-                        }
-                        else
-                        {
-                            build.Append('0');
-                        }
+                        build.Append('1');
                     }
-                    build.Append(' ');
+                    else
+                    {
+                        build.Append('0');
+                    }
                 }
                 build.AppendLine();
             }
@@ -72,6 +67,6 @@ namespace DeveMazeGenerator.InnerMaps
         /// </summary>
 
         //abstract must be overidden
-        public abstract InnerMapArray this[int x] { get; }
+        public abstract Boolean this[int x, int y] { get; set; }
     }
 }

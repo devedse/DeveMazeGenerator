@@ -69,7 +69,7 @@ namespace DeveMazeGenerator
                 {
                     if (x == 0 || y == 0 || x == width || y == height)
                     {
-                        visited[x][y] = true;
+                        visited[x, y] = true;
                     }
                     //else
                     //{
@@ -82,7 +82,7 @@ namespace DeveMazeGenerator
             //Hier begint het gedoe
             Stack<MazePoint> stackje = new Stack<MazePoint>();
             stackje.Push(start);
-            visited[start.X][start.Y] = true;
+            visited[start.X, start.Y] = true;
             callBack.Invoke(start.X, start.Y, true);
             //form.pixelDraw(x, y, Brushes.White);
             while (stackje.Count != 0)
@@ -121,7 +121,7 @@ namespace DeveMazeGenerator
                     callBack.Invoke(x, y, true);
                     //var target = targets[r.Next(targets.Count)];
                     stackje.Push(target);
-                    visited[target.X][target.Y] = true;
+                    visited[target.X, target.Y] = true;
                     //form.pixelDraw(target.X, target.Y, Brushes.Blue);
                     //Thread.Sleep(200);
 
@@ -165,13 +165,13 @@ namespace DeveMazeGenerator
         {
             if (x > 0 && x < width - 1 && y > 0 && y < height - 1)
             {
-                if (visitedmap[x][y])
+                if (visitedmap[x, y])
                 {
                     return false;
                 }
                 else
                 {
-                    return map[x][y];
+                    return map[x, y];
                 }
             }
             else

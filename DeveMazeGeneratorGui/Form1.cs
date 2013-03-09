@@ -617,14 +617,7 @@ namespace DeveMazeGeneratorGui
                     }
                 }));
 
-
-
                 DebugMSG("Done met dit setje :)");
-
-
-
-
-
             });
         }
 
@@ -644,8 +637,8 @@ namespace DeveMazeGeneratorGui
             {
                 AlgorithmBacktrack back = new AlgorithmBacktrack();
 
-                int width = 1024 * 1;
-                int height = 1024 * 1;
+                int width = 2500;
+                int height = 600;
 
                 DebugMSG("Generating maze of size: " + width + " * " + height);
                 Maze maze = back.Generate(width, height, InnerMapType.BitArrayMappedOnHardDisk, null);
@@ -653,7 +646,7 @@ namespace DeveMazeGeneratorGui
                 DebugMSG("Generating done :)");
 
 
-                maze.SaveMazeAsImage("maze1.bmp", ImageFormat.Bmp);
+                maze.SaveMazeAsImage("test-maze1.bmp", ImageFormat.Bmp);
                 DebugMSG("Maze saved");
 
 
@@ -671,15 +664,18 @@ namespace DeveMazeGeneratorGui
                 Maze loadedfromwall = Maze.LoadMazeFromWalls(walls, width, height);
 
                 DebugMSG("Created :), saving this maze...");
-                loadedfromwall.SaveMazeAsImage("maze2.bmp", ImageFormat.Bmp);
+                loadedfromwall.SaveMazeAsImage("test-maze2.bmp", ImageFormat.Bmp);
 
                 DebugMSG("Done saving, creating path for this maze...");
 
-                var path = PathFinderDepthFirst.GoFind(new MazePoint(1, 1), new MazePoint(width - 3, height - 3), loadedfromwall.InnerMap, null);
+                var path = PathFinderDepthFirst.GoFind(loadedfromwall.InnerMap, null);
 
                 DebugMSG("Pathfinding done, saving this maze + path...");
 
-                loadedfromwall.SaveMazeAsImage("mazePath.bmp", ImageFormat.Bmp, path, MazeSaveType.ColorDepth4Bits);
+                loadedfromwall.SaveMazeAsImage("test-mazePath4bpp.bmp", ImageFormat.Bmp, path, MazeSaveType.ColorDepth4Bits);
+                loadedfromwall.SaveMazeAsImage("test-mazePath32bpp.bmp", ImageFormat.Bmp, path, MazeSaveType.ColorDepth32Bits);
+                loadedfromwall.SaveMazeAsImage("test-mazePath4bpp.png", ImageFormat.Png, path, MazeSaveType.ColorDepth4Bits);
+                loadedfromwall.SaveMazeAsImage("test-mazePath32bpp.png", ImageFormat.Png, path, MazeSaveType.ColorDepth32Bits);
 
                 DebugMSG("Saving done :)");
 
@@ -691,7 +687,7 @@ namespace DeveMazeGeneratorGui
 
                 DebugMSG("Creating and saving new maze for this...");
                 Maze mmmmmm = Maze.LoadMazeFromWalls(walls2, width, height);
-                mmmmmm.SaveMazeAsImage("maze3.bmp", ImageFormat.Bmp);
+                mmmmmm.SaveMazeAsImage("test-maze3.bmp", ImageFormat.Bmp);
 
                 DebugMSG("Ok done :), comparing maze 1 and 3...");
 
@@ -701,16 +697,29 @@ namespace DeveMazeGeneratorGui
                 {
                     for (int y = 0; y < height; y++)
                     {
-                        if (maze.InnerMap[x][y] != mmmmmm.InnerMap[x][y])
+                        if (maze.InnerMap[x, y] != mmmmmm.InnerMap[x, y])
                         {
                             thesame = false;
                         }
                     }
                 }
 
-                DebugMSG("Done checking, mazes are the same: " + thesame);
+                if (thesame == false)
+                {
+                    DebugMSG("ERRORRRRRRR: Mazes are not the same...");
+                }
+                else
+                {
+                    DebugMSG("Mazes are the same :)");
+
+                    DebugMSG("Check out if the generated files look correct (all files with test-....)");
+                    DebugMSG("if they are (and no errors were displayed here), all tests succeeded");
+                    DebugMSG("and the base of the framework should work :>");
+                }
 
                 DebugMSG("Ok done :D");
+
+
             });
         }
 

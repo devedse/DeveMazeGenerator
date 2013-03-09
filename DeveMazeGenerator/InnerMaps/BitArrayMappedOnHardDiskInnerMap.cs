@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -50,11 +51,17 @@ namespace DeveMazeGenerator.InnerMaps
         //    Console.WriteLine(build);
         //}
 
-        public override InnerMapArray this[int thePosition]
+        public override Boolean this[int x, int y]
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                return innerData[thePosition];
+                return innerData[x][y];
+            }
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            set
+            {
+                innerData[x][y] = value;
             }
         }
 

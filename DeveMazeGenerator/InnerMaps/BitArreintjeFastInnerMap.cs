@@ -20,12 +20,17 @@ namespace DeveMazeGenerator.InnerMaps
             }
         }
 
-        public override InnerMapArray this[int x]
+        public override Boolean this[int x, int y]
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                return innerData[x];
+                return innerData[x][y];
+            }
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            set
+            {
+                innerData[x][y] = value;
             }
         }
 

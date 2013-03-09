@@ -60,7 +60,7 @@ namespace DeveMazeGenerator.Generators
             //Console.WriteLine(System.Reflection.MethodBase.GetCurrentMethod().Name);
             if (x > 0 && x < maze.Width - 1 && y > 0 && y < maze.Height - 1)
             {
-                return !map[x][y];
+                return !map[x, y];
             }
             return false;
         }
@@ -76,7 +76,7 @@ namespace DeveMazeGenerator.Generators
 
             Stack<MazePoint> stackje = new Stack<MazePoint>();
             stackje.Push(new MazePoint(x, y));
-            map[x][y] = true;
+            map[x, y] = true;
             pixelChangedCallback.Invoke(x, y, currentStep, totSteps);
 
             MazePoint[] targets = new MazePoint[4];
@@ -121,31 +121,31 @@ namespace DeveMazeGenerator.Generators
                 {
                     var target = targets[r.Next(targetCount)];
                     stackje.Push(target);
-                    map[target.X][target.Y] = true;
+                    map[target.X, target.Y] = true;
 
                     currentStep++;
 
                     if (target.X < x)
                     {
-                        map[x - 1][y] = true;
+                        map[x - 1, y] = true;
                         pixelChangedCallback.Invoke(x - 1, y, currentStep, totSteps);
                         //form.drawPixel(x - 1, y, brushThisUses);
                     }
                     else if (target.X > x)
                     {
-                        map[x + 1][y] = true;
+                        map[x + 1, y] = true;
                         pixelChangedCallback.Invoke(x + 1, y, currentStep, totSteps);
                         //form.drawPixel(x + 1, y, brushThisUses);
                     }
                     else if (target.Y < y)
                     {
-                        map[x][y - 1] = true;
+                        map[x, y - 1] = true;
                         pixelChangedCallback.Invoke(x, y - 1, currentStep, totSteps);
                         //form.drawPixel(x, y - 1, brushThisUses);
                     }
                     else if (target.Y > y)
                     {
-                        map[x][y + 1] = true;
+                        map[x, y + 1] = true;
                         pixelChangedCallback.Invoke(x, y + 1, currentStep, totSteps);
                         //form.drawPixel(x, y + 1, brushThisUses);
                     }

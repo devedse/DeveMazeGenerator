@@ -31,7 +31,7 @@ namespace DeveMazeGenerator
         /// <param name="imageFormat">The format the image should be saved in (I suggest Bmp or Png)</param>
         public void SaveMazeAsImage(String fileName, ImageFormat imageFormat)
         {
-            using (Bitmap objBmpImage = new Bitmap(innerMap[0].Length - 1, innerMap.Length - 1, PixelFormat.Format1bppIndexed))
+            using (Bitmap objBmpImage = new Bitmap(innerMap.Width - 1, innerMap.Height - 1, PixelFormat.Format1bppIndexed))
             {
 
                 Rectangle rect = new Rectangle(0, 0, objBmpImage.Width, objBmpImage.Height);
@@ -46,7 +46,7 @@ namespace DeveMazeGenerator
 
                 System.Runtime.InteropServices.Marshal.Copy(ptr, rgbValues, 0, bytes);
 
-                for (int y = 0; y < innerMap[0].Length - 1; y++)
+                for (int y = 0; y < innerMap.Height - 1; y++)
                 {
                     int counterdeluxe = bmpData.Stride * y;
                     int x = 0;
@@ -61,8 +61,11 @@ namespace DeveMazeGenerator
 
                         for (int j = 7; j >= 0; j--)
                         {
-                            bitar[j] = innerMap[x][y];
-                            x++;
+                            if (x < innerMap.Width)
+                            {
+                                bitar[j] = innerMap[x, y];
+                                x++;
+                            }
                         }
                         rgbValues[counterdeluxe] = (byte)GetIntFromBitArray(bitar);
                         counterdeluxe++;
@@ -128,7 +131,7 @@ namespace DeveMazeGenerator
             {
                 for (int x = 0; x < width - 1; x++)
                 {
-                    if (innerMap[x][y] == true)
+                    if (innerMap[x, y] == true)
                     {
                         objGraphics.FillRegion(Brushes.White, new Region(new Rectangle(x * cursize, y * cursize, cursize, cursize)));
                     }
@@ -158,7 +161,7 @@ namespace DeveMazeGenerator
         private void SaveMazeAsImagePath4Bit(String fileName, ImageFormat imageFormat, List<MazePoint> path)
         {
 
-            using (Bitmap objBmpImage = new Bitmap(innerMap[0].Length - 1, innerMap.Length - 1, PixelFormat.Format4bppIndexed))
+            using (Bitmap objBmpImage = new Bitmap(innerMap.Width - 1, innerMap.Height - 1, PixelFormat.Format4bppIndexed))
             {
 
                 Rectangle rect = new Rectangle(0, 0, objBmpImage.Width, objBmpImage.Height);
@@ -188,7 +191,7 @@ namespace DeveMazeGenerator
                 //    pathding[p.X][p.Y] = true;
                 //}
 
-                for (int y = 0; y < innerMap[0].Length - 1; y++)
+                for (int y = 0; y < innerMap.Height - 1; y++)
                 {
                     int counterdeluxe = bmpData.Stride * y;
                     int x = 0;
@@ -203,7 +206,7 @@ namespace DeveMazeGenerator
 
                         for (int j = 4; j >= 0; j = j - 4)
                         {
-                            if (innerMap[x][y])
+                            if (innerMap[x, y])
                             {
                                 bitar[j + 3] = true;
                                 bitar[j + 2] = true;

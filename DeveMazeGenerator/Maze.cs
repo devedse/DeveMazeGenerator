@@ -77,7 +77,7 @@ namespace DeveMazeGenerator
 
         }
 
-    
+
 
         public List<MazeWall> GenerateListOfMazeWalls()
         {
@@ -97,14 +97,14 @@ namespace DeveMazeGenerator
                 {
 
                     //Horizontal
-                    if (innerMap[x][y] == false)
+                    if (innerMap[x, y] == false)
                     {
 
                         Boolean done = false;
                         int xx = x;
                         while (!done)
                         {
-                            if (xx >= width - 1 || innerMap[xx][y] == true)
+                            if (xx >= width - 1 || innerMap[xx, y] == true)
                             {
                                 AddToWallList(walls, x, y, xx, y);
                                 done = true;
@@ -126,14 +126,14 @@ namespace DeveMazeGenerator
                 {
 
                     //Vertical
-                    if (innerMap[x][y] == false)
+                    if (innerMap[x, y] == false)
                     {
 
                         Boolean done = false;
                         int yy = y;
                         while (!done)
                         {
-                            if (yy >= height - 1 || innerMap[x][yy] == true)
+                            if (yy >= height - 1 || innerMap[x, yy] == true)
                             {
                                 AddToWallList(walls, x, y, x, yy);
                                 done = true;
@@ -160,7 +160,7 @@ namespace DeveMazeGenerator
             {
                 for (int x = 0; x < m.width - 1; x++)
                 {
-                    m.innerMap[x][y] = true;
+                    m.innerMap[x, y] = true;
                 }
             }
 
@@ -171,7 +171,7 @@ namespace DeveMazeGenerator
                     //Horizontal
                     for (int x = wall.xstart; x < wall.xend; x++)
                     {
-                        m.innerMap[x][wall.ystart] = false;
+                        m.innerMap[x, wall.ystart] = false;
                     }
                 }
                 else
@@ -179,7 +179,7 @@ namespace DeveMazeGenerator
                     //Vertical
                     for (int y = wall.ystart; y < wall.yend; y++)
                     {
-                        m.innerMap[wall.xstart][y] = false;
+                        m.innerMap[wall.xstart, y] = false;
                     }
                 }
             }
