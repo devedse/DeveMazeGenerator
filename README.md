@@ -60,3 +60,5 @@ My nickname is Devedse, I did this project for fun and to learn more about C#. I
 * BitArreintjeFastInnerMap (Memory usage = n/8, Speed = ~90%)
 * DotNetBitArrayInnerMap (Memory usage = n/8, Speed = ~80%)
 * BitArrayMappedOnHardDiskInnerMap (Memory usage = 0, Speed = ~0,2%)
+* Hybrid (Memory usage = like 10 mb max, Speed = 50%)
+This hybrid map divides the maze in a number of parts (a grid). Each part will be loaded into the memory when needed and written to the disk if possible too. This really is the best way to generate REALLLYYY REAALLLLYYYYY big mazes pretty fast. (This only works well with AlgorithmBacktrack though)

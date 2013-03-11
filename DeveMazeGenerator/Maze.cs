@@ -25,7 +25,10 @@ namespace DeveMazeGenerator
         DotNetBitArray,
 
         [Description("Uses 0 bytes of memory, super slow, god knows what happens when multithreading")]
-        BitArrayMappedOnHardDisk
+        BitArrayMappedOnHardDisk,
+
+        [Description("Hybrid map")]
+        Hybrid
     }
 
     /// <summary>
@@ -70,6 +73,9 @@ namespace DeveMazeGenerator
                     break;
                 case InnerMapType.BitArrayMappedOnHardDisk:
                     innerMap = new BitArrayMappedOnHardDiskInnerMap(width, height);
+                    break;
+                case InnerMapType.Hybrid:
+                    innerMap = new HybridInnerMap(width, height);
                     break;
                 default:
                     break;

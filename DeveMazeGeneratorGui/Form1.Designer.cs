@@ -66,6 +66,8 @@ namespace DeveMazeGeneratorGui
             this.comboBox3 = new System.Windows.Forms.ComboBox();
             this.button22 = new System.Windows.Forms.Button();
             this.button23 = new System.Windows.Forms.Button();
+            this.button24 = new System.Windows.Forms.Button();
+            this.button25 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -368,10 +370,10 @@ namespace DeveMazeGeneratorGui
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(187, 205);
+            this.button7.Location = new System.Drawing.Point(213, 205);
             this.button7.Margin = new System.Windows.Forms.Padding(2);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(141, 72);
+            this.button7.Size = new System.Drawing.Size(115, 72);
             this.button7.TabIndex = 31;
             this.button7.Text = "HUUGE MAZE";
             this.button7.UseVisualStyleBackColor = true;
@@ -471,11 +473,33 @@ namespace DeveMazeGeneratorGui
             this.button23.UseVisualStyleBackColor = true;
             this.button23.Click += new System.EventHandler(this.button23_Click);
             // 
+            // button24
+            // 
+            this.button24.Location = new System.Drawing.Point(684, 284);
+            this.button24.Name = "button24";
+            this.button24.Size = new System.Drawing.Size(110, 34);
+            this.button24.TabIndex = 39;
+            this.button24.Text = "16k test ding";
+            this.button24.UseVisualStyleBackColor = true;
+            this.button24.Click += new System.EventHandler(this.button24_Click);
+            // 
+            // button25
+            // 
+            this.button25.Location = new System.Drawing.Point(130, 205);
+            this.button25.Name = "button25";
+            this.button25.Size = new System.Drawing.Size(78, 72);
+            this.button25.TabIndex = 40;
+            this.button25.Text = "Mega terror maze (hybrid map)";
+            this.button25.UseVisualStyleBackColor = true;
+            this.button25.Click += new System.EventHandler(this.button25_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(830, 615);
+            this.Controls.Add(this.button25);
+            this.Controls.Add(this.button24);
             this.Controls.Add(this.button23);
             this.Controls.Add(this.button22);
             this.Controls.Add(this.comboBox3);
@@ -557,6 +581,8 @@ namespace DeveMazeGeneratorGui
         private System.Windows.Forms.ComboBox comboBox3;
         private System.Windows.Forms.Button button22;
         private System.Windows.Forms.Button button23;
+        private System.Windows.Forms.Button button24;
+        private System.Windows.Forms.Button button25;
     }
 }
 
