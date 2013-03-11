@@ -1222,7 +1222,7 @@ namespace DeveMazeGeneratorGui
                 AlgorithmBacktrack curalg = new AlgorithmBacktrack();
                 Stopwatch w = new Stopwatch();
                 w.Start();
-                int size = (int)Math.Pow(2.0, 15.0);
+                int size = (int)Math.Pow(2.0, 19.0);
                 DebugMSG("Generating maze of size: " + size);
                 DebugMSG("Saved size it should be: " + Math.Pow((double)size, 2.0) / 1024.0 / 1024.0 / 8.0 + " mb");
                 DebugMSG("Or in GB: " + Math.Pow((double)size, 2.0) / 1024.0 / 1024.0 / 1024.0 / 8.0 + " gb");

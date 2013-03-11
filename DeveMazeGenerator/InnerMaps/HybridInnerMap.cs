@@ -76,7 +76,7 @@ namespace DeveMazeGenerator.InnerMaps
         {
             //Console.WriteLine("Loading mappart: " + x + ", " + y);
 
-            int sizeinbytes = (gridSize * gridSize) / 8; //Divide by 8 because of 8
+            long sizeinbytes = (gridSize * gridSize) / 8; //Divide by 8 because of 8
 
 
 
@@ -111,7 +111,7 @@ namespace DeveMazeGenerator.InnerMaps
                     //If not save the oldest one
                     var oldone = mapParts[currentMapCycleFactor];
 
-                    int posToStoreAt = sizeinbytes * (Width / gridSize) * (oldone.StartY / gridSize) + sizeinbytes * (oldone.StartX / gridSize);
+                    long posToStoreAt = sizeinbytes * (long)(Width / gridSize) * (long)(oldone.StartY / gridSize) + (long)sizeinbytes * (long)(oldone.StartX / gridSize);
                     //Console.WriteLine("Storing at: " + posToStoreAt);
                     //Thread.Sleep(5000);
                     oldone.Store(posToStoreAt);
@@ -126,7 +126,7 @@ namespace DeveMazeGenerator.InnerMaps
                 //Load a new one
                 currentMapPart = new HybridInnerMapPart(x * gridSize, y * gridSize, (x + 1) * gridSize, (y + 1) * gridSize, completeHDArray);
 
-                int posToLoadFrom = sizeinbytes * (Width / gridSize) * y + sizeinbytes * x;
+                long posToLoadFrom = sizeinbytes * (long)(Width / gridSize) * (long)y + (long)(sizeinbytes * x);
                 //Thread.Sleep(1000);
                 //Console.WriteLine(posToLoadFrom);
 
