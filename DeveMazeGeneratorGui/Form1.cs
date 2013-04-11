@@ -1150,15 +1150,42 @@ namespace DeveMazeGeneratorGui
 
         private void button23_Click(object sender, EventArgs e)
         {
-            int size = (int)Math.Pow(2.0, 14.0);
+            Task.Run(new Action(() =>
+            {
 
-            AlgorithmBacktrack alg = new AlgorithmBacktrack();
+                Algorithm curalg = new AlgorithmBacktrack();
+                InnerMapType innerMapType = InnerMapType.BitArreintjeFast;
 
-            Stopwatch w = new Stopwatch();
-            w.Start();
-            var maze = alg.Generate(size, size, InnerMapType.BitArreintjeFast, null);
-            w.Stop();
-            DebugMSG("Time it took: " + w.Elapsed.TotalSeconds);
+                Stopwatch w = new Stopwatch();
+                w.Start();
+                int size = 2048 * 8;
+                DebugMSG("Generating maze of size: " + size);
+                DebugMSG("Current algorithm: " + curalg.ToString());
+                DebugMSG("Current InnerMapType: " + innerMapType.ToString());
+                DebugMSG("Saved size it should be: " + Math.Pow((double)size, 2.0) / 1024.0 / 1024.0 / 8.0 + " mb");
+                DebugMSG("Or in GB: " + Math.Pow((double)size, 2.0) / 1024.0 / 1024.0 / 1024.0 / 8.0 + " gb");
+                Maze maze = curalg.Generate(size, size, innerMapType, 1337, (x, y, cur, tot) =>
+                {
+                    currentStepsToCalcPercentage = cur;
+                    totalStepsToCalcPercentage = tot;
+                });
+
+                w.Stop();
+                DebugMSG("Generating time: " + w.Elapsed.TotalSeconds);
+                DebugMSG("Finding Path...");
+                w.Reset();
+                w.Start();
+                var path = PathFinderDepthFirst.GoFind(maze.InnerMap, null);
+                w.Stop();
+                DebugMSG("Done generating path: " + w.Elapsed.TotalSeconds);
+                DebugMSG("Saving...");
+                w.Reset();
+                w.Start();
+                maze.SaveMazeAsImage("benchmark 16k single core.png", ImageFormat.Png, path, MazeSaveType.ColorDepth32Bits);
+                w.Stop();
+                DebugMSG("Done saving: " + w.Elapsed.TotalSeconds);
+            }));
+
         }
 
         private void button24_Click(object sender, EventArgs e)
