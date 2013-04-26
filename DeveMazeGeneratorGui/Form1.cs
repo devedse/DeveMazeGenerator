@@ -1246,7 +1246,7 @@ namespace DeveMazeGeneratorGui
         {
             Task.Run(new Action(() =>
             {
-                AlgorithmBacktrack curalg = new AlgorithmBacktrack();
+                Algorithm curalg = new AlgorithmBacktrackSmartMemory();
                 Stopwatch w = new Stopwatch();
                 w.Start();
                 int size = (int)Math.Pow(2.0, 19.0);
