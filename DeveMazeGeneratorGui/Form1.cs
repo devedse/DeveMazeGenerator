@@ -1290,7 +1290,7 @@ namespace DeveMazeGeneratorGui
                 //}
 
 
-                AlgorithmBacktrack2 curalg = new AlgorithmBacktrack2();
+                AlgorithmBacktrackSmartMemory curalg = new AlgorithmBacktrackSmartMemory();
 
                 Maze m = curalg.Generate(width / size, height / size, InnerMapType.Hybrid, 5, (x, y, cur, tot) =>
                 {

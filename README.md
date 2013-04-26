@@ -5,6 +5,8 @@ My maze generator written in C#, highly optimized to generate huge mazes (128.00
 
 Currently the fastest algorithm it uses is "AlgorithmBacktrack". If you want a fast maze, use that ;).
 
+If you want to create a HUGEE maze take AlgorithmBacktrackSmartMemory as algorithm and Hybrid as InnerMap.
+
 ![Maze](maze.png)
 
 Above, a 4096*4096 maze (Generated in 0,5 seconds)
@@ -47,6 +49,7 @@ My nickname is Devedse, I did this project for fun and to learn more about C#. I
 
 ### Algorithms
 * AlgorithmBacktrack (100%) (Fast, cool mazes, very low memory usage)
+* AlgorithmBacktrackSmartMemory (100%) (About 70% of the speed of AlgorithmBacktrack but uses about 0,1% of the memory for storing the path while generating internally)
 * AlgorithmKruskal (90%) (Average speed, cool mazes, high memory usage)
 * AlgorithmDivisionBreadthFirst (30%) (Not done)
 * AlgorithmDivisionDepthFirst (30%) (Not done)
@@ -54,6 +57,8 @@ My nickname is Devedse, I did this project for fun and to learn more about C#. I
 * AlgorithmPrim (30%) (Not done)
 * AlgorithmPrimCenter (30%) (Not done)
 * AlgorithmHuntKill (30%) (Not done)
+
+The AlgorithmBacktrackSmartMemory only saves every junction in a maze when generating, at these junctions only the previous direction is saved, so only 2 bits are needed per junction. Junctions occur only every 50 steps, this reduces memory by about 50 times. Also this algorithm saves these with bitshifting, this reduces the memory usage even further to about 0.1%.
 
 ### InnerMaps (The way the maze is stored while generating)
 * BooleanInnerMap (Memory usage = n, Speed = 100%)

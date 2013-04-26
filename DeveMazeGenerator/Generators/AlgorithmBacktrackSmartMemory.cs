@@ -10,7 +10,7 @@ using System.Drawing;
 
 namespace DeveMazeGenerator.Generators
 {
-    public class AlgorithmBacktrack2 : Algorithm
+    public class AlgorithmBacktrackSmartMemory : Algorithm
     {
         /// <summary>
         /// Generate a Maze
