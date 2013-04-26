@@ -68,6 +68,7 @@
     <Compile Include="ExtensionMethods.cs" />
     <Compile Include="Generators\AlgorithmKruskal.cs" />
     <Compile Include="Generators\AlgorithmBacktrackTest.cs" />
+    <Compile Include="Generators\AlgorithmBacktrack2.cs" />
     <Compile Include="InnerMaps\BitArrayMappedOnHardDiskInnerMap.cs" />
     <Compile Include="InnerMaps\BitArrayMappedOnHardDiskInnerMapArray.cs" />
     <Compile Include="InnerMaps\BitArreintjeFastInnerMap.cs" />
@@ -86,6 +87,8 @@
     <Compile Include="PathFinderDepthFirst.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="QuatroList.cs" />
+    <Compile Include="QuatroStack.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -1263,6 +1263,63 @@ namespace DeveMazeGeneratorGui
             }));
         }
 
+        private void button26_Click(object sender, EventArgs e)
+        {
+            int size = 5;
+
+            Form f = new Form();
+            f.Size = new System.Drawing.Size(1100, 1100);
+            f.Show();
+
+            Task.Run(() =>
+            {
+
+                var g = f.CreateGraphics();
+
+                int width = 1024;
+                int height = 1024;
+
+                g.FillRectangle(Brushes.Black, 0, 0, width + 1, height + 1);
+
+                //for (int y = 0; y < 10; y++)
+                //{
+                //    for (int x = 0; x < 10; x++)
+                //    {
+                //        g.DrawRectangle(Pens.Red, x * 128, y * 128, 128, 128);
+                //    }
+                //}
+
+
+                AlgorithmBacktrack2 curalg = new AlgorithmBacktrack2();
+
+                Maze m = curalg.Generate(width / size, height / size, InnerMapType.Hybrid, 5, (x, y, cur, tot) =>
+                {
+                    currentStepsToCalcPercentage = cur;
+                    totalStepsToCalcPercentage = tot;
+                    g.FillRectangle(Brushes.Red, x * size, y * size, size, size);
+                    //Thread.Sleep(20);
+                    g.FillRectangle(Brushes.White, x * size, y * size, size, size);
+                });
+
+                var path = PathFinderDepthFirst.GoFind(m.InnerMap, (x, y, pathThing) =>
+                {
+                    if (pathThing)
+                    {
+                        g.FillRectangle(Brushes.Green, x * size, y * size, size, size);
+                    }
+                    else
+                    {
+                        g.FillRectangle(Brushes.Gray, x * size, y * size, size, size);
+                    }
+
+                });
+
+                m.SaveMazeAsImage("hybridmaze.png", ImageFormat.Png, path, MazeSaveType.ColorDepth32Bits);
+            });
+        }
+
+
+
     }
 
 
