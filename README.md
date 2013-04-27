@@ -31,6 +31,8 @@ SQRT(2000000000000*8)=4000000, so a maze of about 4 million * 4 million
 
 ### Things this project tought me:
 * Enums are default ints, this means they take up 32-bit (or 4 bytes) in memory when placed in an array.
+* 64-bit projects can use way more memory.
+* You can use the option "AllowVeryLargeObject" to allow bigger objects.
 * Booleans are 1 byte in memory size.
 * A BitArray can be used to store 8 booleans in 1 byte.
 * How to implement different maze generation algorithms.
@@ -71,6 +73,7 @@ This hybrid map divides the maze in a number of parts (a grid). Each part will b
 
 ### The steps I took for minimal memory usage (Focussing mainly on AlgorithmBacktrack and eventually AlgorithmBacktrackSmartMemory):
 * I first created this maze generator where it used an enum for every point in the maze, solid or not solid. (32 bits per point)
+* The first issue I ran against was that the memory was overflowing when generating big mazes, I changed the execution from 32bit to 64bit and in the App.config I allowed VeryLargeObjects.
 * I changed this enum to a boolean (8 bits per point)
 * I started to use BitArray's (1 bit per point)
 * I created my own implementation of the BitArray that's faster then the one from C# and used "MethodImpl(MethodImplOptions.AggressiveInlining)" (20% speed increase)
