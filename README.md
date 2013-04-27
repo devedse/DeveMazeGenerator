@@ -18,7 +18,7 @@ Above, a 4096*4096 maze (Generated in 0,5 seconds)
 * Save them with or without path (to png, bmp, jpeg, etc)
 * Calculate walls (can be used to draw maze in 3d, I also have a sample of this if anyone is interested)
 * A GUI application with all kinds of buttons that do things
-* Different inner storage formats (Highly optimized BitArray, the normal .net BitArray, a Boolean array or directly mapped on the hard drive)
+* Different inner storage formats (Highly optimized BitArray, the normal .net BitArray, a Boolean array, a directly mapped on the hard drive and a Hybrid storage format (see below))
 * On a hard drive with 2TB you could theoretically generate a maze of the following size (This will take weeks / months to complete though):
 ```
 SQRT(2000000000000*8)=4000000, so a maze of about 4 million * 4 million
