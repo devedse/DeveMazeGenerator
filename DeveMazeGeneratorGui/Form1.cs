@@ -637,9 +637,52 @@ namespace DeveMazeGeneratorGui
             Task.Run(() =>
             {
                 AlgorithmBacktrack back = new AlgorithmBacktrack();
-
                 int width = 2500;
                 int height = 600;
+
+                List<InnerMapType> mapTypes = ((InnerMapType[])Enum.GetValues(typeof(InnerMapType))).ToList();
+                List<Algorithm> algjes = new List<Algorithm>();
+                algjes.Add(new AlgorithmBacktrack());
+                algjes.Add(new AlgorithmBacktrackSmartMemory());
+
+                DebugMSG("Comparing all backtrack algorithms + all InnerMaps...");
+                DebugMSG("Generating reference maze...");
+                Maze referenceMaze = back.Generate(width, height, InnerMapType.BooleanArray, 500, null);
+                DebugMSG("Generating reference done, generating all the other stuff...");
+
+                foreach (var algje in algjes)
+                {
+                    foreach (var innerMapType in mapTypes)
+                    {
+                        Maze tocompare = algje.Generate(width, height, innerMapType, 500, null);
+
+                        Boolean theyarethesame = true;
+
+                        for (int xx = 0; xx < width; xx++)
+                        {
+                            for (int yy = 0; yy < height; yy++)
+                            {
+                                if (referenceMaze.InnerMap[xx, yy] != tocompare.InnerMap[xx, yy])
+                                {
+                                    theyarethesame = false;
+                                }
+                            }
+                        }
+
+                        if (!theyarethesame)
+                        {
+                            DebugMSG("ERRRROR: " + algje.GetType().Name + ", " + innerMapType);
+                        }
+                        else
+                        {
+                            DebugMSG(algje.GetType().Name + ", " + innerMapType + " success :)");
+                        }
+                        Thread.Sleep(50); //Just in case random filenames are the same
+                    }
+                }
+
+                DebugMSG("Done comparing algorithms + innermaps");
+
 
                 DebugMSG("Generating maze of size: " + width + " * " + height);
                 Maze maze = back.Generate(width, height, InnerMapType.BitArrayMappedOnHardDisk, null);
@@ -718,9 +761,9 @@ namespace DeveMazeGeneratorGui
                     DebugMSG("and the base of the framework should work :>");
                 }
 
+                GC.Collect();
+
                 DebugMSG("Ok done :D");
-
-
             });
         }
 
