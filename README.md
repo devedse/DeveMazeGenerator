@@ -3,9 +3,9 @@
 
 My maze generator written in C#, highly optimized to generate huge mazes (128.000x128.000 for example), find the shortest path and then save it all to an image.
 
-Currently the fastest algorithm it uses is "AlgorithmBacktrack". If you want a fast maze, use that ;).
+Currently the fastest algorithm is "AlgorithmBacktrack" with "BitArreintjeFast". If you want a fast maze, use that ;).
 
-If you want to create a HUGEE maze take AlgorithmBacktrackSmartMemory as algorithm and Hybrid as InnerMap.
+If you want to create a HUGEE maze take "AlgorithmBacktrackSmartMemory" as algorithm and "Hybrid" as InnerMap (I'm talking about MASSIVE 512.000x512.000 and bigger) (It's about 50% of the speed of the AlgorithmBacktrack with the BitArreintjeFast innermap but uses almost no memory).
 
 ![Maze](maze.png)
 
