@@ -13,7 +13,7 @@ namespace DeveMazeGenerator.InnerMaps
     {
         public HybridInnerMapPart currentMapPart = new HybridInnerMapPart(-1, -1, -1, -1, null); //-1 because no nullchecks needed etc :)
 
-        public int gridSize = 256;
+        public int gridSize = 4096;
         public int amountOfMapPartsLoadedMax = 10;
         public int currentMapCycleFactor = 0;
 
