@@ -54,7 +54,7 @@ namespace DeveMazeGenerator
                 }
 
                 int mask = (3 << derealone * 2); //Mask where the bits should be set 00110000
-                int negativemask = -1 ^ mask; //Invert the mask 11001111
+                int negativemask = ~(mask); //Invert the mask 11001111
 
                 //Clear current bits at the position, the mask is used for this, (for example 10101010 with the mask will become 10001010):
                 int pre = negativemask & innerCrap[pos];
