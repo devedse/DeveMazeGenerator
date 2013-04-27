@@ -761,7 +761,12 @@ namespace DeveMazeGeneratorGui
                     DebugMSG("and the base of the framework should work :>");
                 }
 
-                GC.Collect();
+                //Do a garbage collection afterwards
+                new Thread(() =>
+                {
+                    Thread.Sleep(5000);
+                    GC.Collect(int.MaxValue, GCCollectionMode.Forced, true);
+                }) { IsBackground = true }.Start();
 
                 DebugMSG("Ok done :D");
             });
