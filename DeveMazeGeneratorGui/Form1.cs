@@ -1000,7 +1000,20 @@ namespace DeveMazeGeneratorGui
             double percentage = (double)currentStepsToCalcPercentage / (double)totalStepsToCalcPercentage * 100.0;
             label5.Text = Math.Round(percentage, 2).ToString();
 
-            label8.Text = currentStepsToCalcPercentage + " / " + totalStepsToCalcPercentage;
+            label8.Text = ConvertNumberToNiceString(currentStepsToCalcPercentage) + " / " + ConvertNumberToNiceString(totalStepsToCalcPercentage);
+        }
+
+
+        private String ConvertNumberToNiceString(long number)
+        {
+            StringBuilder build = new StringBuilder();
+            build.Append(number);
+            int prelength = build.Length;
+            for (int i = 3; i < prelength; i += 3)
+            {
+                build.Insert(prelength - i, ".");
+            }
+            return build.ToString();
         }
 
         private void button8_Click(object sender, EventArgs e)
