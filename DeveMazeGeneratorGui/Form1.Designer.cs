@@ -69,6 +69,8 @@ namespace DeveMazeGeneratorGui
             this.button24 = new System.Windows.Forms.Button();
             this.button25 = new System.Windows.Forms.Button();
             this.button26 = new System.Windows.Forms.Button();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // button1
@@ -411,7 +413,7 @@ namespace DeveMazeGeneratorGui
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(249, 224);
+            this.label4.Location = new System.Drawing.Point(14, 223);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(24, 17);
             this.label4.TabIndex = 32;
@@ -420,7 +422,7 @@ namespace DeveMazeGeneratorGui
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(280, 224);
+            this.label5.Location = new System.Drawing.Point(44, 222);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(16, 17);
             this.label5.TabIndex = 33;
@@ -532,11 +534,31 @@ namespace DeveMazeGeneratorGui
             this.button26.UseVisualStyleBackColor = true;
             this.button26.Click += new System.EventHandler(this.button26_Click);
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(123, 223);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(41, 17);
+            this.label7.TabIndex = 42;
+            this.label7.Text = "Step:";
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(170, 222);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(13, 17);
+            this.label8.TabIndex = 43;
+            this.label8.Text = "-";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1107, 757);
+            this.Controls.Add(this.label8);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.button26);
             this.Controls.Add(this.button25);
             this.Controls.Add(this.button24);
@@ -624,6 +646,8 @@ namespace DeveMazeGeneratorGui
         private System.Windows.Forms.Button button24;
         private System.Windows.Forms.Button button25;
         private System.Windows.Forms.Button button26;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label8;
     }
 }
 
