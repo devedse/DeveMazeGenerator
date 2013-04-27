@@ -67,7 +67,7 @@ The AlgorithmBacktrackSmartMemory only saves every junction in a maze when gener
 * DotNetBitArrayInnerMap (Memory usage = n/8, Speed = ~80%)
 * BitArrayMappedOnHardDiskInnerMap (Memory usage = 0, Speed = ~0,2%)
 * Hybrid (Memory usage = like 20 mb max with default settings, Speed = 50%)
-This hybrid map divides the maze in a number of parts (a grid). Each part will be loaded into the memory when needed and written to the disk if possible too. This really is the best way to generate REALLLYYY REAALLLLYYYYY big mazes pretty fast. (This only works well with AlgorithmBacktrack though)
+This hybrid map divides the maze in a number of parts (a grid). Each part will be loaded into the memory when needed and written to the disk if possible too. This really is the best way to generate REALLLYYY REAALLLLYYYYY big mazes pretty fast. (This only works well with AlgorithmBacktrackSmartMemory though because the other algorithms have more overhead)
 
 ### The steps I took for minimal memory usage (Focussing mainly on AlgorithmBacktrack and eventually AlgorithmBacktrackSmartMemory):
 * I first created this maze generator where it used an enum for every point in the maze, solid or not solid. (32 bits per point)
