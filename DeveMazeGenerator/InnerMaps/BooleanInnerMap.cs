@@ -9,14 +9,12 @@ namespace DeveMazeGenerator.InnerMaps
 {
     class BooleanInnerMap : InnerMap
     {
+        private Boolean[,] innerData;
+
         public BooleanInnerMap(int width, int height)
             : base(width, height)
         {
-            innerData = new InnerMapArray[width];
-            for (int i = 0; i < width; i++)
-            {
-                innerData[i] = new BooleanInnerMapArray(height);
-            }
+            innerData = new Boolean[width, height];
         }
 
         public override Boolean this[int x, int y]
@@ -24,12 +22,12 @@ namespace DeveMazeGenerator.InnerMaps
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
             {
-                return innerData[x][y];
+                return innerData[x, y];
             }
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
-                innerData[x][y] = value;
+                innerData[x, y] = value;
             }
         }
     }

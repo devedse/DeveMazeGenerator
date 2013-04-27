@@ -9,11 +9,12 @@ namespace DeveMazeGenerator.InnerMaps
 {
     public class BitArreintjeFastInnerMap : InnerMap
     {
+        private BitArreintjeFastInnerMapArray[] innerData;
 
         public BitArreintjeFastInnerMap(int width, int height)
             : base(width, height)
         {
-            innerData = new InnerMapArray[width];
+            innerData = new BitArreintjeFastInnerMapArray[width];
             for (int i = 0; i < width; i++)
             {
                 innerData[i] = new BitArreintjeFastInnerMapArray(height);

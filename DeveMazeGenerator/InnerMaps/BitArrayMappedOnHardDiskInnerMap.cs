@@ -14,6 +14,7 @@ namespace DeveMazeGenerator.InnerMaps
         private IntHDArray inthdarray;
 
         private long totalLength;
+        private BitArrayMappedOnHardDiskInnerMapArray[] innerData;
 
         public BitArrayMappedOnHardDiskInnerMap(int width, int height)
             : base(width, height)
@@ -29,28 +30,6 @@ namespace DeveMazeGenerator.InnerMaps
             //data = new int[size / 32 + 1];
         }
 
-        //public override void Print()
-        //{
-        //    StringBuilder build = new StringBuilder();
-        //    for (int i = 0; i < length / 8; i++)
-        //    {
-        //        for (int y = 0; y < 8; y++)
-        //        {
-        //            Boolean b = this[i * 8 + y];
-        //            if (b)
-        //            {
-        //                build.Append('1');
-        //            }
-        //            else
-        //            {
-        //                build.Append('0');
-        //            }
-        //        }
-        //        build.Append(' ');
-        //    }
-        //    Console.WriteLine(build);
-        //}
-
         public override Boolean this[int x, int y]
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -65,7 +44,7 @@ namespace DeveMazeGenerator.InnerMaps
             }
         }
 
-        public void SetRealPos(long pos, Boolean value)
+        internal void SetRealPos(long pos, Boolean value)
         {
             if (pos > totalLength)
             {
@@ -89,7 +68,7 @@ namespace DeveMazeGenerator.InnerMaps
             //inthdarray[pos] = value;
         }
 
-        public Boolean GetRealPos(long pos)
+        internal Boolean GetRealPos(long pos)
         {
             int thePositionForBitShift = (int)(pos % 32);
             return (inthdarray[pos / 32] & (1 << thePositionForBitShift)) != 0;
@@ -97,10 +76,10 @@ namespace DeveMazeGenerator.InnerMaps
     }
 
 
-    public class IntHDArray
+    class IntHDArray
     {
-        public static Random randomFileNameRandom = new Random();
-        public static String tempFolder = "temp\\";
+        private static Random randomFileNameRandom = new Random();
+        private static String tempFolder = "temp\\";
 
         private FileStream fileStream;
         private String innerFileName;

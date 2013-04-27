@@ -22,7 +22,6 @@ namespace DeveMazeGenerator.InnerMaps
             get { return height; }
         }
 
-
         public InnerMap(int width, int height)
         {
             this.width = width;
@@ -51,14 +50,6 @@ namespace DeveMazeGenerator.InnerMaps
             }
             Console.WriteLine(build);
         }
-
-        public int Length
-        {
-            get { return innerData.Length; }
-        }
-
-        public InnerMapArray[] innerData;
-
 
         /// <summary>
         /// Info about mazes:

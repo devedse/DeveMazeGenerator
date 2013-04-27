@@ -7,16 +7,11 @@ using System.Threading.Tasks;
 
 namespace DeveMazeGenerator.InnerMaps
 {
-    class BitArrayMappedOnHardDiskInnerMapArray : InnerMapArray
+    class BitArrayMappedOnHardDiskInnerMapArray
     {
         private int length;
         private int xCoord;
         private BitArrayMappedOnHardDiskInnerMap parent;
-
-        public override int Length
-        {
-            get { return length; }
-        }
 
         public BitArrayMappedOnHardDiskInnerMapArray(BitArrayMappedOnHardDiskInnerMap parent, int xCoord, int height)
         {
@@ -25,14 +20,12 @@ namespace DeveMazeGenerator.InnerMaps
             this.parent = parent;
         }
 
-        public override bool this[int y]
+        public bool this[int y]
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
             {
-
                 parent.SetRealPos((long)xCoord * (long)length + y, value);
-
             }
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get

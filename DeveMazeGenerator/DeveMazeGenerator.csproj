@@ -74,14 +74,11 @@
     <Compile Include="InnerMaps\BitArreintjeFastInnerMap.cs" />
     <Compile Include="InnerMaps\BitArreintjeFastInnerMapArray.cs" />
     <Compile Include="InnerMaps\BooleanInnerMap.cs" />
-    <Compile Include="InnerMaps\BooleanInnerMapArray.cs" />
-    <Compile Include="InnerMaps\DotNetBitArrayInnerMapArray.cs" />
     <Compile Include="InnerMaps\DotNetBitArrayInnerMap.cs" />
     <Compile Include="Generators\Algorithm.cs" />
     <Compile Include="Generators\AlgorithmBacktrack.cs" />
     <Compile Include="InnerMaps\HybridInnerMap.cs" />
     <Compile Include="InnerMaps\InnerMap.cs" />
-    <Compile Include="InnerMaps\InnerMapArray.cs" />
     <Compile Include="Maze.cs" />
     <Compile Include="MazeWall.cs" />
     <Compile Include="PathFinderDepthFirst.cs" />

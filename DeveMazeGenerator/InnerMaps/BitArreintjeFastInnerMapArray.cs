@@ -8,23 +8,17 @@ using System.Threading.Tasks;
 
 namespace DeveMazeGenerator.InnerMaps
 {
-    class BitArreintjeFastInnerMapArray : InnerMapArray
+    class BitArreintjeFastInnerMapArray
     {
-        public int[] innerData;
-        private int length;
-
-        public override int Length
-        {
-            get { return length; }
-        }
+        //Internal since it's used by some other classes (because this is so awesome)
+        internal int[] innerData;
 
         public BitArreintjeFastInnerMapArray(int height)
         {
-            this.length = height;
             innerData = new int[height / 32 + 1];
         }
 
-        public override bool this[int y]
+        public bool this[int y]
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set

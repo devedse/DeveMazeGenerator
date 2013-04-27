@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -9,13 +10,15 @@ namespace DeveMazeGenerator.InnerMaps
 {
     class DotNetBitArrayInnerMap : InnerMap
     {
+        private BitArray[] innerData;
+
         public DotNetBitArrayInnerMap(int width, int height)
             : base(width, height)
         {
-            innerData = new InnerMapArray[width];
+            innerData = new BitArray[width];
             for (int i = 0; i < width; i++)
             {
-                innerData[i] = new DotNetBitArrayInnerMapArray(height);
+                innerData[i] = new BitArray(height);
             }
         }
 
