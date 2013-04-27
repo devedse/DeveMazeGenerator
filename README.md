@@ -40,6 +40,7 @@ SQRT(2000000000000*8)=4000000, so a maze of about 4 million * 4 million
 * That the Random class is not Thread safe :/.
 * How to write my own pathfinder that's faster then A* (It finds "a path" which is always the shortest since the mazes have only 1 path)
 * How the garbage collector won't collect all garbage sometimes (when generating loads of mazes multithreaded for a long time)
+* How you can use 2 bits to store a direction where you came from with BitShifting
 * Lot's more
 
 ### Me
@@ -67,3 +68,17 @@ The AlgorithmBacktrackSmartMemory only saves every junction in a maze when gener
 * BitArrayMappedOnHardDiskInnerMap (Memory usage = 0, Speed = ~0,2%)
 * Hybrid (Memory usage = like 20 mb max with default settings, Speed = 50%)
 This hybrid map divides the maze in a number of parts (a grid). Each part will be loaded into the memory when needed and written to the disk if possible too. This really is the best way to generate REALLLYYY REAALLLLYYYYY big mazes pretty fast. (This only works well with AlgorithmBacktrack though)
+
+### The steps I took for minimal memory usage (Focussing mainly on AlgorithmBacktrack and eventually AlgorithmBacktrackSmartMemory):
+* I first created this maze generator where it used an enum for every point in the maze, solid or not solid. (32 bits per point)
+* I changed this enum to a boolean (8 bits per point)
+* I started to use BitArray's (1 bit per point)
+* I created my own implementation of the BitArray that's faster then the one from C# and used [MethodImpl(MethodImplOptions.AggressiveInlining)] (20% speed increase)
+* I optimized out some code in the AlgorithmBacktrack class and started using an Array which gets reused for finding the next destination (10% speed increase)
+* I then chose to create a new implementation of the InnerMap that stored the maze completely on the hard disk sacrificing speed for 0 memory usage.
+* This resulted in a very slow solution. That's why I then chose to create the Hybrid map, it loads only 10 parts of the maze it's currently working on in memory, so the memory usage stays really low while still maintaining about 50% of the original speed.
+* The issue I ran into after this solution was that the stack used by the AlgorithmBacktrack was actually using the most memory. That's why I retought the solution and created a stack which only stores junctions instead of every point while generating a maze. These junctions are stored as a direction to the previous point we came from (for example top if we came from the top). Since we only have 4 values here we only need 2 bits to store these values. That's why I created the "QuatroList" and "QuatroStack" which stores an int between 0 - 3 in only 2 bits.
+* After all these optimizations the Hybrid map only uses 20mb memory max and AlgorithmBacktrackSmartMemory uses about 0.1% of the memory the stack used previously.
+
+## Issues ;)?
+If you have any issues, questions or just want to talk to me, throw me a message and get in contact with me :).
