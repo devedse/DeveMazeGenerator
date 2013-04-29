@@ -27,6 +27,9 @@ namespace DeveMazeGeneratorGui
         private long totalStepsToCalcPercentage = 100;
         private long currentStepsToCalcPercentage = 0;
 
+        private long lastSteps = 0;
+        private Stopwatch stopwatchTimeSinceLastTimerTick = Stopwatch.StartNew();
+
         public Form1()
         {
             InitializeComponent();
@@ -1045,6 +1048,10 @@ namespace DeveMazeGeneratorGui
 
         private void timer1_Tick(object sender, EventArgs e)
         {
+            long perSecond = (long)(1.0 / stopwatchTimeSinceLastTimerTick.Elapsed.TotalSeconds * (double)(currentStepsToCalcPercentage - lastSteps));
+            lastSteps = currentStepsToCalcPercentage;
+            stopwatchTimeSinceLastTimerTick.Restart();
+            label10.Text = ConvertNumberToNiceString(perSecond);
             double percentage = (double)currentStepsToCalcPercentage / (double)totalStepsToCalcPercentage * 100.0;
             label5.Text = Math.Round(percentage, 2).ToString();
 
