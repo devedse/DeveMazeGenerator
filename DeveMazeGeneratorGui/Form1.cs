@@ -456,7 +456,11 @@ namespace DeveMazeGeneratorGui
 
             AlgorithmBacktrack back = new AlgorithmBacktrack();
             DebugMSG("Generating maze of type: " + type + " of size: " + size);
-            Maze maze = back.Generate(size, size, type, null);
+            Maze maze = back.Generate(size, size, type, (x, y, cur, tot) =>
+            {
+                currentStepsToCalcPercentage = cur;
+                totalStepsToCalcPercentage = tot;
+            });
             //var path = PathFinderDepthFirst.GoFind(new MazePoint(1, 1), new MazePoint(size - 3, size - 3), maze.InnerMap);
             //maze.SaveMazeAsBmpWithPath4bpp("maze.bmp", path);
             DebugMSG("Ok done, time: " + w.Elapsed.TotalSeconds);
@@ -1048,7 +1052,7 @@ namespace DeveMazeGeneratorGui
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            long perSecond = (long)(1.0 / stopwatchTimeSinceLastTimerTick.Elapsed.TotalSeconds * (double)(currentStepsToCalcPercentage - lastSteps));
+            long perSecond = (long)Math.Max((1.0 / stopwatchTimeSinceLastTimerTick.Elapsed.TotalSeconds * (double)(currentStepsToCalcPercentage - lastSteps)), 0.0);
             lastSteps = currentStepsToCalcPercentage;
             stopwatchTimeSinceLastTimerTick.Restart();
             label10.Text = ConvertNumberToNiceString(perSecond);
