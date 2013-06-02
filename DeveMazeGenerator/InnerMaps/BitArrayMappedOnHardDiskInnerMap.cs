@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DeveMazeGenerator.InnerMaps.InnerMapHelpers;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -74,56 +75,5 @@ namespace DeveMazeGenerator.InnerMaps
             return (inthdarray[pos / 32] & (1 << thePositionForBitShift)) != 0;
         }
     }
-
-
-    class IntHDArray
-    {
-        private static Random randomFileNameRandom = new Random();
-        private static String tempFolder = "temp\\";
-
-        private FileStream fileStream;
-        private String innerFileName;
-
-        public IntHDArray(long size)
-        {
-            if (!Directory.Exists(tempFolder))
-            {
-                Directory.CreateDirectory(tempFolder);
-            }
-            innerFileName = tempFolder + GetRandomFileName();
-            fileStream = new FileStream(innerFileName, FileMode.Create);
-            fileStream.SetLength(size);
-        }
-
-        private String GetRandomFileName()
-        {
-            String str = randomFileNameRandom.Next().ToString() + randomFileNameRandom.Next().ToString() + randomFileNameRandom.Next().ToString() + randomFileNameRandom.Next().ToString() + ".txt";
-            return str;
-        }
-
-        public int this[long thePosition]
-        {
-            set
-            {
-                fileStream.Position = thePosition * 4;
-                fileStream.Write(BitConverter.GetBytes(value), 0, 4);
-            }
-            get
-            {
-                fileStream.Position = thePosition * 4;
-                byte[] readstuff = new byte[4];
-                fileStream.Read(readstuff, 0, 4);
-                return BitConverter.ToInt32(readstuff, 0);
-            }
-        }
-
-        ~IntHDArray()
-        {
-            fileStream.Close();
-            File.Delete(innerFileName);
-        }
-
-    }
-
 
 }

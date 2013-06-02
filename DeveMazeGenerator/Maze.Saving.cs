@@ -115,7 +115,7 @@ namespace DeveMazeGenerator
             */
             int cursize = 1;
 
-            Bitmap objBmpImage = new Bitmap(cursize * (width - 1), cursize * (height - 1), PixelFormat.Format32bppArgb);
+            Bitmap objBmpImage = new Bitmap(cursize * (Width - 1), cursize * (Height - 1), PixelFormat.Format32bppArgb);
             Graphics objGraphics = Graphics.FromImage(objBmpImage);
 
             // Add the colors to the new bitmap.
@@ -127,9 +127,9 @@ namespace DeveMazeGenerator
             //objGraphics.TextRenderingHint = TextRenderingHint.AntiAlias;
             //objGraphics.DrawString(sImageText, objFont, new SolidBrush(Color.FromArgb(102, 102, 102)), 0, 0);
 
-            for (int y = 0; y < height - 1; y++)
+            for (int y = 0; y < Height - 1; y++)
             {
-                for (int x = 0; x < width - 1; x++)
+                for (int x = 0; x < Width - 1; x++)
                 {
                     if (innerMap[x, y] == true)
                     {

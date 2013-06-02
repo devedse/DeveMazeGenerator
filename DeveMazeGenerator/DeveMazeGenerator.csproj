@@ -79,6 +79,8 @@
     <Compile Include="Generators\AlgorithmBacktrack.cs" />
     <Compile Include="InnerMaps\HybridInnerMap.cs" />
     <Compile Include="InnerMaps\InnerMap.cs" />
+    <Compile Include="InnerMaps\InnerMapHelpers\CompleteHDArray.cs" />
+    <Compile Include="InnerMaps\InnerMapHelpers\IntHDArray.cs" />
     <Compile Include="Maze.cs" />
     <Compile Include="MazeWall.cs" />
     <Compile Include="PathFinderDepthFirst.cs" />
@@ -108,6 +110,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

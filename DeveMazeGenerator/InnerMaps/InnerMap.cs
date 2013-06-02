@@ -13,12 +13,14 @@ namespace DeveMazeGenerator.InnerMaps
 
         public int Width
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get { return width; }
         }
         private int height;
 
         public int Height
         {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get { return height; }
         }
 
