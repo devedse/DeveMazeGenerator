@@ -9,7 +9,6 @@ namespace DeveMazeGenerator.InnerMaps.InnerMapHelpers
 {
     class IntHDArray
     {
-        private static Random randomFileNameRandom = new Random();
         private static String tempFolder = "temp\\";
 
         private FileStream fileStream;
@@ -28,8 +27,7 @@ namespace DeveMazeGenerator.InnerMaps.InnerMapHelpers
 
         private String GetRandomFileName()
         {
-            String str = randomFileNameRandom.Next().ToString() + randomFileNameRandom.Next().ToString() + randomFileNameRandom.Next().ToString() + randomFileNameRandom.Next().ToString() + ".txt";
-            return str;
+            return Guid.NewGuid() + ".txt";
         }
 
         public int this[long thePosition]
