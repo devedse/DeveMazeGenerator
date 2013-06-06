@@ -44,7 +44,6 @@ namespace DeveMazeGeneratorUnitTest
                     var obj = ctors[0].Invoke(new object[] { width, height });
                     InnerMap curInnerMap = (InnerMap)obj;
                     maps.Add(curInnerMap);
-                    Thread.Sleep(100); //Wait a while so random resets because hybrid and innermap use the same thing to determine file name
                 }
             }
 
