@@ -156,12 +156,12 @@ namespace DeveMazeGeneratorGui
                 Maze maze = curalg.Generate(size, size, InnerMapType.BitArreintjeFast, 1337, null);
                 w.Stop();
                 DebugMSG("Generating time: " + w.Elapsed.TotalSeconds);
-                //DebugMSG("Finding path...");
-                //w.Reset();
-                //w.Start();
-                //var path = PathfinderDepthFirst.GoFind(new MazePoint(1, 1), new MazePoint(size - 3, size - 3), maze.InnerMap);
-                //w.Stop();
-                //DebugMSG("Time it took to find path: " + w.Elapsed.TotalSeconds);
+                DebugMSG("Finding path...");
+                w.Reset();
+                w.Start();
+                var path = PathFinderDepthFirst.GoFind(maze.InnerMap, null);
+                w.Stop();
+                DebugMSG("Time it took to find path: " + w.Elapsed.TotalSeconds);
 
                 GC.Collect();
 
@@ -169,11 +169,12 @@ namespace DeveMazeGeneratorGui
                 w.Reset();
                 w.Start();
 
-                maze.SaveMazeAsImage("bigmazeetc.bmp", ImageFormat.Bmp);
+                maze.SaveMazeAsImage("bigmazeetc.bmp", ImageFormat.Bmp, path, MazeSaveType.ColorDepth4Bits);
                 DebugMSG("Done saving, saving time: " + w.Elapsed.TotalSeconds);
                 DebugMSG("Location: " + System.IO.Directory.GetCurrentDirectory());
                 maze = null;
-                GC.Collect();
+                path = null;
+                GC.Collect(int.MaxValue);
             }));
         }
 
