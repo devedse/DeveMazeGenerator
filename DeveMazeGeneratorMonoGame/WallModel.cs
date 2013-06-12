@@ -10,18 +10,11 @@ namespace DeveMazeGeneratorMonoGame
 {
     class WallModel
     {
-        public Game1 game;
-        public int[] indices = new int[12];
-        public VertexPositionNormalTexture[] vertices = new VertexPositionNormalTexture[24];
-
-
         private MazeWall mazeWall;
 
-        public Matrix myMatrix;
 
-        public WallModel(Game1 game, MazeWall mazeWall)
+        public WallModel(MazeWall mazeWall)
         {
-            this.game = game;
             this.mazeWall = mazeWall;
 
 
@@ -34,7 +27,7 @@ namespace DeveMazeGeneratorMonoGame
 
             int height = 1;
 
-            int howmuchvertices = 4;
+            int howmuchvertices = 8;
 
             //Front
             vertices[curVertice + 0] = new VertexPositionNormalTexture(new Vector3(mazeWall.xstart, height, mazeWall.ystart), new Vector3(0, 0, 1), texturePosInfo.front.First());
@@ -43,10 +36,10 @@ namespace DeveMazeGeneratorMonoGame
             vertices[curVertice + 3] = new VertexPositionNormalTexture(new Vector3(mazeWall.xend, 0, mazeWall.yend), new Vector3(0, 0, 1), texturePosInfo.front.Fourth());
 
             //Rear
-            //vertices[4] = new VertexPositionNormalTexture(new Vector3(width, height, 0), new Vector3(0, 0, -1), texturePosInfo.rear.First());
-            //vertices[5] = new VertexPositionNormalTexture(new Vector3(0, height, 0), new Vector3(0, 0, -1), texturePosInfo.rear.Second());
-            //vertices[6] = new VertexPositionNormalTexture(new Vector3(width, 0, 0), new Vector3(0, 0, -1), texturePosInfo.rear.Third());
-            //vertices[7] = new VertexPositionNormalTexture(new Vector3(0, 0, 0), new Vector3(0, 0, -1), texturePosInfo.rear.Fourth());
+            vertices[curVertice + 4] = new VertexPositionNormalTexture(new Vector3(mazeWall.xstart, height, mazeWall.ystart), new Vector3(0, 0, -1), texturePosInfo.rear.Second());
+            vertices[curVertice + 5] = new VertexPositionNormalTexture(new Vector3(mazeWall.xstart, 0, mazeWall.ystart), new Vector3(0, 0, -1), texturePosInfo.rear.Fourth());
+            vertices[curVertice + 6] = new VertexPositionNormalTexture(new Vector3(mazeWall.xend, height, mazeWall.yend), new Vector3(0, 0, -1), texturePosInfo.rear.First());
+            vertices[curVertice + 7] = new VertexPositionNormalTexture(new Vector3(mazeWall.xend, 0, mazeWall.yend), new Vector3(0, 0, -1), texturePosInfo.rear.Third());
 
 
 
@@ -61,16 +54,23 @@ namespace DeveMazeGeneratorMonoGame
                 curIndice += 6;
             }
 
-            curVertice += howmuchvertices;
+
+
+            float hhh = height;
+            float www = mazeWall.yend - mazeWall.ystart + mazeWall.xend - mazeWall.xstart;
 
             ////This stuff is for repeating the texture
-            //for (int i = 0; i < vertices.Length; i++)
-            //{
-            //    var vert = vertices[i];
-            //    vert.TextureCoordinate.X *= (width / 10.0f);
-            //    vert.TextureCoordinate.Y *= (height / 10.0f);
-            //    vertices[i] = vert;
-            //}
+            for (int i = curVertice; i < curVertice + howmuchvertices; i++)
+            {
+                var vert = vertices[i];
+                vert.TextureCoordinate.X *= (www / 1.0f);
+                vert.TextureCoordinate.Y *= (hhh / 1.0f);
+                vertices[i] = vert;
+            }
+
+            curVertice += howmuchvertices;
+
+
         }
 
         //public void Update(GameTime gameTime)

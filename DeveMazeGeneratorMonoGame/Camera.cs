@@ -10,9 +10,9 @@ namespace DeveMazeGeneratorMonoGame
 {
     public class Camera
     {
-        public Vector3 cameraPosition = new Vector3(0, 0, 50);
-        private float leftrightRot = 0;
-        private float updownRot = 0;
+        public Vector3 cameraPosition = new Vector3(-100, 100, -100);
+        private float leftrightRot = -MathHelper.Pi * 0.75f;
+        private float updownRot = -0.33f;
         private const float rotationSpeed = 0.3f;
         private float moveSpeed = 100.0f;
         private Game1 game;
@@ -40,6 +40,10 @@ namespace DeveMazeGeneratorMonoGame
             if (InputDing.CurMouse.LeftButton == ButtonState.Pressed)
             {
                 moveSpeed = 1000.0f;
+            }
+            else if (InputDing.CurMouse.RightButton == ButtonState.Pressed)
+            {
+                moveSpeed = 30.0f;
             }
             else
             {

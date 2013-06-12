@@ -76,6 +76,17 @@ namespace DeveMazeGeneratorMonoGame
                 indices[cur + 5] = 2 + i;
                 cur += 6;
             }
+
+            //This stuff is for repeating the texture
+            for (int i = 0; i < vertices.Length; i++)
+            {
+                var vert = vertices[i];
+                vert.TextureCoordinate.X *= (width / 10.0f);
+                vert.TextureCoordinate.Y *= (depth / 10.0f); 
+                //vert.TextureCoordinate.X /= 10.0f;
+                //vert.TextureCoordinate.Y /= 10.0f;
+                vertices[i] = vert;
+            }
         }
 
         public void Update(GameTime gameTime)

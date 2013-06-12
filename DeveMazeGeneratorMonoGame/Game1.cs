@@ -28,8 +28,13 @@ namespace DeveMazeGeneratorMonoGame
         private VertexBuffer vertexBuffer;
         private IndexBuffer indexBuffer;
 
+        private VertexBuffer vertexBufferPath;
+        private IndexBuffer indexBufferPath;
+
         private int curMazeWidth = 32;
         private int curMazeHeight = 32;
+        private int wallsCount = 0;
+        private int pathCount = 0;
 
         public Game1()
             : base()
@@ -103,6 +108,7 @@ namespace DeveMazeGeneratorMonoGame
             var alg = new AlgorithmBacktrack();
             var maze = alg.Generate(curMazeWidth, curMazeHeight, InnerMapType.BitArreintjeFast, null);
             var walls = maze.GenerateListOfMazeWalls();
+            var path = PathFinderDepthFirst.GoFind(maze.InnerMap, null);
 
 
             VertexPositionNormalTexture[] vertices = new VertexPositionNormalTexture[walls.Count * 8];
@@ -112,22 +118,63 @@ namespace DeveMazeGeneratorMonoGame
             int curIndice = 0;
 
 
+
             foreach (var wall in walls)
             {
                 //int factorHeight = 10;
                 //int factorWidth = 10;
 
-                WallModel model = new WallModel(this, wall);
+                WallModel model = new WallModel(wall);
 
                 model.GoGenerateVertices(vertices, indices, ref curVertice, ref curIndice);
 
             }
+
+            wallsCount = walls.Count;
 
             vertexBuffer = new VertexBuffer(GraphicsDevice, VertexPositionNormalTexture.VertexDeclaration, vertices.Length, BufferUsage.WriteOnly);
             indexBuffer = new IndexBuffer(GraphicsDevice, IndexElementSize.ThirtyTwoBits, indices.Length, BufferUsage.WriteOnly);
 
             vertexBuffer.SetData(vertices);
             indexBuffer.SetData(indices);
+
+            GeneratePath(path);
+        }
+
+        public void GeneratePath(List<MazePoint> path)
+        {
+            if (vertexBufferPath != null)
+                vertexBufferPath.Dispose();
+            if (indexBufferPath != null)
+                indexBufferPath.Dispose();
+
+
+            VertexPositionNormalTexture[] vertices = new VertexPositionNormalTexture[path.Count * 4];
+            int[] indices = new int[path.Count * 6];
+
+            int curVertice = 0;
+            int curIndice = 0;
+
+
+
+            foreach (var pathNode in path)
+            {
+                //int factorHeight = 10;
+                //int factorWidth = 10;
+
+                VierkantjeModel model = new VierkantjeModel();
+
+                model.GoGenerateVertices(pathNode.X, pathNode.Y, vertices, indices, ref curVertice, ref curIndice);
+
+            }
+
+            pathCount = path.Count;
+
+            vertexBufferPath = new VertexBuffer(GraphicsDevice, VertexPositionNormalTexture.VertexDeclaration, vertices.Length, BufferUsage.WriteOnly);
+            indexBufferPath = new IndexBuffer(GraphicsDevice, IndexElementSize.ThirtyTwoBits, indices.Length, BufferUsage.WriteOnly);
+
+            vertexBufferPath.SetData(vertices);
+            indexBufferPath.SetData(indices);
         }
 
         /// <summary>
@@ -160,7 +207,7 @@ namespace DeveMazeGeneratorMonoGame
                 GenerateMaze();
             }
 
-            if (InputDing.KeyDownUp(Keys.R))
+            if (InputDing.CurKey.IsKeyDown(Keys.R))
             {
                 GenerateMaze();
             }
@@ -239,22 +286,22 @@ namespace DeveMazeGeneratorMonoGame
             //}
 
 
+
+
             //Ground
-
-
             int mazeScale = 10;
 
             effect.World = Matrix.CreateScale(mazeScale);
 
             //effect.Texture = ContentDing.grasTexture;
 
-            //SamplerState newSamplerState2 = new SamplerState()
-            //{
-            //    AddressU = TextureAddressMode.Wrap,
-            //    AddressV = TextureAddressMode.Wrap,
-            //    Filter = TextureFilter.Point
-            //};
-            //GraphicsDevice.SamplerStates[0] = newSamplerState2;
+            SamplerState newSamplerState2 = new SamplerState()
+            {
+                AddressU = TextureAddressMode.Mirror,
+                AddressV = TextureAddressMode.Mirror,
+                Filter = TextureFilter.Anisotropic
+            };
+            GraphicsDevice.SamplerStates[0] = newSamplerState2;
 
 
             //int curmazeheight = 100;
@@ -264,21 +311,25 @@ namespace DeveMazeGeneratorMonoGame
 
             effect.Texture = ContentDing.grasTexture;
 
-            CubeModel ground = new CubeModel(this, curMazeWidth, 1, curMazeHeight, TexturePosInfoGenerator.FullImage);
+            CubeModel ground = new CubeModel(this, curMazeWidth - 2, 1, curMazeHeight - 2, TexturePosInfoGenerator.FullImage);
             ground.Draw(Matrix.CreateTranslation(0, -1, 0) * effect.World, effect);
 
+
+
+
+
+
+            //Maze
             effect.World = Matrix.CreateScale(mazeScale);
 
             if (vertexBuffer != null && indexBuffer != null)
             {
-                GraphicsDevice.RasterizerState = RasterizerState.CullNone;
+                GraphicsDevice.RasterizerState = RasterizerState.CullCounterClockwise;
 
                 GraphicsDevice.Indices = indexBuffer;
                 GraphicsDevice.SetVertexBuffer(vertexBuffer);
 
                 effect.Texture = ContentDing.wallTexture;
-
-
 
                 foreach (EffectPass pass in effect.CurrentTechnique.Passes)
                 {
@@ -288,6 +339,23 @@ namespace DeveMazeGeneratorMonoGame
 
             }
 
+            //Path
+            if (vertexBufferPath != null && vertexBufferPath != null)
+            {
+                GraphicsDevice.RasterizerState = RasterizerState.CullCounterClockwise;
+
+                GraphicsDevice.Indices = indexBufferPath;
+                GraphicsDevice.SetVertexBuffer(vertexBufferPath);
+
+                effect.Texture = ContentDing.redTexture;
+
+                foreach (EffectPass pass in effect.CurrentTechnique.Passes)
+                {
+                    pass.Apply();
+                    GraphicsDevice.DrawIndexedPrimitives(PrimitiveType.TriangleList, 0, 0, vertexBuffer.VertexCount, 0, indexBuffer.IndexCount / 3);
+                }
+
+            }
 
 
 
@@ -302,12 +370,20 @@ namespace DeveMazeGeneratorMonoGame
             //}
 
 
-            //spriteBatch.Begin();
+            spriteBatch.Begin();
 
-            //spriteBatch.DrawString(ContentDing.spriteFont, "Size: " + curMazeWidth, new Vector2(10, 10), Color.White);
+            String stringToDraw = "Size: " + curMazeWidth + ", Walls: " + wallsCount + ", Path length: " + pathCount;
 
-            //spriteBatch.End();
+            var meassured = ContentDing.spriteFont.MeasureString(stringToDraw);
 
+            spriteBatch.Draw(ContentDing.semiTransparantTexture, new Rectangle(5, 5, (int)meassured.X + 10, (int)meassured.Y + 10), Color.White);
+            spriteBatch.DrawString(ContentDing.spriteFont, stringToDraw, new Vector2(10, 10), Color.White);
+
+            spriteBatch.End();
+
+
+            GraphicsDevice.BlendState = BlendState.Opaque;
+            GraphicsDevice.DepthStencilState = DepthStencilState.Default;
 
             base.Draw(gameTime);
         }
