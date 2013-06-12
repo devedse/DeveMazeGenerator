@@ -161,9 +161,10 @@ namespace DeveMazeGenerator
         {
             Maze m = new Maze(width, height, InnerMapType.BitArreintjeFast);
 
-            for (int y = 0; y < m.Height; y++)
+            //-1 for stupid black pixel thing :o
+            for (int y = 0; y < m.Height - 1; y++)
             {
-                for (int x = 0; x < m.Width; x++)
+                for (int x = 0; x < m.Width - 1; x++)
                 {
                     m.innerMap[x, y] = true;
                 }
@@ -174,7 +175,7 @@ namespace DeveMazeGenerator
                 if (wall.ystart == wall.yend)
                 {
                     //Horizontal
-                    for (int x = wall.xstart; x < wall.xend; x++)
+                    for (int x = wall.xstart; x <= wall.xend; x++)
                     {
                         m.innerMap[x, wall.ystart] = false;
                     }
@@ -182,7 +183,7 @@ namespace DeveMazeGenerator
                 else
                 {
                     //Vertical
-                    for (int y = wall.ystart; y < wall.yend; y++)
+                    for (int y = wall.ystart; y <= wall.yend; y++)
                     {
                         m.innerMap[wall.xstart, y] = false;
                     }
