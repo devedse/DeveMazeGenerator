@@ -48,8 +48,8 @@ namespace DeveMazeGeneratorMonoGame
             }
             else
             {
-                graphics.PreferredBackBufferWidth = 2560;
-                graphics.PreferredBackBufferHeight = 1440;
+                graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+                graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
                 graphics.IsFullScreen = true;
             }
 
