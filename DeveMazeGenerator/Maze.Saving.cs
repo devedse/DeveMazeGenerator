@@ -229,7 +229,7 @@ namespace DeveMazeGenerator
 
                 for (int i = 0; i < path.Count; i++)
                 {
-                    int percent = 100 * (i + 1) / path.Count;
+                    long percent = 100L * (long)(i + 1) / (long)path.Count;
                     MazePoint point = path[i];
                     int xrest = point.X % 2;
 

@@ -162,6 +162,7 @@ namespace DeveMazeGeneratorGui
                 var path = PathFinderDepthFirst.GoFind(maze.InnerMap, null);
                 w.Stop();
                 DebugMSG("Time it took to find path: " + w.Elapsed.TotalSeconds);
+                DebugMSG("Path length: " + path.Count);
 
                 GC.Collect();
 
@@ -169,6 +170,7 @@ namespace DeveMazeGeneratorGui
                 w.Reset();
                 w.Start();
 
+                maze.SaveMazeAsImage("bigmazeetc.png", ImageFormat.Png, path, MazeSaveType.ColorDepth4Bits);
                 maze.SaveMazeAsImage("bigmazeetc.bmp", ImageFormat.Bmp, path, MazeSaveType.ColorDepth4Bits);
                 DebugMSG("Done saving, saving time: " + w.Elapsed.TotalSeconds);
                 DebugMSG("Location: " + System.IO.Directory.GetCurrentDirectory());
