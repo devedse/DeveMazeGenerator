@@ -1167,12 +1167,12 @@ namespace DeveMazeGeneratorGui
                     if (wall.xstart == wall.xend)
                     {
                         //Verticale wall
-                        g.FillRectangle(Brushes.Black, wall.xstart * size, wall.ystart * size, size, (wall.yend - wall.ystart) * size);
+                        g.FillRectangle(Brushes.Black, wall.xstart * size, wall.ystart * size, size, (wall.yend - wall.ystart + 1) * size);
                     }
                     else
                     {
                         //Horizontale wall
-                        g.FillRectangle(Brushes.Black, wall.xstart * size, wall.ystart * size, (wall.xend - wall.xstart) * size, size);
+                        g.FillRectangle(Brushes.Black, wall.xstart * size, wall.ystart * size, (wall.xend - wall.xstart + 1) * size, size);
                     }
                 }
 
