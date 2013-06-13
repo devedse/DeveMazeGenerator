@@ -1421,7 +1421,7 @@ namespace DeveMazeGeneratorGui
 
                     DebugMSG("Saving...");
 
-                    maze.SaveMazeAsImage(Path.Combine(mazedir, size + " (" + ConvertNumberToNiceString(path.Count) + ").png"), ImageFormat.Png, path, MazeSaveType.ColorDepth32Bits);
+                    maze.SaveMazeAsImage(Path.Combine(mazedir, size + " (" + ConvertNumberToNiceString(path.Count) + ").png"), ImageFormat.Png, path, MazeSaveType.ColorDepth4Bits);
                 }
 
                 DebugMSG("Done :)");
