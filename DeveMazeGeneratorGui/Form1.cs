@@ -1395,6 +1395,39 @@ namespace DeveMazeGeneratorGui
             });
         }
 
+        private void button27_Click(object sender, EventArgs e)
+        {
+            String mazedir = "multimaze";
+            Directory.CreateDirectory(mazedir);
+
+            Task.Run(() =>
+            {
+                var alg = new AlgorithmBacktrack();
+
+                for (int i = 11; i < 17; i++)
+                {
+                    int size = (int)Math.Pow(2, i);
+
+                    DebugMSG("Generating maze of size: " + size);
+                    var maze = alg.Generate(size, size, InnerMapType.BitArreintjeFast, (x, y, cur, tot) =>
+                    {
+                        currentStepsToCalcPercentage = cur;
+                        totalStepsToCalcPercentage = tot;
+                    });
+
+                    DebugMSG("Finding path...");
+
+                    var path = PathFinderDepthFirst.GoFind(maze.InnerMap, null);
+
+                    DebugMSG("Saving...");
+
+                    maze.SaveMazeAsImage(Path.Combine(mazedir, size + " (" + ConvertNumberToNiceString(path.Count) + ").png"), ImageFormat.Png, path, MazeSaveType.ColorDepth32Bits);
+                }
+
+                DebugMSG("Done :)");
+            });
+        }
+
 
 
     }

@@ -73,6 +73,7 @@ namespace DeveMazeGeneratorGui
             this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
+            this.button27 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -546,11 +547,22 @@ namespace DeveMazeGeneratorGui
             this.label10.TabIndex = 45;
             this.label10.Text = "-";
             // 
+            // button27
+            // 
+            this.button27.Location = new System.Drawing.Point(359, 379);
+            this.button27.Name = "button27";
+            this.button27.Size = new System.Drawing.Size(125, 23);
+            this.button27.TabIndex = 46;
+            this.button27.Text = "MultiMazeGen";
+            this.button27.UseVisualStyleBackColor = true;
+            this.button27.Click += new System.EventHandler(this.button27_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(830, 615);
+            this.Controls.Add(this.button27);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label8);
@@ -646,6 +658,7 @@ namespace DeveMazeGeneratorGui
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Button button27;
     }
 }
 
