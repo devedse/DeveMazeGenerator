@@ -14,19 +14,19 @@ namespace DeveMazeGeneratorMonoGame
         public int[] indices = new int[36];
         public VertexPositionNormalTexture[] vertices = new VertexPositionNormalTexture[24];
 
-        public int width;
-        public int height;
-        public int depth;
-        public CubeModel(Game1 game, int width, int height, int depth, TexturePosInfo texturePosInfo)
+        public float width;
+        public float height;
+        public float depth;
+        public CubeModel(Game1 game, float width, float height, float depth, TexturePosInfo texturePosInfo, float imageSizeFactor)
         {
             this.game = game;
             this.width = width;
             this.height = height;
             this.depth = depth;
-            GoGenerateVertices(texturePosInfo);
+            GoGenerateVertices(texturePosInfo, imageSizeFactor);
         }
 
-        public void GoGenerateVertices(TexturePosInfo texturePosInfo)
+        public void GoGenerateVertices(TexturePosInfo texturePosInfo, float imageSizeFactor)
         {
             //Front
             vertices[0] = new VertexPositionNormalTexture(new Vector3(0, height, depth), new Vector3(0, 0, 1), texturePosInfo.front.First());
@@ -81,8 +81,8 @@ namespace DeveMazeGeneratorMonoGame
             for (int i = 0; i < vertices.Length; i++)
             {
                 var vert = vertices[i];
-                vert.TextureCoordinate.X *= (width / 10.0f);
-                vert.TextureCoordinate.Y *= (depth / 10.0f); 
+                vert.TextureCoordinate.X *= (width / imageSizeFactor);
+                vert.TextureCoordinate.Y *= (depth / imageSizeFactor); 
                 //vert.TextureCoordinate.X /= 10.0f;
                 //vert.TextureCoordinate.Y /= 10.0f;
                 vertices[i] = vert;

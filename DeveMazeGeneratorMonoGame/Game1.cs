@@ -36,6 +36,12 @@ namespace DeveMazeGeneratorMonoGame
         private int wallsCount = 0;
         private int pathCount = 0;
 
+        private bool drawRoof = true;
+
+        private bool lighting = false;
+
+        private float numbertje = -1f;
+
         public Game1()
             : base()
         {
@@ -189,7 +195,6 @@ namespace DeveMazeGeneratorMonoGame
             if (InputDing.CurKey.IsKeyDown(Keys.Escape))
                 Exit();
 
-
             camera.Update(gameTime);
 
 
@@ -212,6 +217,22 @@ namespace DeveMazeGeneratorMonoGame
                 GenerateMaze();
             }
 
+            if (InputDing.KeyDownUp(Keys.H))
+            {
+                drawRoof = !drawRoof;
+            }
+
+            if (InputDing.KeyDownUp(Keys.L))
+            {
+                lighting = !lighting;
+            }
+
+            numbertje += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (InputDing.CurKey.IsKeyDown(Keys.G))
+            {
+                numbertje = 0;
+            }
 
 
             InputDing.AfterUpdate();
@@ -286,22 +307,25 @@ namespace DeveMazeGeneratorMonoGame
             //}
 
 
-
+            effect.LightingEnabled = false;
 
             //Ground
             int mazeScale = 10;
+            Matrix scaleMatrix = Matrix.CreateScale(mazeScale);
+            Matrix growingScaleMatrix = scaleMatrix * Matrix.CreateScale(1, (float)Math.Max(Math.Min(numbertje / 1.0f, 1), 0), 1);
 
-            effect.World = Matrix.CreateScale(mazeScale);
+            effect.World = scaleMatrix;
 
             //effect.Texture = ContentDing.grasTexture;
 
             SamplerState newSamplerState2 = new SamplerState()
             {
-                AddressU = TextureAddressMode.Mirror,
-                AddressV = TextureAddressMode.Mirror,
-                Filter = TextureFilter.Anisotropic
+                AddressU = TextureAddressMode.Wrap,
+                AddressV = TextureAddressMode.Wrap,
+                Filter = TextureFilter.Point
             };
             GraphicsDevice.SamplerStates[0] = newSamplerState2;
+
 
 
             //int curmazeheight = 100;
@@ -309,18 +333,42 @@ namespace DeveMazeGeneratorMonoGame
             //WallModel wallmodel = new WallModel(this, curmazeheight * 10, curmazeheight * 10, TexturePosInfoGenerator.FullImageWithSize(15), Matrix.Identity);
             //wallmodel.Draw(Matrix.CreateRotationX(-MathHelper.PiOver2) * Matrix.CreateTranslation(0, 0, curmazeheight * 10), effect);
 
-            effect.Texture = ContentDing.grasTexture;
-
-            CubeModel ground = new CubeModel(this, curMazeWidth - 2, 1, curMazeHeight - 2, TexturePosInfoGenerator.FullImage);
-            ground.Draw(Matrix.CreateTranslation(0, -1, 0) * effect.World, effect);
+            effect.Texture = ContentDing.win98FloorTexture;
 
 
 
 
+
+
+
+            CubeModel ground = new CubeModel(this, curMazeWidth - 2, 0.1f, curMazeHeight - 2, TexturePosInfoGenerator.FullImage, 2f / 3f);
+            ground.Draw(Matrix.CreateTranslation(0, -0.1f, 0) * scaleMatrix, effect);
+
+
+            if (drawRoof)
+            {
+                effect.Texture = ContentDing.win98RoofTexture;
+
+                CubeModel roof = new CubeModel(this, curMazeWidth - 2, 0.1f, curMazeHeight - 2, TexturePosInfoGenerator.FullImage, 2f / 3f);
+                roof.Draw(Matrix.CreateTranslation(0, 4f / 3f, 0) * scaleMatrix, effect);
+            }
+
+            effect.LightingEnabled = lighting;
+
+            //Start
+            effect.Texture = ContentDing.startTexture;
+            CubeModel start = new CubeModel(this, 0.75f, 0.75f, 0.75f, TexturePosInfoGenerator.FullImage, 0.75f);
+            start.Draw(Matrix.CreateTranslation(0.625f, 0.375f, 0.625f) * growingScaleMatrix, effect);
+
+
+            //Finish
+            effect.Texture = ContentDing.endTexture;
+            CubeModel finish = new CubeModel(this, 0.75f, 0.75f, 0.75f, TexturePosInfoGenerator.FullImage, 0.75f);
+            finish.Draw(Matrix.CreateTranslation(0.625f, 0.375f, 0.625f) * Matrix.CreateTranslation(curMazeWidth - 4, 0, curMazeHeight - 4) * growingScaleMatrix, effect);
 
 
             //Maze
-            effect.World = Matrix.CreateScale(mazeScale);
+            effect.World = growingScaleMatrix;
 
             if (vertexBuffer != null && indexBuffer != null)
             {
@@ -329,7 +377,7 @@ namespace DeveMazeGeneratorMonoGame
                 GraphicsDevice.Indices = indexBuffer;
                 GraphicsDevice.SetVertexBuffer(vertexBuffer);
 
-                effect.Texture = ContentDing.wallTexture;
+                effect.Texture = ContentDing.win98WallTexture;
 
                 foreach (EffectPass pass in effect.CurrentTechnique.Passes)
                 {
@@ -339,6 +387,8 @@ namespace DeveMazeGeneratorMonoGame
 
             }
 
+            effect.World = growingScaleMatrix *Matrix.CreateTranslation(0, 0.1f, 0);
+
             //Path
             if (vertexBufferPath != null && vertexBufferPath != null)
             {
@@ -347,7 +397,7 @@ namespace DeveMazeGeneratorMonoGame
                 GraphicsDevice.Indices = indexBufferPath;
                 GraphicsDevice.SetVertexBuffer(vertexBufferPath);
 
-                effect.Texture = ContentDing.redTexture;
+                effect.Texture = ContentDing.win98LegoTexture;
 
                 foreach (EffectPass pass in effect.CurrentTechnique.Passes)
                 {

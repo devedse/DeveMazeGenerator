@@ -25,7 +25,7 @@ namespace DeveMazeGeneratorMonoGame
         {
             TexturePosInfo texturePosInfo = TexturePosInfoGenerator.FullImage;
 
-            int height = 1;
+            float height = 4f / 3f;
 
             int howmuchvertices = 8;
 
@@ -63,8 +63,8 @@ namespace DeveMazeGeneratorMonoGame
             for (int i = curVertice; i < curVertice + howmuchvertices; i++)
             {
                 var vert = vertices[i];
-                vert.TextureCoordinate.X *= (www / 1.0f);
-                vert.TextureCoordinate.Y *= (hhh / 1.0f);
+                vert.TextureCoordinate.X *= (www / 2f);
+                vert.TextureCoordinate.Y *= (hhh / height);
                 vertices[i] = vert;
             }
 
