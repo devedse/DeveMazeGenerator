@@ -46,6 +46,11 @@ namespace DeveMazeGeneratorMonoGame
             : base()
         {
             graphics = new GraphicsDeviceManager(this);
+         
+            graphics.PreferMultiSampling = true;
+            GraphicsDevice.PresentationParameters.MultiSampleCount = 16;
+
+            //TargetElapsedTime = TimeSpan.FromTicks((long)10000000 / (long)500);
 
             if (!true)
             {
@@ -277,6 +282,15 @@ namespace DeveMazeGeneratorMonoGame
             effect.TextureEnabled = true;
 
 
+
+            RasterizerState state = new RasterizerState();
+            state.CullMode = CullMode.CullCounterClockwiseFace;
+            state.MultiSampleAntiAlias = true;
+            state.DepthBias = 0.01f;
+            GraphicsDevice.RasterizerState = state;
+
+
+
             //Skybox
             effect.LightingEnabled = false;
             effect.Texture = ContentDing.skyTexture1;
@@ -372,8 +386,6 @@ namespace DeveMazeGeneratorMonoGame
 
             if (vertexBuffer != null && indexBuffer != null)
             {
-                GraphicsDevice.RasterizerState = RasterizerState.CullCounterClockwise;
-
                 GraphicsDevice.Indices = indexBuffer;
                 GraphicsDevice.SetVertexBuffer(vertexBuffer);
 
@@ -392,8 +404,6 @@ namespace DeveMazeGeneratorMonoGame
             //Path
             if (vertexBufferPath != null && vertexBufferPath != null)
             {
-                GraphicsDevice.RasterizerState = RasterizerState.CullCounterClockwise;
-
                 GraphicsDevice.Indices = indexBufferPath;
                 GraphicsDevice.SetVertexBuffer(vertexBufferPath);
 
