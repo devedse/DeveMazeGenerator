@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{41FAD483-B889-43FD-9404-678C35AC6340}</ProjectGuid>
+    <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DeveMazeGeneratorMonoGameAndroid</RootNamespace>
+    <AssemblyName>DeveMazeGeneratorMonoGameAndroid</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <AndroidApplication>true</AndroidApplication>
+    <AndroidResgenFile>Resources\Resource.Designer.cs</AndroidResgenFile>
+    <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+    <AndroidSupportedAbis>armeabi-v7a%3bx86</AndroidSupportedAbis>
+    <AndroidStoreUncompressedFileExtensions />
+    <MandroidI18n />
+    <TargetFrameworkVersion>v2.3</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;ANDROID</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AndroidUseSharedRuntime>True</AndroidUseSharedRuntime>
+    <AndroidLinkMode>None</AndroidLinkMode>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;ANDROID</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AndroidUseSharedRuntime>False</AndroidUseSharedRuntime>
+    <AndroidLinkMode>SdkOnly</AndroidLinkMode>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Mono.Android" />
+    <Reference Include="mscorlib" />
+    <Reference Include="OpenTK" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Xml" />
+    <Reference Include="MonoGame.Framework">
+      <HintPath>$(MSBuildExtensionsPath)\..\MonoGame\v3.0\Assemblies\Android\MonoGame.Framework.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Activity1.cs" />
+    <Compile Include="DeveMazeGeneratorMonoGame\Camera.cs" />
+    <Compile Include="DeveMazeGeneratorMonoGame\ContentDing.cs" />
+    <Compile Include="DeveMazeGeneratorMonoGame\CubeModel.cs" />
+    <Compile Include="DeveMazeGeneratorMonoGame\CubeModelInvertedForSkybox.cs" />
+    <Compile Include="DeveMazeGeneratorMonoGame\Game1.cs" />
+    <Compile Include="DeveMazeGeneratorMonoGame\InputDing.cs" />
+    <Compile Include="DeveMazeGeneratorMonoGame\Program.cs" />
+    <Compile Include="DeveMazeGeneratorMonoGame\RectangleExtensions.cs" />
+    <Compile Include="DeveMazeGeneratorMonoGame\TexturePosInfo.cs" />
+    <Compile Include="DeveMazeGeneratorMonoGame\TexturePosInfoGenerator.cs" />
+    <Compile Include="DeveMazeGeneratorMonoGame\VierkantjeModel.cs" />
+    <Compile Include="DeveMazeGeneratorMonoGame\WallModel.cs" />
+    <Compile Include="DeveMazeGenerator\ExtensionMethods.cs" />
+    <Compile Include="DeveMazeGenerator\Generators\Algorithm.cs" />
+    <Compile Include="DeveMazeGenerator\Generators\AlgorithmBacktrack.cs" />
+    <Compile Include="DeveMazeGenerator\Generators\AlgorithmBacktrackSmartMemory.cs" />
+    <Compile Include="DeveMazeGenerator\Generators\AlgorithmBacktrackTest.cs" />
+    <Compile Include="DeveMazeGenerator\Generators\AlgorithmKruskal.cs" />
+    <Compile Include="DeveMazeGenerator\InnerMaps\BitArrayMappedOnHardDiskInnerMap.cs" />
+    <Compile Include="DeveMazeGenerator\InnerMaps\BitArrayMappedOnHardDiskInnerMapArray.cs" />
+    <Compile Include="DeveMazeGenerator\InnerMaps\BitArreintjeFastInnerMap.cs" />
+    <Compile Include="DeveMazeGenerator\InnerMaps\BitArreintjeFastInnerMapArray.cs" />
+    <Compile Include="DeveMazeGenerator\InnerMaps\BooleanInnerMap.cs" />
+    <Compile Include="DeveMazeGenerator\InnerMaps\DotNetBitArrayInnerMap.cs" />
+    <Compile Include="DeveMazeGenerator\InnerMaps\HybridInnerMap.cs" />
+    <Compile Include="DeveMazeGenerator\InnerMaps\InnerMap.cs" />
+    <Compile Include="DeveMazeGenerator\InnerMaps\InnerMapHelpers\CompleteHDArray.cs" />
+    <Compile Include="DeveMazeGenerator\InnerMaps\InnerMapHelpers\IntHDArray.cs" />
+    <Compile Include="DeveMazeGenerator\Maze.cs" />
+    <Compile Include="DeveMazeGenerator\Maze.Saving.cs" />
+    <Compile Include="DeveMazeGenerator\MazeWall.cs" />
+    <Compile Include="DeveMazeGenerator\PathFinderDepthFirst.cs" />
+    <Compile Include="DeveMazeGenerator\QuatroList.cs" />
+    <Compile Include="DeveMazeGenerator\QuatroStack.cs" />
+    <Compile Include="Game1.cs" />
+    <Compile Include="Resources\Resource.Designer.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Content\spriteFont1.xnb" />
+    <None Include="Resources\AboutResources.txt" />
+    <None Include="Assets\AboutAssets.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\Values\Strings.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\Drawable\Icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\Layout\" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\Drawable\Splash.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\Values\Styles.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Content\end.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Content\floor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Content\lego.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Content\roof.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Content\sky.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Content\start.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\Content\wall.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Novell\Novell.MonoDroid.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+     Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

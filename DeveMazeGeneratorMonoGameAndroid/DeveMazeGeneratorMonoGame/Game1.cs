@@ -48,13 +48,14 @@ namespace DeveMazeGeneratorMonoGame
 
         private int speedFactor = 4;
 
+        public Boolean shouldShutdown = false;
+
         public Game1()
             : base()
         {
             graphics = new GraphicsDeviceManager(this);
 
             graphics.PreferMultiSampling = true;
-            GraphicsDevice.PresentationParameters.MultiSampleCount = 16;
 
             IsMouseVisible = false;
 
@@ -67,16 +68,14 @@ namespace DeveMazeGeneratorMonoGame
             }
             else
             {
-                graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
-                graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
+                //graphics.PreferredBackBufferWidth = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width;
+                //graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
                 graphics.IsFullScreen = true;
             }
 
-            GenerateMaze();
 
             Content.RootDirectory = "Content";
 
-            camera = new Camera(this);
 
         }
 
@@ -104,6 +103,9 @@ namespace DeveMazeGeneratorMonoGame
             effect = new BasicEffect(GraphicsDevice);
 
             ContentDing.GoLoadContent(GraphicsDevice, Content);
+
+            camera = new Camera(this);
+            GenerateMaze();
         }
 
         /// <summary>
@@ -228,7 +230,7 @@ namespace DeveMazeGeneratorMonoGame
         {
             InputDing.PreUpdate();
 
-            if (InputDing.CurKey.IsKeyDown(Keys.Escape))
+            if (InputDing.CurKey.IsKeyDown(Keys.Escape) || shouldShutdown)
                 Exit();
 
 
@@ -388,9 +390,6 @@ namespace DeveMazeGeneratorMonoGame
             CubeModelInvertedForSkybox skybox = new CubeModelInvertedForSkybox(this, skyboxSize, skyboxSize, skyboxSize, TexturePosInfoGenerator.FullImage);
             Matrix skyboxMatrix = Matrix.CreateTranslation(camera.cameraPosition) * Matrix.CreateTranslation(new Vector3(-skyboxSize / 2, -skyboxSize / 2, -skyboxSize / 2));
             skybox.Draw(skyboxMatrix, effect);
-            effect.LightingEnabled = false;
-
-
 
 
             //effect.Texture = ContentDing.wallTexture;
@@ -442,7 +441,7 @@ namespace DeveMazeGeneratorMonoGame
 
 
 
-
+            effect.LightingEnabled = false;
 
 
             CubeModel ground = new CubeModel(this, curMazeWidth - 2, 0.1f, curMazeHeight - 2, TexturePosInfoGenerator.FullImage, 2f / 3f);
@@ -531,20 +530,20 @@ namespace DeveMazeGeneratorMonoGame
             //}
 
 
-            spriteBatch.Begin();
+            //spriteBatch.Begin();
 
-            String stringToDraw = "Size: " + curMazeWidth + ", Walls: " + wallsCount + ", Path length: " + pathCount + ", Speed: " + speedFactor + ", Current: " + (int)Math.Max((numbertje - 1f) * speedFactor, 0);
+            //String stringToDraw = "Size: " + curMazeWidth + ", Walls: " + wallsCount + ", Path length: " + pathCount + ", Speed: " + speedFactor + ", Current: " + (int)Math.Max((numbertje - 1f) * speedFactor, 0);
 
-            var meassured = ContentDing.spriteFont.MeasureString(stringToDraw);
+            //var meassured = ContentDing.spriteFont.MeasureString(stringToDraw);
 
-            spriteBatch.Draw(ContentDing.semiTransparantTexture, new Rectangle(5, 5, (int)meassured.X + 10, (int)meassured.Y + 10), Color.White);
-            spriteBatch.DrawString(ContentDing.spriteFont, stringToDraw, new Vector2(10, 10), Color.White);
+            //spriteBatch.Draw(ContentDing.semiTransparantTexture, new Rectangle(5, 5, (int)meassured.X + 10, (int)meassured.Y + 10), Color.White);
+            //spriteBatch.DrawString(ContentDing.spriteFont, stringToDraw, new Vector2(10, 10), Color.White);
 
-            spriteBatch.End();
+            //spriteBatch.End();
 
 
-            GraphicsDevice.BlendState = BlendState.Opaque;
-            GraphicsDevice.DepthStencilState = DepthStencilState.Default;
+            //GraphicsDevice.BlendState = BlendState.Opaque;
+            //GraphicsDevice.DepthStencilState = DepthStencilState.Default;
 
             base.Draw(gameTime);
         }
