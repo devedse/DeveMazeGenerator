@@ -13,10 +13,10 @@ namespace DeveMazeGeneratorMonoGame
         //public Vector3 cameraPosition = new Vector3(-100, 100, -100);
         public Vector3 cameraPosition = new Vector3(7.5f, 7.5f, 7.5f);
 
-        private float leftrightRot = -MathHelper.Pi * 0.75f;
+        public float leftrightRot = -MathHelper.Pi * 0.75f;
 
         //private float updownRot = -0.33f;
-        private float updownRot = 0;
+        public float updownRot = 0;
 
         private const float rotationSpeed = 0.3f;
         private float moveSpeed = 100.0f;

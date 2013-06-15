@@ -36,17 +36,23 @@ namespace DeveMazeGeneratorMonoGame
         private int wallsCount = 0;
         private int pathCount = 0;
 
+        private List<MazePoint> currentPath = null;
+
         private bool drawRoof = true;
 
         private bool lighting = false;
 
+        private bool freeMove = false;
+
         private float numbertje = -1f;
+
+        private int speedFactor = 4;
 
         public Game1()
             : base()
         {
             graphics = new GraphicsDeviceManager(this);
-         
+
             graphics.PreferMultiSampling = true;
             GraphicsDevice.PresentationParameters.MultiSampleCount = 16;
 
@@ -119,7 +125,7 @@ namespace DeveMazeGeneratorMonoGame
             var alg = new AlgorithmBacktrack();
             var maze = alg.Generate(curMazeWidth, curMazeHeight, InnerMapType.BitArreintjeFast, null);
             var walls = maze.GenerateListOfMazeWalls();
-            var path = PathFinderDepthFirst.GoFind(maze.InnerMap, null);
+            currentPath = PathFinderDepthFirst.GoFind(maze.InnerMap, null);
 
 
             VertexPositionNormalTexture[] vertices = new VertexPositionNormalTexture[walls.Count * 8];
@@ -149,7 +155,7 @@ namespace DeveMazeGeneratorMonoGame
             vertexBuffer.SetData(vertices);
             indexBuffer.SetData(indices);
 
-            GeneratePath(path);
+            GeneratePath(currentPath);
         }
 
         public void GeneratePath(List<MazePoint> path)
@@ -188,6 +194,29 @@ namespace DeveMazeGeneratorMonoGame
             indexBufferPath.SetData(indices);
         }
 
+        public Vector2 GetPosAtThisNumer(float number)
+        {
+            number -= 1.0f;
+
+            number *= (float)speedFactor;
+
+            number = Math.Max(0, number);
+
+            int cur = (int)number;
+            int next = cur + 1;
+
+            var curPoint = currentPath[Math.Min(cur, currentPath.Count - 1)];
+            var nextPoint = currentPath[Math.Min(next, currentPath.Count - 1)];
+
+            var curPointVector = new Vector2(curPoint.X, curPoint.Y);
+            var nextPointVector = new Vector2(nextPoint.X, nextPoint.Y);
+
+            float rest = number - cur;
+
+            var retval = curPointVector + ((nextPointVector - curPointVector) * rest);
+            return retval;
+        }
+
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
@@ -200,11 +229,50 @@ namespace DeveMazeGeneratorMonoGame
             if (InputDing.CurKey.IsKeyDown(Keys.Escape))
                 Exit();
 
+
+            if (InputDing.KeyDownUp(Keys.OemPlus))
+            {
+                speedFactor *= 2;
+                numbertje = (numbertje - 1f) / 2f + 1f;
+            }
+
+            if (InputDing.KeyDownUp(Keys.OemMinus))
+            {
+                if (speedFactor >= 2)
+                {
+                    speedFactor /= 2;
+                    numbertje = (numbertje - 1f) * 2f + 1f;
+                }
+            }
+
+            if (!freeMove)
+            {
+                var pospos = GetPosAtThisNumer(numbertje);
+                var posposnext = GetPosAtThisNumer(Math.Max(numbertje + (1.0f / (float)speedFactor), 1.1f));
+                var pospos3d = new Vector3(pospos.X * 10.0f, 7.5f, pospos.Y * 10.0f);
+
+                camera.cameraPosition = pospos3d;
+
+                camera.updownRot = 0;
+
+                camera.leftrightRot = (float)Math.Atan2(posposnext.Y - pospos.Y, posposnext.X - pospos.X) * -1f - (MathHelper.Pi / 2.0f);
+            }
+
+
+            //Reset when done
+            if ((numbertje * speedFactor) > pathCount + speedFactor)
+            {
+                numbertje = 0;
+                GenerateMaze();
+            }
+
+
             camera.Update(gameTime);
 
 
             if (InputDing.KeyDownUp(Keys.Up))
             {
+                numbertje = 0;
                 curMazeWidth *= 2;
                 curMazeHeight *= 2;
                 GenerateMaze();
@@ -212,8 +280,13 @@ namespace DeveMazeGeneratorMonoGame
 
             if (InputDing.KeyDownUp(Keys.Down))
             {
+                numbertje = 0;
                 curMazeWidth /= 2;
                 curMazeHeight /= 2;
+                if (curMazeWidth < 1)
+                    curMazeWidth = 1;
+                if (curMazeHeight < 1)
+                    curMazeHeight = 1;
                 GenerateMaze();
             }
 
@@ -237,6 +310,17 @@ namespace DeveMazeGeneratorMonoGame
             if (InputDing.CurKey.IsKeyDown(Keys.G))
             {
                 numbertje = 0;
+            }
+
+            if (InputDing.KeyDownUp(Keys.P))
+            {
+                numbertje = 0;
+                GenerateMaze();
+            }
+
+            if (InputDing.KeyDownUp(Keys.O))
+            {
+                freeMove = !freeMove;
             }
 
 
@@ -381,6 +465,17 @@ namespace DeveMazeGeneratorMonoGame
             finish.Draw(Matrix.CreateTranslation(0.625f, 0.375f, 0.625f) * Matrix.CreateTranslation(curMazeWidth - 4, 0, curMazeHeight - 4) * growingScaleMatrix, effect);
 
 
+            //Me
+            if (freeMove)
+            {
+                effect.Texture = ContentDing.redTexture;
+                var vvv = GetPosAtThisNumer(numbertje);
+                var vvvv2 = new Vector3(vvv.X * 10f - 2.5f, 5f, vvv.Y * 10f - 2.5f);
+                CubeModel targetCamera = new CubeModel(this, 5f, 5f, 5f, TexturePosInfoGenerator.FullImage, 0.75f);
+                targetCamera.Draw(Matrix.CreateTranslation(vvvv2), effect);
+            }
+
+
             //Maze
             effect.World = growingScaleMatrix;
 
@@ -399,7 +494,7 @@ namespace DeveMazeGeneratorMonoGame
 
             }
 
-            effect.World = growingScaleMatrix *Matrix.CreateTranslation(0, 0.1f, 0);
+            effect.World = growingScaleMatrix * Matrix.CreateTranslation(0, 0.1f, 0);
 
             //Path
             if (vertexBufferPath != null && vertexBufferPath != null)
@@ -432,7 +527,7 @@ namespace DeveMazeGeneratorMonoGame
 
             spriteBatch.Begin();
 
-            String stringToDraw = "Size: " + curMazeWidth + ", Walls: " + wallsCount + ", Path length: " + pathCount;
+            String stringToDraw = "Size: " + curMazeWidth + ", Walls: " + wallsCount + ", Path length: " + pathCount + ", Speed: " + speedFactor + ", cur: " + (int)Math.Max((numbertje - 1f) * speedFactor, 0);
 
             var meassured = ContentDing.spriteFont.MeasureString(stringToDraw);
 
