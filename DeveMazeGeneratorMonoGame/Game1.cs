@@ -388,9 +388,6 @@ namespace DeveMazeGeneratorMonoGame
             CubeModelInvertedForSkybox skybox = new CubeModelInvertedForSkybox(this, skyboxSize, skyboxSize, skyboxSize, TexturePosInfoGenerator.FullImage);
             Matrix skyboxMatrix = Matrix.CreateTranslation(camera.cameraPosition) * Matrix.CreateTranslation(new Vector3(-skyboxSize / 2, -skyboxSize / 2, -skyboxSize / 2));
             skybox.Draw(skyboxMatrix, effect);
-            effect.LightingEnabled = false;
-
-
 
 
             //effect.Texture = ContentDing.wallTexture;
