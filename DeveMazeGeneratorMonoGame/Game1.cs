@@ -56,6 +56,8 @@ namespace DeveMazeGeneratorMonoGame
             graphics.PreferMultiSampling = true;
             GraphicsDevice.PresentationParameters.MultiSampleCount = 16;
 
+            IsMouseVisible = false;
+
             //TargetElapsedTime = TimeSpan.FromTicks((long)10000000 / (long)500);
 
             if (!true)
@@ -255,7 +257,11 @@ namespace DeveMazeGeneratorMonoGame
 
                 camera.updownRot = 0;
 
-                camera.leftrightRot = (float)Math.Atan2(posposnext.Y - pospos.Y, posposnext.X - pospos.X) * -1f - (MathHelper.Pi / 2.0f);
+                var oldRot = camera.leftrightRot;
+                var newRot = (float)Math.Atan2(posposnext.Y - pospos.Y, posposnext.X - pospos.X) * -1f - (MathHelper.Pi / 2.0f);
+
+                //camera.leftrightRot = (9.0f * oldRot + 1.0f * newRot) / 10.0f;
+                camera.leftrightRot = newRot;
             }
 
 
