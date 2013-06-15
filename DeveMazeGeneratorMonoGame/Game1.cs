@@ -527,7 +527,7 @@ namespace DeveMazeGeneratorMonoGame
 
             spriteBatch.Begin();
 
-            String stringToDraw = "Size: " + curMazeWidth + ", Walls: " + wallsCount + ", Path length: " + pathCount + ", Speed: " + speedFactor + ", cur: " + (int)Math.Max((numbertje - 1f) * speedFactor, 0);
+            String stringToDraw = "Size: " + curMazeWidth + ", Walls: " + wallsCount + ", Path length: " + pathCount + ", Speed: " + speedFactor + ", Current: " + (int)Math.Max((numbertje - 1f) * speedFactor, 0);
 
             var meassured = ContentDing.spriteFont.MeasureString(stringToDraw);
 
