@@ -69,6 +69,7 @@
     <Compile Include="Generators\AlgorithmKruskal.cs" />
     <Compile Include="Generators\AlgorithmBacktrackTest.cs" />
     <Compile Include="Generators\AlgorithmBacktrackSmartMemory.cs" />
+    <Compile Include="Generators\AlgorithmDivision.cs" />
     <Compile Include="InnerMaps\BitArrayMappedOnHardDiskInnerMap.cs" />
     <Compile Include="InnerMaps\BitArrayMappedOnHardDiskInnerMapArray.cs" />
     <Compile Include="InnerMaps\BitArreintjeFastInnerMap.cs" />

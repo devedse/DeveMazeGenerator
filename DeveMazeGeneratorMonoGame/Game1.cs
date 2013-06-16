@@ -48,6 +48,8 @@ namespace DeveMazeGeneratorMonoGame
 
         private int speedFactor = 4;
 
+        private Random random = new Random();
+
         public Game1()
             : base()
         {
@@ -123,8 +125,16 @@ namespace DeveMazeGeneratorMonoGame
                 vertexBuffer.Dispose();
 
 
+            Algorithm alg;
+            int randomnumber = random.Next(3);
+            if (randomnumber == 0)
+                alg = new AlgorithmBacktrack();
+            else if (randomnumber == 1)
+                alg = new AlgorithmKruskal();
+            else
+                alg = new AlgorithmDivision();
 
-            var alg = new AlgorithmBacktrack();
+
             var maze = alg.Generate(curMazeWidth, curMazeHeight, InnerMapType.BitArreintjeFast, null);
             var walls = maze.GenerateListOfMazeWalls();
             currentPath = PathFinderDepthFirst.GoFind(maze.InnerMap, null);
