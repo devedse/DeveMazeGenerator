@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DeveMazeGeneratorMonoGame
 {
-    class CubeModel
+    class CubeModelForPlayer
     {
         public Game1 game;
         public int[] indices = new int[36];
@@ -17,16 +17,16 @@ namespace DeveMazeGeneratorMonoGame
         public float width;
         public float height;
         public float depth;
-        public CubeModel(Game1 game, float width, float height, float depth, TexturePosInfo texturePosInfo, float imageSizeFactor)
+        public CubeModelForPlayer(Game1 game, float width, float height, float depth, TexturePosInfo texturePosInfo)
         {
             this.game = game;
             this.width = width;
             this.height = height;
             this.depth = depth;
-            GoGenerateVertices(texturePosInfo, imageSizeFactor);
+            GoGenerateVertices(texturePosInfo);
         }
 
-        public void GoGenerateVertices(TexturePosInfo texturePosInfo, float imageSizeFactor)
+        public void GoGenerateVertices(TexturePosInfo texturePosInfo)
         {
             //Front
             vertices[0] = new VertexPositionNormalTexture(new Vector3(0, height, depth), new Vector3(0, 0, 1), texturePosInfo.front.First());
@@ -77,16 +77,6 @@ namespace DeveMazeGeneratorMonoGame
                 cur += 6;
             }
 
-            //This stuff is for repeating the texture
-            for (int i = 0; i < vertices.Length; i++)
-            {
-                var vert = vertices[i];
-                vert.TextureCoordinate.X *= (width / imageSizeFactor);
-                vert.TextureCoordinate.Y *= (depth / imageSizeFactor);
-                //vert.TextureCoordinate.X /= 10.0f;
-                //vert.TextureCoordinate.Y /= 10.0f;
-                vertices[i] = vert;
-            }
         }
 
         public void Update(GameTime gameTime)

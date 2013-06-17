@@ -26,6 +26,8 @@ namespace DeveMazeGeneratorMonoGame
         public static Texture2D win98RoofTexture;
         public static Texture2D win98LegoTexture;
 
+        public static Texture2D minecraftTexture;
+
         public static SpriteFont spriteFont;
 
         public static void GoLoadContent(GraphicsDevice graphicsDevice, ContentManager Content)
@@ -42,6 +44,8 @@ namespace DeveMazeGeneratorMonoGame
             win98LegoTexture = Content.Load<Texture2D>("lego");
             win98RoofTexture = Content.Load<Texture2D>("roof");
             win98WallTexture = Content.Load<Texture2D>("wall");
+
+            minecraftTexture = Content.Load<Texture2D>("devedse");
 
             blankTexture = new Texture2D(graphicsDevice, 1, 1, false, SurfaceFormat.Color);
             blankTexture.SetData(new[] { Color.White });

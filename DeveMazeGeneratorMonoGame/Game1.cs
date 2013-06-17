@@ -40,15 +40,21 @@ namespace DeveMazeGeneratorMonoGame
 
         private bool drawRoof = true;
 
-        private bool lighting = false;
+        private bool lighting = true;
 
         private bool freeMove = false;
 
+        private bool drawPath = false;
+
         private float numbertje = -1f;
 
-        private int speedFactor = 4;
+        private int speedFactor = 2;
 
         private Random random = new Random();
+
+        private PlayerModel playerModel;
+
+        private String lastAlgorithm = "";
 
         public Game1()
             : base()
@@ -106,6 +112,8 @@ namespace DeveMazeGeneratorMonoGame
             effect = new BasicEffect(GraphicsDevice);
 
             ContentDing.GoLoadContent(GraphicsDevice, Content);
+
+            playerModel = new PlayerModel(this);
         }
 
         /// <summary>
@@ -134,6 +142,7 @@ namespace DeveMazeGeneratorMonoGame
             else
                 alg = new AlgorithmDivision();
 
+            lastAlgorithm = alg.GetType().Name;
 
             var maze = alg.Generate(curMazeWidth, curMazeHeight, InnerMapType.BitArreintjeFast, null);
             var walls = maze.GenerateListOfMazeWalls();
@@ -260,7 +269,8 @@ namespace DeveMazeGeneratorMonoGame
             if (!freeMove)
             {
                 var pospos = GetPosAtThisNumer(numbertje);
-                var posposnext = GetPosAtThisNumer(Math.Max(numbertje + (1.0f / (float)speedFactor), 1.1f));
+                var posposbefore = GetPosAtThisNumer(numbertje - (0.5f / (float)speedFactor));
+                var posposnext = GetPosAtThisNumer(Math.Max(numbertje + (0.5f / (float)speedFactor), 1.1f));
                 var pospos3d = new Vector3(pospos.X * 10.0f, 7.5f, pospos.Y * 10.0f);
 
                 camera.cameraPosition = pospos3d;
@@ -268,7 +278,7 @@ namespace DeveMazeGeneratorMonoGame
                 camera.updownRot = 0;
 
                 var oldRot = camera.leftrightRot;
-                var newRot = (float)Math.Atan2(posposnext.Y - pospos.Y, posposnext.X - pospos.X) * -1f - (MathHelper.Pi / 2.0f);
+                var newRot = (float)Math.Atan2(posposnext.Y - posposbefore.Y, posposnext.X - posposbefore.X) * -1f - (MathHelper.Pi / 2.0f);
 
                 //camera.leftrightRot = (9.0f * oldRot + 1.0f * newRot) / 10.0f;
                 camera.leftrightRot = newRot;
@@ -309,7 +319,7 @@ namespace DeveMazeGeneratorMonoGame
                 }
             }
 
-            if (InputDing.CurKey.IsKeyDown(Keys.R))
+            if (InputDing.CurKey.IsKeyDown(Keys.D0))
             {
                 GenerateMaze();
             }
@@ -324,6 +334,11 @@ namespace DeveMazeGeneratorMonoGame
                 lighting = !lighting;
             }
 
+            if (InputDing.KeyDownUp(Keys.P))
+            {
+                drawPath = !drawPath;
+            }
+
             numbertje += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             if (InputDing.CurKey.IsKeyDown(Keys.G))
@@ -331,7 +346,7 @@ namespace DeveMazeGeneratorMonoGame
                 numbertje = 0;
             }
 
-            if (InputDing.KeyDownUp(Keys.P))
+            if (InputDing.KeyDownUp(Keys.R))
             {
                 numbertje = 0;
                 GenerateMaze();
@@ -484,11 +499,38 @@ namespace DeveMazeGeneratorMonoGame
             //Me
             if (freeMove)
             {
-                effect.Texture = ContentDing.redTexture;
+
                 var vvv = GetPosAtThisNumer(numbertje);
-                var vvvv2 = new Vector3(vvv.X * 10f - 2.5f, 5f, vvv.Y * 10f - 2.5f);
-                CubeModel targetCamera = new CubeModel(this, 5f, 5f, 5f, TexturePosInfoGenerator.FullImage, 0.75f);
-                targetCamera.Draw(Matrix.CreateTranslation(vvvv2), effect);
+
+                var vvvv2 = new Vector3(vvv.X * 10f, 0, vvv.Y * 10f);
+
+                //var translationmatrix = Matrix.CreateTranslation(vvvv2);
+
+                //effect.Texture = ContentDing.redTexture;
+                //targetCamera.Draw(translationmatrix, effect);
+
+
+                var pospos = GetPosAtThisNumer(numbertje - (1f / (float)speedFactor));
+                var posposnext = GetPosAtThisNumer(Math.Max(numbertje + (1f / (float)speedFactor), 1.1f));
+
+                var newRot = (float)Math.Atan2(posposnext.Y - pospos.Y, posposnext.X - pospos.X) * -1f + (MathHelper.Pi / 2.0f);
+
+
+                Matrix totMatrix = MatrixExtensions.CreateRotationY(new Vector3(4, 0, 2), newRot);
+                totMatrix *= Matrix.CreateTranslation(-4, 12, -2); //Put him in the middle of a tile
+                totMatrix *= Matrix.CreateScale(1f / 3f);
+                totMatrix *= Matrix.CreateTranslation(vvvv2);
+
+
+                var posposHeadTurn = GetPosAtThisNumer(numbertje);
+                var posposnextHeadTurn = GetPosAtThisNumer(Math.Max(numbertje + (2f / (float)speedFactor), 1.1f));
+                var newHeadTurn = (float)Math.Atan2(posposnextHeadTurn.Y - posposHeadTurn.Y, posposnextHeadTurn.X - posposHeadTurn.X) * -1f + (MathHelper.Pi / 2.0f);
+
+
+                effect.Texture = ContentDing.minecraftTexture;
+
+
+                playerModel.Draw(totMatrix, effect, numbertje / 2.0f * speedFactor, newHeadTurn - newRot);
             }
 
 
@@ -513,7 +555,7 @@ namespace DeveMazeGeneratorMonoGame
             effect.World = growingScaleMatrix * Matrix.CreateTranslation(0, 0.1f, 0);
 
             //Path
-            if (vertexBufferPath != null && vertexBufferPath != null)
+            if (drawPath && vertexBufferPath != null && vertexBufferPath != null)
             {
                 GraphicsDevice.Indices = indexBufferPath;
                 GraphicsDevice.SetVertexBuffer(vertexBufferPath);
@@ -543,7 +585,7 @@ namespace DeveMazeGeneratorMonoGame
 
             spriteBatch.Begin();
 
-            String stringToDraw = "Size: " + curMazeWidth + ", Walls: " + wallsCount + ", Path length: " + pathCount + ", Speed: " + speedFactor + ", Current: " + (int)Math.Max((numbertje - 1f) * speedFactor, 0);
+            String stringToDraw = "Size: " + curMazeWidth + ", Walls: " + wallsCount + ", Path length: " + pathCount + ", Speed: " + speedFactor + ", Current: " + (int)Math.Max((numbertje - 1f) * speedFactor, 0) + ", Algorithm: " + lastAlgorithm;
 
             var meassured = ContentDing.spriteFont.MeasureString(stringToDraw);
 
