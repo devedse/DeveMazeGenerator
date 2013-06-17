@@ -296,14 +296,17 @@ namespace DeveMazeGeneratorMonoGame
 
             if (InputDing.KeyDownUp(Keys.Down))
             {
-                numbertje = 0;
-                curMazeWidth /= 2;
-                curMazeHeight /= 2;
-                if (curMazeWidth < 1)
-                    curMazeWidth = 1;
-                if (curMazeHeight < 1)
-                    curMazeHeight = 1;
-                GenerateMaze();
+                if (curMazeWidth > 4 && curMazeHeight > 4)
+                {
+                    numbertje = 0;
+                    curMazeWidth /= 2;
+                    curMazeHeight /= 2;
+                    if (curMazeWidth < 1)
+                        curMazeWidth = 1;
+                    if (curMazeHeight < 1)
+                        curMazeHeight = 1;
+                    GenerateMaze();
+                }
             }
 
             if (InputDing.CurKey.IsKeyDown(Keys.R))
