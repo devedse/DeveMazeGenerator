@@ -27,7 +27,7 @@ namespace DeveMazeGenerator.Generators
             }
 
             Maze maze = new Maze(width, height, innerMapType);
-            GoGenerate(maze.InnerMap, maze, new Random(), pixelChangedCallback);
+            GoGenerate(maze.InnerMap, maze, new Random(), pixelChangedCallback, new Random().Next());
             return maze;
 
         }
@@ -49,7 +49,7 @@ namespace DeveMazeGenerator.Generators
             }
 
             Maze maze = new Maze(width, height, innerMapType);
-            GoGenerate(maze.InnerMap, maze, new Random(seed), pixelChangedCallback);
+            GoGenerate(maze.InnerMap, maze, new Random(seed), pixelChangedCallback, seed);
             return maze;
         }
 
@@ -66,7 +66,7 @@ namespace DeveMazeGenerator.Generators
         }
 
 
-        private void GoGenerate(InnerMap map, Maze maze, Random r, Action<int, int, long, long> pixelChangedCallback)
+        private void GoGenerate(InnerMap map, Maze maze, Random r, Action<int, int, long, long> pixelChangedCallback, int seed)
         {
             long totSteps = (((long)maze.Width - 1L) / 2L) * (((long)maze.Height - 1L) / 2L) * 2;
             long currentStep = 1;
@@ -142,7 +142,7 @@ namespace DeveMazeGenerator.Generators
 
 
 
-            walls = walls.RandomPermutation();
+            walls = walls.RandomPermutation(seed);
             int cur = 0;
             foreach (KruskalCell wall in walls)
             {

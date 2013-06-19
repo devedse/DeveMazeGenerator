@@ -46,6 +46,8 @@
     <Compile Include="ContentDing.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="InputDing.cs" />
+    <Compile Include="LineOfSight\LineOfSightDeterminer.cs" />
+    <Compile Include="LineOfSight\LineOfSightObject.cs" />
     <Compile Include="MatrixExtensions.cs" />
     <Compile Include="PlayerModel.cs" />
     <Compile Include="Program.cs" />

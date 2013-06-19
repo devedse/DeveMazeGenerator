@@ -39,5 +39,10 @@ namespace DeveMazeGenerator.Generators
             this.X = X;
             this.Y = Y;
         }
+
+        public override string ToString()
+        {
+            return "MazePoint, X: " + X + ", Y: " + Y;
+        }
     }
 }

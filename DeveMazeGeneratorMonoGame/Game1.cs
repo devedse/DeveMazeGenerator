@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
 using DeveMazeGenerator;
 using DeveMazeGenerator.Generators;
+using DeveMazeGeneratorMonoGame.LineOfSight;
 #endregion
 
 namespace DeveMazeGeneratorMonoGame
@@ -36,6 +37,7 @@ namespace DeveMazeGeneratorMonoGame
         private int wallsCount = 0;
         private int pathCount = 0;
 
+        private Maze currentMaze = null;
         private List<MazePoint> currentPath = null;
 
         private bool drawRoof = true;
@@ -56,6 +58,11 @@ namespace DeveMazeGeneratorMonoGame
 
         private String lastAlgorithm = "";
 
+        private Boolean chaseCamera = true;
+        private LineOfSightDeterminer determiner;
+        private LineOfSightObject curChaseCameraPoint = new LineOfSightObject();
+        private float chaseCameraHoekje = 0;
+
         public Game1()
             : base()
         {
@@ -68,10 +75,10 @@ namespace DeveMazeGeneratorMonoGame
 
             //TargetElapsedTime = TimeSpan.FromTicks((long)10000000 / (long)500);
 
-            if (!true)
+            if (true)
             {
-                graphics.PreferredBackBufferWidth = 1700;
-                graphics.PreferredBackBufferHeight = 900;
+                graphics.PreferredBackBufferWidth = 1600;
+                graphics.PreferredBackBufferHeight = 800;
             }
             else
             {
@@ -134,20 +141,23 @@ namespace DeveMazeGeneratorMonoGame
 
 
             Algorithm alg;
-            int randomnumber = random.Next(3);
-            if (randomnumber == 0)
-                alg = new AlgorithmBacktrack();
-            else if (randomnumber == 1)
-                alg = new AlgorithmKruskal();
-            else
-                alg = new AlgorithmDivision();
+            //int randomnumber = random.Next(3);
+            //if (randomnumber == 0)
+            //    alg = new AlgorithmBacktrack();
+            //else if (randomnumber == 1)
+            //    alg = new AlgorithmKruskal();
+            //else
+            //    alg = new AlgorithmDivision();
+            alg = new AlgorithmKruskal();
 
             lastAlgorithm = alg.GetType().Name;
 
-            var maze = alg.Generate(curMazeWidth, curMazeHeight, InnerMapType.BitArreintjeFast, null);
-            var walls = maze.GenerateListOfMazeWalls();
-            currentPath = PathFinderDepthFirst.GoFind(maze.InnerMap, null);
+            currentMaze = alg.Generate(curMazeWidth, curMazeHeight, InnerMapType.BitArreintjeFast, 1290, null);
+            var walls = currentMaze.GenerateListOfMazeWalls();
+            currentPath = PathFinderDepthFirst.GoFind(currentMaze.InnerMap, null);
 
+
+            determiner = new LineOfSightDeterminer(currentMaze.InnerMap, currentPath);
 
             VertexPositionNormalTexture[] vertices = new VertexPositionNormalTexture[walls.Count * 8];
             int[] indices = new int[walls.Count * 12];
@@ -236,6 +246,21 @@ namespace DeveMazeGeneratorMonoGame
 
             var retval = curPointVector + ((nextPointVector - curPointVector) * rest);
             return retval;
+        }
+
+        public MazePoint GetPosAtThisNumerMazePoint(float number)
+        {
+            number -= 1.0f;
+
+            number *= (float)speedFactor;
+
+            number = Math.Max(0, number);
+
+            int cur = (int)number;
+
+            var curPoint = currentPath[Math.Min(cur, currentPath.Count - 1)];
+
+            return curPoint;
         }
 
         /// <summary>
@@ -569,6 +594,33 @@ namespace DeveMazeGeneratorMonoGame
                 }
 
             }
+
+
+
+            //Test
+
+            if (numbertje % 100 == 0)
+            {
+                curChaseCameraPoint = determiner.GetNextLosObject();
+            }
+
+
+            //var possible = determiner.GetAdjacentPoints(GetPosAtThisNumerMazePoint(numbertje));
+
+            //foreach (var poss in possible)
+            //{
+            //    effect.Texture = ContentDing.startTexture;
+            //    CubeModel possibleCubeje = new CubeModel(this, 0.75f, 0.75f, 0.75f, TexturePosInfoGenerator.FullImage, 0.75f);
+            //    possibleCubeje.Draw(Matrix.CreateTranslation(0.625f, 0.375f, 0.625f) * Matrix.CreateTranslation(poss.X - 1, 0, poss.Y - 1) * growingScaleMatrix, effect);
+            //}
+
+            //foreach (var pathnode in currentPath)
+            //{
+            //    effect.Texture = ContentDing.redTexture;
+            //    CubeModel possibleCubeje = new CubeModel(this, 0.75f, 0.75f, 0.75f, TexturePosInfoGenerator.FullImage, 0.75f);
+            //    possibleCubeje.Draw(Matrix.CreateTranslation(0.625f, 0.375f, 0.625f) * Matrix.CreateTranslation(pathnode.X - 1, 0, pathnode.Y - 1) * growingScaleMatrix, effect);
+
+            //}
 
 
 
