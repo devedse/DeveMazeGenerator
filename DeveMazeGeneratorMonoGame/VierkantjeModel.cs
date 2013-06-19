@@ -25,7 +25,7 @@ namespace DeveMazeGeneratorMonoGame
         {
             TexturePosInfo texturePosInfo = TexturePosInfoGenerator.FullImage;
 
-            float height = 0.1f;
+            float height = 0.0f;
 
             int howmuchvertices = 4;
 
