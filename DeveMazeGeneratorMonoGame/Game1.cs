@@ -1,5 +1,6 @@
 ﻿#region Using Statements
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
@@ -44,7 +45,7 @@ namespace DeveMazeGeneratorMonoGame
 
         private bool lighting = true;
 
-        private bool freeMove = false;
+        private bool followCamera = false;
 
         private bool drawPath = false;
 
@@ -58,9 +59,10 @@ namespace DeveMazeGeneratorMonoGame
 
         private String lastAlgorithm = "";
 
-        private Boolean chaseCamera = true;
+        private Boolean chaseCamera = false;
+        private Boolean chaseCameraShowDebugBlocks = true;
         private LineOfSightDeterminer determiner;
-        private LineOfSightObject curChaseCameraPoint = new LineOfSightObject();
+        private LineOfSightObject curChaseCameraPoint = null;
         private float chaseCameraHoekje = 0;
 
         public Game1()
@@ -158,6 +160,7 @@ namespace DeveMazeGeneratorMonoGame
 
 
             determiner = new LineOfSightDeterminer(currentMaze.InnerMap, currentPath);
+            curChaseCameraPoint = null;
 
             VertexPositionNormalTexture[] vertices = new VertexPositionNormalTexture[walls.Count * 8];
             int[] indices = new int[walls.Count * 12];
@@ -291,7 +294,88 @@ namespace DeveMazeGeneratorMonoGame
                 }
             }
 
-            if (!freeMove)
+
+            //Line of sight stuff
+            //Should happen when player runs out of range
+
+            if (chaseCamera || chaseCameraShowDebugBlocks)
+            {
+                if (curChaseCameraPoint == null)
+                {
+                    curChaseCameraPoint = determiner.GetNextLosObject();
+                }
+
+                Boolean pastAll = false;
+                do
+                {
+                    pastAll = true;
+
+                    var curmazepoint = GetPosAtThisNumerMazePoint(numbertje);
+                    var curposnumber = currentPath.IndexOf(curmazepoint);
+                    //Get line of sight points on current path
+                    foreach (var curlospoint in curChaseCameraPoint.LosPoints.Where(t => currentPath.Any(z => t.X == z.X && t.Y == z.Y)))
+                    {
+                        for (int i = curposnumber; i < currentPath.Count; i++)
+                        {
+                            var brrr = currentPath[i];
+                            if (curlospoint.X == brrr.X && curlospoint.Y == brrr.Y)
+                            {
+                                pastAll = false;
+                            }
+                        }
+                    }
+                    if (pastAll)
+                    {
+
+                        curChaseCameraPoint = determiner.GetNextLosObject();
+
+                    }
+                }
+                while (pastAll);
+
+
+
+                if (InputDing.KeyDownUp(Keys.Enter))
+                {
+                    curChaseCameraPoint = determiner.GetNextLosObject();
+                }
+            }
+
+            if (InputDing.KeyDownUp(Keys.C))
+            {
+                if (chaseCamera == false)
+                    followCamera = false;
+                chaseCamera = !chaseCamera;
+            }
+
+            if (chaseCamera && curChaseCameraPoint != null)
+            {
+                camera.cameraPosition = new Vector3(curChaseCameraPoint.CameraPoint.X * 10.0f, 7.5f, curChaseCameraPoint.CameraPoint.Y * 10.0f);
+
+                var playerPos = GetPosAtThisNumer(numbertje);
+
+
+                var newRot = (float)Math.Atan2(playerPos.Y - curChaseCameraPoint.CameraPoint.Y, playerPos.X - curChaseCameraPoint.CameraPoint.X) * -1f - (MathHelper.Pi / 2.0f);
+
+                camera.updownRot = 0;
+                camera.leftrightRot = newRot;
+            }
+
+            if (InputDing.KeyDownUp(Keys.B))
+            {
+                chaseCameraShowDebugBlocks = !chaseCameraShowDebugBlocks;
+            }
+
+
+            if (InputDing.KeyDownUp(Keys.O))
+            {
+                if (!followCamera)
+                    chaseCamera = false;
+                followCamera = !followCamera;
+            }
+
+
+            if (followCamera)
             {
                 var pospos = GetPosAtThisNumer(numbertje);
                 var posposbefore = GetPosAtThisNumer(numbertje - (0.5f / (float)speedFactor));
@@ -376,12 +460,6 @@ namespace DeveMazeGeneratorMonoGame
                 numbertje = 0;
                 GenerateMaze();
             }
-
-            if (InputDing.KeyDownUp(Keys.O))
-            {
-                freeMove = !freeMove;
-            }
-
 
             InputDing.AfterUpdate();
             base.Update(gameTime);
@@ -522,7 +600,7 @@ namespace DeveMazeGeneratorMonoGame
 
 
             //Me
-            if (freeMove)
+            if (!followCamera)
             {
 
                 var vvv = GetPosAtThisNumer(numbertje);
@@ -597,13 +675,23 @@ namespace DeveMazeGeneratorMonoGame
 
 
 
-            //Test
-
-            if (numbertje % 100 == 0)
+            //Draw line of sight
+            if (chaseCameraShowDebugBlocks && curChaseCameraPoint != null)
             {
-                curChaseCameraPoint = determiner.GetNextLosObject();
-            }
+                effect.Texture = ContentDing.redTexture;
+                CubeModel possibleCubeje = new CubeModel(this, 0.75f, 0.75f, 0.75f, TexturePosInfoGenerator.FullImage, 0.75f);
+                possibleCubeje.Draw(Matrix.CreateTranslation(0.625f, 0.375f, 0.625f) * Matrix.CreateTranslation(curChaseCameraPoint.CameraPoint.X - 1, 0, curChaseCameraPoint.CameraPoint.Y - 1) * growingScaleMatrix, effect);
 
+                if (curChaseCameraPoint.LosPoints != null)
+                {
+                    foreach (var losPoint in curChaseCameraPoint.LosPoints)
+                    {
+                        effect.Texture = ContentDing.startTexture;
+                        CubeModel losPointCube = new CubeModel(this, 0.75f, 0.75f, 0.75f, TexturePosInfoGenerator.FullImage, 0.75f);
+                        losPointCube.Draw(Matrix.CreateTranslation(0.625f, 0.375f, 0.625f) * Matrix.CreateTranslation(losPoint.X - 1, 0, losPoint.Y - 1) * growingScaleMatrix, effect);
+                    }
+                }
+            }
 
             //var possible = determiner.GetAdjacentPoints(GetPosAtThisNumerMazePoint(numbertje));
 

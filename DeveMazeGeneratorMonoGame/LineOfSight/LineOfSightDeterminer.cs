@@ -48,13 +48,18 @@ namespace DeveMazeGeneratorMonoGame.LineOfSight
                     adjacentPoints.Add(new MazePoint(x, y + 2));
                 }
 
+                current += 2;
+
                 if (adjacentPoints.Any())
                 {
                     LineOfSightObject losobject = new LineOfSightObject() { CameraPoint = adjacentPoints.First() };
+
+                    losobject.LosPoints = GetAdjacentPoints(losobject.CameraPoint);
+
                     return losobject;
                 }
 
-                current += 2;
+
             }
             return null;
         }
@@ -67,37 +72,39 @@ namespace DeveMazeGeneratorMonoGame.LineOfSight
             //int yend = Math.Min(curMazePoint.Y + 2, innerMap.Height);
 
 
-            int xstart = 0;
-            int ystart = 0;
-            int xend = innerMap.Width;
-            int yend = innerMap.Height;
+            //int xstart = 0;
+            //int ystart = 0;
+            //int xend = innerMap.Width;
+            //int yend = innerMap.Height;
 
-            List<MazePoint> probableMazePoints = new List<MazePoint>();
+            return path.AsParallel().Where(t => HasLosSmart(t, curMazePoint)).ToList();
 
-            for (int x = xstart; x < xend; x++)
-            {
-                for (int y = ystart; y < yend; y++)
-                {
-                    var probablePoint = new MazePoint(x, y);
+            //List<MazePoint> probableMazePoints = new List<MazePoint>();
 
-                    //Not valid because its the same point
-                    //if (AreEqual(curMazePoint, probablePoint))
-                    //    break;
+            //for (int x = xstart; x < xend; x++)
+            //{
+            //    for (int y = ystart; y < yend; y++)
+            //    {
+            //        var probablePoint = new MazePoint(x, y);
 
-                    //Not valid because its on the path
-                    if (path.Any(t => (t.X == probablePoint.X && t.Y == probablePoint.Y)))
-                        continue;
+            //        //Not valid because its the same point
+            //        //if (AreEqual(curMazePoint, probablePoint))
+            //        //    break;
 
-                    if (HasLosSmart(probablePoint, curMazePoint))
-                    {
-                        probableMazePoints.Add(probablePoint);
-                    }
+            //        //Not valid because its on the path
+            //        //if (path.Any(t => (t.X == probablePoint.X && t.Y == probablePoint.Y)))
+            //        //    continue;
 
-                    //probableMazePoints.Add(probablePoint);
-                }
-            }
+            //        if (HasLosSmart(probablePoint, curMazePoint))
+            //        {
+            //            probableMazePoints.Add(probablePoint);
+            //        }
 
-            return probableMazePoints;
+            //        //probableMazePoints.Add(probablePoint);
+            //    }
+            //}
+
+            //return probableMazePoints;
         }
 
         private Boolean HasLosSmart(MazePoint start, MazePoint end)
@@ -195,7 +202,7 @@ namespace DeveMazeGeneratorMonoGame.LineOfSight
                 }
             }
 
-            if (reeksje.Any(x => innerMap[x.X, x.Y] == false))
+            if (reeksje.Any(x => x.X < 0 || x.Y < 0 || x.X > innerMap.Width || x.Y > innerMap.Height || innerMap[x.X, x.Y] == false))
             {
                 return false;
             }
