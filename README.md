@@ -1,5 +1,4 @@
-# DeveMazeGenerator, Big Mazes, 3D, Pathfinding & more
-=================
+# DeveMazeGenerator, C#, Huge Mazes, 3D, Pathfinding & More
 
 My maze generator written in C#, highly optimized to generate huge mazes (128.000x128.000 for example), find the shortest path and then save it all to an image. In the latest version I've also added a MonoGame project to render the mazes in 3D (also works on android)
 
