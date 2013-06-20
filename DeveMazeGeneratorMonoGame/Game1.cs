@@ -287,11 +287,16 @@ namespace DeveMazeGeneratorMonoGame
             if (InputDing.CurKey.IsKeyDown(Keys.Escape))
                 Exit();
 
-
-            if (InputDing.KeyDownUp(Keys.OemPlus))
+            if (InputDing.KeyDownUp(Keys.OemPlus) || InputDing.KeyDownUp(Keys.Add))
             {
                 speedFactor *= 2;
                 numbertje = (numbertje - 1f) / 2f + 1f;
+
+                if (speedFactor <= 0)
+                {
+                    numbertje = 0;
+                    speedFactor = 1;
+                }
             }
 
             if (InputDing.KeyDownUp(Keys.OemMinus))
