@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.GamerServices;
 using DeveMazeGenerator;
 using DeveMazeGenerator.Generators;
 using DeveMazeGeneratorMonoGame.LineOfSight;
+using System.Diagnostics;
 #endregion
 
 namespace DeveMazeGeneratorMonoGame
@@ -144,13 +145,13 @@ namespace DeveMazeGeneratorMonoGame
 
 
             Algorithm alg;
-            int randomnumber = random.Next(3);
+            int randomnumber = curMazeWidth < 2048 ? random.Next(3) : random.Next(2);
             if (randomnumber == 0)
                 alg = new AlgorithmBacktrack();
             else if (randomnumber == 1)
-                alg = new AlgorithmKruskal();
-            else
                 alg = new AlgorithmDivision();
+            else
+                alg = new AlgorithmKruskal();
 
             lastAlgorithm = alg.GetType().Name;
 
@@ -266,6 +267,14 @@ namespace DeveMazeGeneratorMonoGame
             return curPoint;
         }
 
+
+        public static void Meassure(Action a)
+        {
+            var s = Stopwatch.StartNew();
+            a();
+            Debug.WriteLine("Elapsed: " + s.Elapsed.TotalSeconds);
+        }
+
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
@@ -303,6 +312,21 @@ namespace DeveMazeGeneratorMonoGame
             //Line of sight stuff
             //Should happen when player runs out of range
 
+            if (InputDing.KeyDownUp(Keys.C))
+            {
+                if (chaseCamera == false)
+                {
+                    fromAboveCamera = false;
+                    followCamera = false;
+                }
+                chaseCamera = !chaseCamera;
+            }
+
+            if (InputDing.KeyDownUp(Keys.B))
+            {
+                chaseCameraShowDebugBlocks = !chaseCameraShowDebugBlocks;
+            }
+
             if (chaseCamera || chaseCameraShowDebugBlocks)
             {
                 if (curChaseCameraPoint == null)
@@ -312,33 +336,22 @@ namespace DeveMazeGeneratorMonoGame
 
                 if (curChaseCameraPoint != null)
                 {
-                    Boolean pastAll = false;
-                    do
+                    var curmazepoint = GetPosAtThisNumerMazePoint(numbertje);
+                    var curposnumber = currentPath.IndexOf(curmazepoint);
+
+                    while (true)
                     {
-                        pastAll = true;
-
-                        var curmazepoint = GetPosAtThisNumerMazePoint(numbertje);
-                        var curposnumber = currentPath.IndexOf(curmazepoint);
-                        //Get line of sight points on current path
-                        foreach (var curlospoint in curChaseCameraPoint.LosPoints.Where(t => currentPath.Any(z => t.X == z.X && t.Y == z.Y)))
+                        if (!curChaseCameraPoint.LosPoints.Any(t => currentPath.Skip(curposnumber).Any(z => t.X == z.X && t.Y == z.Y)))
                         {
-                            for (int i = curposnumber; i < currentPath.Count; i++)
-                            {
-                                var brrr = currentPath[i];
-                                if (curlospoint.X == brrr.X && curlospoint.Y == brrr.Y)
-                                {
-                                    pastAll = false;
-                                }
-                            }
-                        }
-                        if (pastAll)
-                        {
-
                             curChaseCameraPoint = determiner.GetNextLosObject();
-
+                            if (curChaseCameraPoint == null)
+                                break;
+                        }
+                        else
+                        {
+                            break;
                         }
                     }
-                    while (pastAll && curChaseCameraPoint != null);
                 }
 
 
@@ -346,16 +359,6 @@ namespace DeveMazeGeneratorMonoGame
                 {
                     curChaseCameraPoint = determiner.GetNextLosObject();
                 }
-            }
-
-            if (InputDing.KeyDownUp(Keys.C))
-            {
-                if (chaseCamera == false)
-                {
-                    fromAboveCamera = false;
-                    followCamera = false;
-                }
-                chaseCamera = !chaseCamera;
             }
 
             if (chaseCamera && curChaseCameraPoint != null)
@@ -371,11 +374,6 @@ namespace DeveMazeGeneratorMonoGame
                 camera.leftrightRot = newRot;
             }
 
-            if (InputDing.KeyDownUp(Keys.B))
-            {
-                chaseCameraShowDebugBlocks = !chaseCameraShowDebugBlocks;
-            }
-
 
 
 
@@ -387,6 +385,10 @@ namespace DeveMazeGeneratorMonoGame
                 {
                     chaseCamera = false;
                     followCamera = false;
+                    drawRoof = false;
+
+                    camera.leftrightRot = 0.15f;
+                    camera.updownRot = -0.72f;
                 }
                 fromAboveCamera = !fromAboveCamera;
             }
@@ -394,12 +396,12 @@ namespace DeveMazeGeneratorMonoGame
 
             if (fromAboveCamera)
             {
-                float prenumbertje = numbertje - (float)gameTime.ElapsedGameTime.TotalSeconds;
+                //float prenumbertje = numbertje - (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-                var pre = GetPosAtThisNumer(prenumbertje);
+                //var pre = GetPosAtThisNumer(prenumbertje);
                 var now = GetPosAtThisNumer(numbertje);
 
-                camera.cameraPosition += new Vector3((now.X - pre.X) * 10.0f, 0, (pre.Y - now.Y) * -10.0f);
+                camera.cameraPosition = new Vector3((now.X + 1.9f) * 10.0f, (7.0f) * 10.0f, (now.Y + 7.0f) * 10.0f);
             }
 
 
@@ -706,7 +708,7 @@ namespace DeveMazeGeneratorMonoGame
 
             }
 
-            effect.World = scaleMatrix * Matrix.CreateTranslation(0, 0.01f, 0); //Put it slightly above ground level
+            effect.World = scaleMatrix * Matrix.CreateTranslation(0, 0.5f, 0); //Put it slightly above ground level
 
             //Path
             if (drawPath && vertexBufferPath != null && vertexBufferPath != null)

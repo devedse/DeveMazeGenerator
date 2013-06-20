@@ -54,7 +54,7 @@ namespace DeveMazeGeneratorMonoGame.LineOfSight
                 {
                     LineOfSightObject losobject = new LineOfSightObject() { CameraPoint = adjacentPoints.First() };
 
-                    losobject.LosPoints = GetAdjacentPoints(losobject.CameraPoint);
+                    losobject.LosPoints = GetAdjacentPoints(losobject.CameraPoint, current);
 
                     return losobject;
                 }
@@ -64,7 +64,7 @@ namespace DeveMazeGeneratorMonoGame.LineOfSight
             return null;
         }
 
-        public List<MazePoint> GetAdjacentPoints(MazePoint curMazePoint)
+        public List<MazePoint> GetAdjacentPoints(MazePoint curMazePoint, int curPathStep)
         {
             //int xstart = Math.Max(curMazePoint.X - 2, 0);
             //int ystart = Math.Max(curMazePoint.Y - 2, 0);
@@ -77,7 +77,7 @@ namespace DeveMazeGeneratorMonoGame.LineOfSight
             //int xend = innerMap.Width;
             //int yend = innerMap.Height;
 
-            return path.AsParallel().Where(t => HasLosSmart(t, curMazePoint)).ToList();
+            return path.AsParallel().Skip(curPathStep - 300).Take(600).Where(t => HasLosSmart(t, curMazePoint)).ToList();
 
             //List<MazePoint> probableMazePoints = new List<MazePoint>();
 
