@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.20617.1 PREVIEW
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeveMazeGeneratorMonoGame", "DeveMazeGeneratorMonoGame\DeveMazeGeneratorMonoGame.csproj", "{D440FC33-3EF6-4D18-AA82-B76D3487D03E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeveMazeGenerator", "DeveMazeGenerator\DeveMazeGenerator.csproj", "{85559C8E-CEF5-4DA8-B313-8B37455A5DC2}"
