@@ -1249,18 +1249,18 @@ namespace DeveMazeGeneratorGui
 
                 w.Stop();
                 DebugMSG("Generating time: " + w.Elapsed.TotalSeconds);
-                DebugMSG("Finding Path...");
-                w.Reset();
-                w.Start();
-                var path = PathFinderDepthFirst.GoFind(maze.InnerMap, null);
-                w.Stop();
-                DebugMSG("Done generating path: " + w.Elapsed.TotalSeconds);
-                DebugMSG("Saving...");
-                w.Reset();
-                w.Start();
-                maze.SaveMazeAsImage("benchmark 16k single core.png", ImageFormat.Png, path, MazeSaveType.ColorDepth32Bits);
-                w.Stop();
-                DebugMSG("Done saving: " + w.Elapsed.TotalSeconds);
+                //DebugMSG("Finding Path...");
+                //w.Reset();
+                //w.Start();
+                //var path = PathFinderDepthFirst.GoFind(maze.InnerMap, null);
+                //w.Stop();
+                //DebugMSG("Done generating path: " + w.Elapsed.TotalSeconds);
+                //DebugMSG("Saving...");
+                //w.Reset();
+                //w.Start();
+                //maze.SaveMazeAsImage("benchmark 16k single core.png", ImageFormat.Png, path, MazeSaveType.ColorDepth32Bits);
+                //w.Stop();
+                //DebugMSG("Done saving: " + w.Elapsed.TotalSeconds);
             }));
 
         }
