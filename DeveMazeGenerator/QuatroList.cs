@@ -9,11 +9,11 @@ namespace DeveMazeGenerator
 {
     public class QuatroList
     {
-        int[] innerCrap;
+        int[] innerData;
 
         public QuatroList()
         {
-            innerCrap = new int[128];
+            innerData = new int[128];
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -28,7 +28,7 @@ namespace DeveMazeGenerator
             v++;
             //v = next power of 2 now;
 
-            Array.Resize<int>(ref innerCrap, v);
+            Array.Resize<int>(ref innerData, v);
         }
 
 
@@ -48,7 +48,7 @@ namespace DeveMazeGenerator
                 int unmasked = value << (derealone * 2); //moving value to the left, 00100000 for example
                 int pos = y / 16; //Position in array
 
-                if (pos >= innerCrap.Length)
+                if (pos >= innerData.Length)
                 {
                     IncreaseSize(pos);
                 }
@@ -57,11 +57,11 @@ namespace DeveMazeGenerator
                 int negativemask = ~(mask); //Invert the mask 11001111
 
                 //Clear current bits at the position, the mask is used for this, (for example 10101010 with the mask will become 10001010):
-                int pre = negativemask & innerCrap[pos];
+                int pre = negativemask & innerData[pos];
 
                 int after = pre | unmasked; //Add the value to the cleared thing 10001010 + 00100000 becomes 10101010
 
-                innerCrap[pos] = after;
+                innerData[pos] = after;
             }
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             get
@@ -73,7 +73,7 @@ namespace DeveMazeGenerator
                 int mask = (3 << derealone * 2); //Mask where the bits should be, 00110000 for example
                 int pos = y / 16; //Pos in array
 
-                int unmasked = innerCrap[pos] & mask; //Get only the 2 bits that were found by using the mask
+                int unmasked = innerData[pos] & mask; //Get only the 2 bits that were found by using the mask
                 int bitshiftedback = (int)((uint)unmasked >> (derealone * 2)); //Shift the bits to the right so that 00110000 becomes 00000011, then we can read it as "3" for example
 
                 return bitshiftedback;
