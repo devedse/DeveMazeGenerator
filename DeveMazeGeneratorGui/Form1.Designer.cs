@@ -485,7 +485,7 @@ namespace DeveMazeGeneratorGui
             this.button24.Name = "button24";
             this.button24.Size = new System.Drawing.Size(86, 34);
             this.button24.TabIndex = 39;
-            this.button24.Text = "16k test with hybrid map";
+            this.button24.Text = "test with hybrid map";
             this.button24.UseVisualStyleBackColor = true;
             this.button24.Click += new System.EventHandler(this.button24_Click);
             // 
