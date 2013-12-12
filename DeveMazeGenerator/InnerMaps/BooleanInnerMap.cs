@@ -17,6 +17,12 @@ namespace DeveMazeGenerator.InnerMaps
             innerData = new Boolean[width, height];
         }
 
+        internal BooleanInnerMap(int width, int height, Boolean[,] data)
+            : base(width, height)
+        {
+            innerData = data;
+        }
+
         public override Boolean this[int x, int y]
         {
             [MethodImpl(MethodImplOptions.AggressiveInlining)]

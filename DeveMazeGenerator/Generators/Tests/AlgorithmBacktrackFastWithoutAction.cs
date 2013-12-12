@@ -6,10 +6,11 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using DeveMazeGenerator.InnerMaps;
+using System.ComponentModel;
 
-namespace DeveMazeGenerator.Generators
+namespace DeveMazeGenerator.Generators.Tests
 {
-    public class AlgorithmBacktrackTest
+    public class AlgorithmBacktrackFastWithoutAction : Algorithm
     {
         /// <summary>
         /// Generate a Maze
@@ -21,15 +22,9 @@ namespace DeveMazeGenerator.Generators
         /// <returns>A maze</returns>
         public Maze Generate(int width, int height, InnerMapType innerMapType, Action<int, int, long, long> pixelChangedCallback)
         {
-            if (pixelChangedCallback == null)
-            {
-                pixelChangedCallback = (x, y, z, u) => { };
-            }
-
             Maze maze = new Maze(width, height, innerMapType);
-            GoGenerate(maze.InnerMap, maze, new Random(), pixelChangedCallback);
+            GoGenerate(maze.InnerMap, maze, new Random(), null);
             return maze;
-
         }
 
         /// <summary>
@@ -43,13 +38,8 @@ namespace DeveMazeGenerator.Generators
         /// <returns>A maze</returns>
         public Maze Generate(int width, int height, InnerMapType innerMapType, int seed, Action<int, int, long, long> pixelChangedCallback)
         {
-            if (pixelChangedCallback == null)
-            {
-                pixelChangedCallback = (x, y, z, u) => { };
-            }
-
             Maze maze = new Maze(width, height, innerMapType);
-            GoGenerate(maze.InnerMap, maze, new Random(seed), pixelChangedCallback);
+            GoGenerate(maze.InnerMap, maze, new Random(seed), null);
             return maze;
         }
 
@@ -68,16 +58,13 @@ namespace DeveMazeGenerator.Generators
 
         private void GoGenerate(InnerMap map, Maze maze, Random r, Action<int, int, long, long> pixelChangedCallback)
         {
-            long totSteps = (((long)maze.Width - 1L) / 2L) * (((long)maze.Height - 1L) / 2L);
-            long currentStep = 0;
-
             int x = 1;
             int y = 1;
 
             Stack<MazePoint> stackje = new Stack<MazePoint>();
             stackje.Push(new MazePoint(x, y));
             map[x, y] = true;
-            pixelChangedCallback.Invoke(x, y, currentStep, totSteps);
+            //pixelChangedCallback.Invoke(x, y, currentStep, totSteps);
 
             MazePoint[] targets = new MazePoint[4];
 
@@ -123,33 +110,31 @@ namespace DeveMazeGenerator.Generators
                     stackje.Push(target);
                     map[target.X, target.Y] = true;
 
-                    currentStep++;
-
                     if (target.X < x)
                     {
                         map[x - 1, y] = true;
-                        pixelChangedCallback.Invoke(x - 1, y, currentStep, totSteps);
+                        //pixelChangedCallback.Invoke(x - 1, y, currentStep, totSteps);
                         //form.drawPixel(x - 1, y, brushThisUses);
                     }
                     else if (target.X > x)
                     {
                         map[x + 1, y] = true;
-                        pixelChangedCallback.Invoke(x + 1, y, currentStep, totSteps);
+                        //pixelChangedCallback.Invoke(x + 1, y, currentStep, totSteps);
                         //form.drawPixel(x + 1, y, brushThisUses);
                     }
                     else if (target.Y < y)
                     {
                         map[x, y - 1] = true;
-                        pixelChangedCallback.Invoke(x, y - 1, currentStep, totSteps);
+                        //pixelChangedCallback.Invoke(x, y - 1, currentStep, totSteps);
                         //form.drawPixel(x, y - 1, brushThisUses);
                     }
                     else if (target.Y > y)
                     {
                         map[x, y + 1] = true;
-                        pixelChangedCallback.Invoke(x, y + 1, currentStep, totSteps);
+                        //pixelChangedCallback.Invoke(x, y + 1, currentStep, totSteps);
                         //form.drawPixel(x, y + 1, brushThisUses);
                     }
-                    pixelChangedCallback.Invoke(target.X, target.Y, currentStep, totSteps);
+                    //pixelChangedCallback.Invoke(target.X, target.Y, currentStep, totSteps);
                     //form.drawPixel(target.X, target.Y, brushThisUses);
                 }
                 else

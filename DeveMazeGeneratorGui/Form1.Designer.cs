@@ -74,6 +74,7 @@ namespace DeveMazeGeneratorGui
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.button27 = new System.Windows.Forms.Button();
+            this.button28 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -143,6 +144,7 @@ namespace DeveMazeGeneratorGui
             // listBox1
             // 
             this.listBox1.FormattingEnabled = true;
+            this.listBox1.HorizontalScrollbar = true;
             this.listBox1.Location = new System.Drawing.Point(315, 430);
             this.listBox1.Name = "listBox1";
             this.listBox1.Size = new System.Drawing.Size(482, 173);
@@ -557,11 +559,22 @@ namespace DeveMazeGeneratorGui
             this.button27.UseVisualStyleBackColor = true;
             this.button27.Click += new System.EventHandler(this.button27_Click);
             // 
+            // button28
+            // 
+            this.button28.Location = new System.Drawing.Point(95, 549);
+            this.button28.Name = "button28";
+            this.button28.Size = new System.Drawing.Size(91, 54);
+            this.button28.TabIndex = 47;
+            this.button28.Text = "Normal vs Fast";
+            this.button28.UseVisualStyleBackColor = true;
+            this.button28.Click += new System.EventHandler(this.button28_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(830, 615);
+            this.Controls.Add(this.button28);
             this.Controls.Add(this.button27);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
@@ -659,6 +672,7 @@ namespace DeveMazeGeneratorGui
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Button button27;
+        private System.Windows.Forms.Button button28;
     }
 }
 

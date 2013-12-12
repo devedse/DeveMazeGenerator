@@ -14,6 +14,7 @@ using DeveMazeGenerator.Generators;
 using System.IO;
 using System.Threading;
 using System.Drawing.Imaging;
+using DeveMazeGenerator.Generators.Tests;
 
 namespace DeveMazeGeneratorGui
 {
@@ -1428,7 +1429,25 @@ namespace DeveMazeGeneratorGui
             });
         }
 
+        private void button28_Click(object sender, EventArgs e)
+        {
+            TestThisAlg(new AlgorithmBacktrack());
+            TestThisAlg(new AlgorithmBacktrackFastWithoutAction());
+            TestThisAlg(new AlgorithmBacktrackFastWithoutActionAndMaze());
+            TestThisAlg(new AlgorithmBacktrackFastWithoutActionAndMazeAndFastRandomFastStackArray());
+            TestThisAlg(new AlgorithmBacktrackFastWithoutActionAndMazeAndFastRandomFastStackList());
+        }
 
+        private void TestThisAlg(Algorithm alg)
+        {
+            int size = 2048 * 16;
+            var w = Stopwatch.StartNew();
+            var maze2 = alg.Generate(size, size, InnerMapType.BooleanArray, 1337, null);
+            w.Stop();
+            //var path = PathFinderDepthFirst.GoFind(maze2.InnerMap, null);
+            //maze2.SaveMazeAsImage(alg.GetType().ToString() + ".png", ImageFormat.Png, path, MazeSaveType.ColorDepth32Bits);
+            DebugMSG(alg.GetType() + ": " + w.Elapsed.TotalSeconds);
+        }
 
     }
 

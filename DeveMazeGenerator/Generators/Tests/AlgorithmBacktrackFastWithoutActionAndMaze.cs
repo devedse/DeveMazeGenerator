@@ -1,0 +1,151 @@
+﻿using DeveMazeGenerator.InnerMaps;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace DeveMazeGenerator.Generators.Tests
+{
+    public class AlgorithmBacktrackFastWithoutActionAndMaze : Algorithm
+    {
+        /// <summary>
+        /// Generate a Maze
+        /// </summary>
+        /// <param name="width">Width of the maze</param>
+        /// <param name="height">Height of the maze</param>
+        /// <param name="innerMapType">The type which is used to store a map</param>
+        /// <param name="pixelChangedCallback">When a pixel is changed you can define a callback here to for example draw the maze while its being generated, add null if you don't want this. Last 2 longs are for the current step and the total steps (can be used to calculate how far the maze is done being generated)</param>
+        /// <returns>A maze</returns>
+        public Maze Generate(int width, int height, InnerMapType innerMapType, Action<int, int, long, long> pixelChangedCallback)
+        {
+            var map = GoGenerate(new Random(), width, height);
+
+            InnerMap innerMap = new BooleanInnerMap(width, height, map);
+            var maze = new Maze(innerMap);
+            return maze;
+        }
+
+        /// <summary>
+        /// Generate a Maze
+        /// </summary>
+        /// <param name="width">Width of the maze</param>
+        /// <param name="height">Height of the maze</param>
+        /// <param name="innerMapType">The type which is used to store a map</param>
+        /// <param name="seed">The seed that is used to generate a maze</param>
+        /// <param name="pixelChangedCallback">When a pixel is changed you can define a callback here to for example draw the maze while its being generated, add null if you don't want this. Last 2 longs are for the current step and the total steps (can be used to calculate how far the maze is done being generated)</param>
+        /// <returns>A maze</returns>
+        public Maze Generate(int width, int height, InnerMapType innerMapType, int seed, Action<int, int, long, long> pixelChangedCallback)
+        {
+            var map = GoGenerate(new Random(seed), width, height);
+
+            InnerMap innerMap = new BooleanInnerMap(width, height, map);
+            var maze = new Maze(innerMap);
+            return maze;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private static bool isValid(int x, int y, Boolean[,] map, int width, int height)
+        {
+            //Console.WriteLine(System.Reflection.MethodBase.GetCurrentMethod().Name);
+            if (x > 0 && x < width - 1 && y > 0 && y < height - 1)
+            {
+                return !map[x, y];
+            }
+            return false;
+        }
+
+        private Boolean[,] GoGenerate(Random r, int width, int height)
+        {
+            int x = 1;
+            int y = 1;
+
+            var map = new Boolean[width, height];
+
+            Stack<MazePoint> stackje = new Stack<MazePoint>();
+            stackje.Push(new MazePoint(x, y));
+            map[x, y] = true;
+            //pixelChangedCallback.Invoke(x, y, currentStep, totSteps);
+
+            MazePoint[] targets = new MazePoint[4];
+
+            //form.drawPixel(x, y, brushThisUses);
+            while (stackje.Count != 0)
+            {
+                MazePoint cur = stackje.Peek();
+                x = cur.X;
+                y = cur.Y;
+
+                int targetCount = 0;
+                if (isValid(x - 2, y, map, width, height))
+                {
+                    targets[targetCount].X = x - 2;
+                    targets[targetCount].Y = y;
+                    targetCount++;
+                }
+                if (isValid(x + 2, y, map, width, height))
+                {
+                    targets[targetCount].X = x + 2;
+                    targets[targetCount].Y = y;
+                    targetCount++;
+                }
+                if (isValid(x, y - 2, map, width, height))
+                {
+                    targets[targetCount].X = x;
+                    targets[targetCount].Y = y - 2;
+                    targetCount++;
+                }
+                if (isValid(x, y + 2, map, width, height))
+                {
+                    targets[targetCount].X = x;
+                    targets[targetCount].Y = y + 2;
+                    targetCount++;
+                }
+
+                //Thread.Sleep(1000);
+
+                if (targetCount > 0)
+                {
+                    var target = targets[r.Next(targetCount)];
+                    stackje.Push(target);
+                    map[target.X, target.Y] = true;
+
+                    if (target.X < x)
+                    {
+                        map[x - 1, y] = true;
+                        //pixelChangedCallback.Invoke(x - 1, y, currentStep, totSteps);
+                        //form.drawPixel(x - 1, y, brushThisUses);
+                    }
+                    else if (target.X > x)
+                    {
+                        map[x + 1, y] = true;
+                        //pixelChangedCallback.Invoke(x + 1, y, currentStep, totSteps);
+                        //form.drawPixel(x + 1, y, brushThisUses);
+                    }
+                    else if (target.Y < y)
+                    {
+                        map[x, y - 1] = true;
+                        //pixelChangedCallback.Invoke(x, y - 1, currentStep, totSteps);
+                        //form.drawPixel(x, y - 1, brushThisUses);
+                    }
+                    else if (target.Y > y)
+                    {
+                        map[x, y + 1] = true;
+                        //pixelChangedCallback.Invoke(x, y + 1, currentStep, totSteps);
+                        //form.drawPixel(x, y + 1, brushThisUses);
+                    }
+                    //pixelChangedCallback.Invoke(target.X, target.Y, currentStep, totSteps);
+                    //form.drawPixel(target.X, target.Y, brushThisUses);
+                }
+                else
+                {
+                    stackje.Pop();
+                }
+            }
+
+            return map;
+        }
+    }
+}

@@ -66,8 +66,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExtensionMethods.cs" />
+    <Compile Include="FastRandom.cs" />
+    <Compile Include="Generators\Tests\AlgorithmBacktrackFastWithoutAction.cs" />
+    <Compile Include="Generators\Tests\AlgorithmBacktrackFastWithoutActionAndMazeAndFastRandomFastStackList.cs" />
+    <Compile Include="Generators\Tests\AlgorithmBacktrackFastWithoutActionAndMazeAndFastRandomFastStackArray.cs" />
+    <Compile Include="Generators\Tests\AlgorithmBacktrackFastWithoutActionAndMaze.cs" />
     <Compile Include="Generators\AlgorithmKruskal.cs" />
-    <Compile Include="Generators\AlgorithmBacktrackTest.cs" />
+    <Compile Include="Generators\Tests\AlgorithmBacktrackTest.cs" />
     <Compile Include="Generators\AlgorithmBacktrackSmartMemory.cs" />
     <Compile Include="Generators\AlgorithmDivision.cs" />
     <Compile Include="InnerMaps\BitArrayMappedOnHardDiskInnerMap.cs" />
