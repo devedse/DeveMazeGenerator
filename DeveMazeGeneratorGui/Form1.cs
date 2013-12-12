@@ -1440,7 +1440,7 @@ namespace DeveMazeGeneratorGui
 
         private void TestThisAlg(Algorithm alg)
         {
-            int size = 2048 * 16;
+            int size = 2048 * 8;
             var w = Stopwatch.StartNew();
             var maze2 = alg.Generate(size, size, InnerMapType.BooleanArray, 1337, null);
             w.Stop();
