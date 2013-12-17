@@ -1434,8 +1434,10 @@ namespace DeveMazeGeneratorGui
             TestThisAlg(new AlgorithmBacktrack());
             TestThisAlg(new AlgorithmBacktrackFastWithoutAction());
             TestThisAlg(new AlgorithmBacktrackFastWithoutActionAndMaze());
-            TestThisAlg(new AlgorithmBacktrackFastWithoutActionAndMazeAndFastRandomFastStackArray());
             TestThisAlg(new AlgorithmBacktrackFastWithoutActionAndMazeAndFastRandomFastStackList());
+            TestThisAlg(new AlgorithmBacktrackFastWithoutActionAndMazeAndFastRandomFastStackArray());
+            TestThisAlg(new AlgorithmBacktrackFastWithoutActionAndMazeAndFastRandomFastStackArray2());
+            TestThisAlg(new AlgorithmBacktrackFastWithoutActionAndMazeAndFastRandomFastStackArray3());
         }
 
         private void TestThisAlg(Algorithm alg)

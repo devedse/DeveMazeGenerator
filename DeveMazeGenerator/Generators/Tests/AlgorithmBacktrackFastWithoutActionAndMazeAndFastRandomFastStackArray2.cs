@@ -9,7 +9,7 @@ using DeveMazeGenerator.InnerMaps;
 
 namespace DeveMazeGenerator.Generators.Tests
 {
-    public class AlgorithmBacktrackFastWithoutActionAndMazeAndFastRandomFastStackArray : Algorithm
+    public class AlgorithmBacktrackFastWithoutActionAndMazeAndFastRandomFastStackArray2 : Algorithm
     {
         /// <summary>
         /// Generate a Maze
@@ -22,7 +22,7 @@ namespace DeveMazeGenerator.Generators.Tests
         public Maze Generate(int width, int height, InnerMapType innerMapType, Action<int, int, long, long> pixelChangedCallback)
         {
             var map = GoGenerate(new FastRandom(), width, height);
-            
+
             InnerMap innerMap = new BooleanInnerMap(width, height, map);
             var maze = new Maze(innerMap);
             return maze;
@@ -48,12 +48,12 @@ namespace DeveMazeGenerator.Generators.Tests
 
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static bool isValid(int x, int y, Boolean[,] map, int width, int height)
+        private static bool isValid(int x, int y, Boolean[] map, int width, int height)
         {
             //Console.WriteLine(System.Reflection.MethodBase.GetCurrentMethod().Name);
             if (x > 0 && x < width - 1 && y > 0 && y < height - 1)
             {
-                return !map[x, y];
+                return !map[y * width + x];
             }
             return false;
         }
@@ -65,7 +65,7 @@ namespace DeveMazeGenerator.Generators.Tests
             int y = 1;
 
 
-            var map = new Boolean[width, height];
+            var map = new Boolean[width * height];
 
             //The length of this array is just enough to fit the longest path possible
             int[] stackjex = new int[width * height / 4];
@@ -77,7 +77,7 @@ namespace DeveMazeGenerator.Generators.Tests
             stackjey[pointertje] = y;
             pointertje++;
 
-            map[x, y] = true;
+            map[y * width + x] = true;
             //pixelChangedCallback.Invoke(x, y, currentStep, totSteps);
 
             MazePoint[] targets = new MazePoint[4];
@@ -123,29 +123,29 @@ namespace DeveMazeGenerator.Generators.Tests
                     stackjey[pointertje] = target.Y;
                     pointertje++;
 
-                    map[target.X, target.Y] = true;
+                    map[target.Y * width + target.X] = true;
 
                     if (target.X < x)
                     {
-                        map[x - 1, y] = true;
+                        map[y * width + (x - 1)] = true;
                         //pixelChangedCallback.Invoke(x - 1, y, currentStep, totSteps);
                         //form.drawPixel(x - 1, y, brushThisUses);
                     }
                     else if (target.X > x)
                     {
-                        map[x + 1, y] = true;
+                        map[y * width + (x + 1)] = true;
                         //pixelChangedCallback.Invoke(x + 1, y, currentStep, totSteps);
                         //form.drawPixel(x + 1, y, brushThisUses);
                     }
                     else if (target.Y < y)
                     {
-                        map[x, y - 1] = true;
+                        map[(y - 1) * width + x] = true;
                         //pixelChangedCallback.Invoke(x, y - 1, currentStep, totSteps);
                         //form.drawPixel(x, y - 1, brushThisUses);
                     }
                     else if (target.Y > y)
                     {
-                        map[x, y + 1] = true;
+                        map[(y + 1) * width + x] = true;
                         //pixelChangedCallback.Invoke(x, y + 1, currentStep, totSteps);
                         //form.drawPixel(x, y + 1, brushThisUses);
                     }
@@ -160,7 +160,8 @@ namespace DeveMazeGenerator.Generators.Tests
 
             }
 
-            return map;
+            //return map;
+            return null;
         }
 
 
