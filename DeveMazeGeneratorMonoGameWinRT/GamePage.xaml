@@ -8,6 +8,7 @@
     mc:Ignorable="d">
 
     <Grid>
+        <Button Content="Button" HorizontalAlignment="Left" Margin="60,69,0,0" VerticalAlignment="Top" Height="153" Width="317" Background="#FF9CCFD8" />
     </Grid>
     
 </SwapChainBackgroundPanel>
