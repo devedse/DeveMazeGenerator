@@ -1,4 +1,5 @@
 ﻿using DeveMazeGenerator.Generators;
+using DeveMazeGenerator.InnerMaps;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +25,30 @@ namespace DeveMazeGenerator
 
     public partial class Maze
     {
+        /// <summary>
+        /// Saves the maze with 1 bit per pixel
+        /// </summary>
+        /// <param name="filename">The filename of the file</param>
+        public void SaveAsBinaryFile(String filename)
+        {
+            using (var fileStream = new FileStream(filename, FileMode.Create))
+            {
+                for (int y = 0; y < this.Height; y++)
+                {
+                    BitArreintjeFastInnerMapArray lineOfData = new BitArreintjeFastInnerMapArray(this.Width);
+                    for (int x = 0; x < this.Width; x++)
+                    {
+                        lineOfData[x] = this.innerMap[x, y];
+                    }
+
+                    byte[] bytesData = new byte[lineOfData.innerData.Length * sizeof(int)];
+                    System.Buffer.BlockCopy(lineOfData.innerData, 0, bytesData, 0, bytesData.Length);
+
+                    fileStream.Write(bytesData, 0, bytesData.Length);
+                }
+            }
+        }
+
         /// <summary>
         /// Most memory efficient way of saving a maze
         /// Uses 1 bit per pixel

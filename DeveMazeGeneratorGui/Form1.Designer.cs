@@ -75,6 +75,14 @@ namespace DeveMazeGeneratorGui
             this.label10 = new System.Windows.Forms.Label();
             this.button27 = new System.Windows.Forms.Button();
             this.button28 = new System.Windows.Forms.Button();
+            this.button29 = new System.Windows.Forms.Button();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.comboBox4 = new System.Windows.Forms.ComboBox();
+            this.button30 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -493,9 +501,9 @@ namespace DeveMazeGeneratorGui
             // 
             // button25
             // 
-            this.button25.Location = new System.Drawing.Point(130, 205);
+            this.button25.Location = new System.Drawing.Point(824, 71);
             this.button25.Name = "button25";
-            this.button25.Size = new System.Drawing.Size(78, 72);
+            this.button25.Size = new System.Drawing.Size(132, 40);
             this.button25.TabIndex = 40;
             this.button25.Text = "Mega terror maze (hybrid map)";
             this.button25.UseVisualStyleBackColor = true;
@@ -569,11 +577,92 @@ namespace DeveMazeGeneratorGui
             this.button28.UseVisualStyleBackColor = true;
             this.button28.Click += new System.EventHandler(this.button28_Click);
             // 
+            // button29
+            // 
+            this.button29.Location = new System.Drawing.Point(824, 167);
+            this.button29.Name = "button29";
+            this.button29.Size = new System.Drawing.Size(132, 63);
+            this.button29.TabIndex = 48;
+            this.button29.Text = "Remove Last Mega Terror Maze from memory";
+            this.button29.UseVisualStyleBackColor = true;
+            this.button29.Click += new System.EventHandler(this.button29_Click);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(130, 217);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(17, 13);
+            this.label11.TabIndex = 49;
+            this.label11.Text = "X:";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(131, 245);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(17, 13);
+            this.label12.TabIndex = 50;
+            this.label12.Text = "Y:";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(154, 217);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(10, 13);
+            this.label13.TabIndex = 51;
+            this.label13.Text = "-";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(155, 245);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(10, 13);
+            this.label14.TabIndex = 52;
+            this.label14.Text = "-";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(861, 13);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(30, 13);
+            this.label15.TabIndex = 53;
+            this.label15.Text = "Size:";
+            // 
+            // comboBox4
+            // 
+            this.comboBox4.FormattingEnabled = true;
+            this.comboBox4.Location = new System.Drawing.Point(824, 30);
+            this.comboBox4.Name = "comboBox4";
+            this.comboBox4.Size = new System.Drawing.Size(132, 21);
+            this.comboBox4.TabIndex = 54;
+            // 
+            // button30
+            // 
+            this.button30.Location = new System.Drawing.Point(824, 117);
+            this.button30.Name = "button30";
+            this.button30.Size = new System.Drawing.Size(132, 44);
+            this.button30.TabIndex = 55;
+            this.button30.Text = "Save this maze (slow)";
+            this.button30.UseVisualStyleBackColor = true;
+            this.button30.Click += new System.EventHandler(this.button30_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(830, 615);
+            this.ClientSize = new System.Drawing.Size(968, 615);
+            this.Controls.Add(this.button30);
+            this.Controls.Add(this.comboBox4);
+            this.Controls.Add(this.label15);
+            this.Controls.Add(this.label14);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.label11);
+            this.Controls.Add(this.button29);
             this.Controls.Add(this.button28);
             this.Controls.Add(this.button27);
             this.Controls.Add(this.label10);
@@ -673,6 +762,14 @@ namespace DeveMazeGeneratorGui
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Button button27;
         private System.Windows.Forms.Button button28;
+        private System.Windows.Forms.Button button29;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.ComboBox comboBox4;
+        private System.Windows.Forms.Button button30;
     }
 }
 
