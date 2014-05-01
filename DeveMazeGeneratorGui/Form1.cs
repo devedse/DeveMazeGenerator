@@ -1460,7 +1460,7 @@ namespace DeveMazeGeneratorGui
         {
             int size = 2048 * 8;
             var w = Stopwatch.StartNew();
-            var maze2 = alg.Generate(size, size, InnerMapType.BitArreintjeFast, 1337, null);
+            var maze2 = alg.Generate(size, size, InnerMapType.BooleanArray, 1337, null);
             w.Stop();
             //var path = PathFinderDepthFirst.GoFind(maze2.InnerMap, null);
             //maze2.SaveMazeAsImage(alg.GetType().ToString() + ".png", ImageFormat.Png, path, MazeSaveType.ColorDepth32Bits);
