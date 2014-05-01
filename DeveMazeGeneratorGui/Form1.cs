@@ -669,6 +669,12 @@ namespace DeveMazeGeneratorGui
                 List<Algorithm> algjes = new List<Algorithm>();
                 algjes.Add(new AlgorithmBacktrack());
                 algjes.Add(new AlgorithmBacktrackSmartMemory());
+                algjes.Add(new AlgorithmBacktrackFastWithoutAction());
+                algjes.Add(new AlgorithmBacktrackFastWithoutActionAndMaze());
+                algjes.Add(new AlgorithmBacktrackFastWithoutActionAndMazeAndFastRandomFastStackArray());
+                algjes.Add(new AlgorithmBacktrackFastWithoutActionAndMazeAndFastRandomFastStackArray2());
+                algjes.Add(new AlgorithmBacktrackFastWithoutActionAndMazeAndFastRandomFastStackArray3());
+                algjes.Add(new AlgorithmBacktrackFastWithoutActionAndMazeAndFastRandomFastStackList());
 
                 DebugMSG("Comparing all backtrack algorithms + all InnerMaps...");
                 DebugMSG("Generating reference maze...");
@@ -683,15 +689,22 @@ namespace DeveMazeGeneratorGui
 
                         Boolean theyarethesame = true;
 
-                        for (int xx = 0; xx < width; xx++)
+                        try
                         {
-                            for (int yy = 0; yy < height; yy++)
+                            for (int xx = 0; xx < width; xx++)
                             {
-                                if (referenceMaze.InnerMap[xx, yy] != tocompare.InnerMap[xx, yy])
+                                for (int yy = 0; yy < height; yy++)
                                 {
-                                    theyarethesame = false;
+                                    if (referenceMaze.InnerMap[xx, yy] != tocompare.InnerMap[xx, yy])
+                                    {
+                                        theyarethesame = false;
+                                    }
                                 }
                             }
+                        }
+                        catch (Exception eee)
+                        {
+                            theyarethesame = false;
                         }
 
                         if (!theyarethesame)
