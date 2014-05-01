@@ -83,6 +83,8 @@ namespace DeveMazeGeneratorGui
             this.label15 = new System.Windows.Forms.Label();
             this.comboBox4 = new System.Windows.Forms.ComboBox();
             this.button30 = new System.Windows.Forms.Button();
+            this.button31 = new System.Windows.Forms.Button();
+            this.button32 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -579,7 +581,7 @@ namespace DeveMazeGeneratorGui
             // 
             // button29
             // 
-            this.button29.Location = new System.Drawing.Point(824, 167);
+            this.button29.Location = new System.Drawing.Point(824, 270);
             this.button29.Name = "button29";
             this.button29.Size = new System.Drawing.Size(132, 63);
             this.button29.TabIndex = 48;
@@ -642,7 +644,7 @@ namespace DeveMazeGeneratorGui
             // 
             // button30
             // 
-            this.button30.Location = new System.Drawing.Point(824, 117);
+            this.button30.Location = new System.Drawing.Point(825, 220);
             this.button30.Name = "button30";
             this.button30.Size = new System.Drawing.Size(132, 44);
             this.button30.TabIndex = 55;
@@ -650,11 +652,33 @@ namespace DeveMazeGeneratorGui
             this.button30.UseVisualStyleBackColor = true;
             this.button30.Click += new System.EventHandler(this.button30_Click);
             // 
+            // button31
+            // 
+            this.button31.Location = new System.Drawing.Point(825, 118);
+            this.button31.Name = "button31";
+            this.button31.Size = new System.Drawing.Size(131, 39);
+            this.button31.TabIndex = 56;
+            this.button31.Text = "Mega terror maze in memory";
+            this.button31.UseVisualStyleBackColor = true;
+            this.button31.Click += new System.EventHandler(this.button31_Click);
+            // 
+            // button32
+            // 
+            this.button32.Location = new System.Drawing.Point(824, 164);
+            this.button32.Name = "button32";
+            this.button32.Size = new System.Drawing.Size(132, 50);
+            this.button32.TabIndex = 57;
+            this.button32.Text = "Mega terror maze in meomry (Smart Backtrack)";
+            this.button32.UseVisualStyleBackColor = true;
+            this.button32.Click += new System.EventHandler(this.button32_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(968, 615);
+            this.Controls.Add(this.button32);
+            this.Controls.Add(this.button31);
             this.Controls.Add(this.button30);
             this.Controls.Add(this.comboBox4);
             this.Controls.Add(this.label15);
@@ -770,6 +794,8 @@ namespace DeveMazeGeneratorGui
         private System.Windows.Forms.Label label15;
         private System.Windows.Forms.ComboBox comboBox4;
         private System.Windows.Forms.Button button30;
+        private System.Windows.Forms.Button button31;
+        private System.Windows.Forms.Button button32;
     }
 }
 

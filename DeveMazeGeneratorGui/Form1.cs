@@ -1352,7 +1352,7 @@ namespace DeveMazeGeneratorGui
             });
         }
 
-   
+
         private void button26_Click(object sender, EventArgs e)
         {
             int size = 5;
@@ -1460,7 +1460,7 @@ namespace DeveMazeGeneratorGui
         {
             int size = 2048 * 8;
             var w = Stopwatch.StartNew();
-            var maze2 = alg.Generate(size, size, InnerMapType.BooleanArray, 1337, null);
+            var maze2 = alg.Generate(size, size, InnerMapType.BitArreintjeFast, 1337, null);
             w.Stop();
             //var path = PathFinderDepthFirst.GoFind(maze2.InnerMap, null);
             //maze2.SaveMazeAsImage(alg.GetType().ToString() + ".png", ImageFormat.Png, path, MazeSaveType.ColorDepth32Bits);
@@ -1502,6 +1502,64 @@ namespace DeveMazeGeneratorGui
         private void button30_Click(object sender, EventArgs e)
         {
             lastMegaTerrorMaze.SaveAsBinaryFile("megaterrormaze.bin");
+        }
+
+        private void button32_Click(object sender, EventArgs e)
+        {
+            int sizezzz = int.Parse(comboBox4.SelectedItem.ToString().Replace(".", ""));
+
+            //Passing an int into the action like this is faster because else it will get stuck on the heap/stack or w/e I guess :o
+            var aaaa = new Action<int>((size) =>
+            {
+                Algorithm curalg = new AlgorithmBacktrackSmartMemory();
+                Stopwatch w = new Stopwatch();
+                w.Start();
+                //int size = (int)Math.Pow(2.0, 19.0);                
+
+                DebugMSG("Generating maze of size: " + size);
+                DebugMSG("Saved size it should be: " + Math.Pow((double)size, 2.0) / 1024.0 / 1024.0 / 8.0 + " mb");
+                DebugMSG("Or in GB: " + Math.Pow((double)size, 2.0) / 1024.0 / 1024.0 / 1024.0 / 8.0 + " gb");
+                lastMegaTerrorMaze = curalg.Generate(size, size, InnerMapType.BitArreintjeFast, 1337, (x, y, cur, tot) =>
+                {
+                    curXInMaze = x;
+                    curYInMaze = y;
+                    currentStepsToCalcPercentage = cur;
+                    totalStepsToCalcPercentage = tot;
+                });
+                w.Stop();
+                DebugMSG("Generating time: " + w.Elapsed.TotalSeconds);
+            });
+
+            Task.Run(() => aaaa(sizezzz));
+        }
+
+        private void button31_Click(object sender, EventArgs e)
+        {
+            int sizezzz = int.Parse(comboBox4.SelectedItem.ToString().Replace(".", ""));
+
+            //Passing an int into the action like this is faster because else it will get stuck on the heap/stack or w/e I guess :o
+            var aaaa = new Action<int>((size) =>
+            {
+                Algorithm curalg = new AlgorithmBacktrack();
+                Stopwatch w = new Stopwatch();
+                w.Start();
+                //int size = (int)Math.Pow(2.0, 19.0);                
+
+                DebugMSG("Generating maze of size: " + size);
+                DebugMSG("Saved size it should be: " + Math.Pow((double)size, 2.0) / 1024.0 / 1024.0 / 8.0 + " mb");
+                DebugMSG("Or in GB: " + Math.Pow((double)size, 2.0) / 1024.0 / 1024.0 / 1024.0 / 8.0 + " gb");
+                lastMegaTerrorMaze = curalg.Generate(size, size, InnerMapType.BitArreintjeFast, 1337, (x, y, cur, tot) =>
+                {
+                    curXInMaze = x;
+                    curYInMaze = y;
+                    currentStepsToCalcPercentage = cur;
+                    totalStepsToCalcPercentage = tot;
+                });
+                w.Stop();
+                DebugMSG("Generating time: " + w.Elapsed.TotalSeconds);
+            });
+
+            Task.Run(() => aaaa(sizezzz));
         }
 
     }
