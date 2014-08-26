@@ -751,6 +751,27 @@ namespace DeveMazeGeneratorGui
                 DebugMSG("Done saving, creating path for this maze...");
 
                 var path = PathFinderDepthFirst.GoFind(loadedfromwall.InnerMap, null);
+                var path2 = PathFinderDepthFirstSmart.GoFind(loadedfromwall.InnerMap, null);
+
+                DebugMSG("Path found, comparing path from 2 different path finders...");
+
+                if (path.Count != path2.Count)
+                {
+                    DebugMSG("ERRORRRRRRR: path length not equals!!!");
+                }
+
+                var itworkedhereforpathfinding = true;
+                for (int i = 0; i < path.Count; i++)
+                {
+                    if (path[i].X != path2[i].X || path[i].Y != path2[i].Y)
+                    {
+                        itworkedhereforpathfinding = false;
+                    }
+                }
+                if (itworkedhereforpathfinding)
+                {
+                    DebugMSG("ERRORRRRRRR: path finder not working correctly!!!!");
+                }
 
                 DebugMSG("Pathfinding done, saving this maze + path...");
 
