@@ -53,8 +53,8 @@ namespace DeveMazeGenerator
             int height = map.Height;
 
 
-            Stack<MazePoint> stackje = new Stack<MazePoint>();
-            stackje.Push(start);
+            List<MazePoint> stackje = new List<MazePoint>();
+            stackje.Add(start);
 
             MazePoint cur = new MazePoint();
             MazePoint prev = new MazePoint(-1, -1);
@@ -65,7 +65,7 @@ namespace DeveMazeGenerator
             while (stackje.Count != 0)
             {
 
-                cur = stackje.Peek();
+                cur = stackje[stackje.Count - 1];
                 var x = cur.X;
                 var y = cur.Y;
 
@@ -90,7 +90,8 @@ namespace DeveMazeGenerator
                 }
                 else
                 {
-                    var prepoppy = stackje.Pop();
+                    var prepoppy = stackje[stackje.Count - 1];
+                    stackje.RemoveAt(stackje.Count - 1);
 
                     if (stackje.Count == 0)
                     {
@@ -98,7 +99,7 @@ namespace DeveMazeGenerator
                         break;
                     }
 
-                    var newcur = stackje.Peek();
+                    var newcur = stackje[stackje.Count - 1];
 
                     //Set the new previous point
                     if (stackje.Count == 1)
@@ -107,7 +108,7 @@ namespace DeveMazeGenerator
                     }
                     else
                     {
-                        prev = stackje.ElementAt(1);
+                        prev = stackje.ElementAt(stackje.Count - 2);
                     }
 
                     //Console.WriteLine("Backtracking to X: " + newcur.X + " Y: " + newcur.Y);
@@ -144,7 +145,7 @@ namespace DeveMazeGenerator
 
                 callBack.Invoke(x, y, true);
 
-                stackje.Push(target);
+                stackje.Add(target);
 
                 if (target.X == end.X && target.Y == end.Y)
                 {
@@ -156,14 +157,7 @@ namespace DeveMazeGenerator
 
             }
 
-
-            var pointlist = new List<MazePoint>();
-
-            pointlist.AddRange(stackje);
-
-            pointlist.Reverse();
-
-            return pointlist;
+            return stackje;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

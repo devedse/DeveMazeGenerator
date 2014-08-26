@@ -87,6 +87,7 @@ namespace DeveMazeGeneratorGui
             this.button32 = new System.Windows.Forms.Button();
             this.button33 = new System.Windows.Forms.Button();
             this.button34 = new System.Windows.Forms.Button();
+            this.button35 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -583,7 +584,7 @@ namespace DeveMazeGeneratorGui
             // 
             // button29
             // 
-            this.button29.Location = new System.Drawing.Point(824, 270);
+            this.button29.Location = new System.Drawing.Point(825, 540);
             this.button29.Name = "button29";
             this.button29.Size = new System.Drawing.Size(132, 63);
             this.button29.TabIndex = 48;
@@ -646,11 +647,11 @@ namespace DeveMazeGeneratorGui
             // 
             // button30
             // 
-            this.button30.Location = new System.Drawing.Point(825, 220);
+            this.button30.Location = new System.Drawing.Point(824, 462);
             this.button30.Name = "button30";
             this.button30.Size = new System.Drawing.Size(132, 44);
             this.button30.TabIndex = 55;
-            this.button30.Text = "Save this maze (slow)";
+            this.button30.Text = "Save this maze to binary (slow)";
             this.button30.UseVisualStyleBackColor = true;
             this.button30.Click += new System.EventHandler(this.button30_Click);
             // 
@@ -694,11 +695,22 @@ namespace DeveMazeGeneratorGui
             this.button34.UseVisualStyleBackColor = true;
             this.button34.Click += new System.EventHandler(this.button34_Click);
             // 
+            // button35
+            // 
+            this.button35.Location = new System.Drawing.Point(825, 253);
+            this.button35.Name = "button35";
+            this.button35.Size = new System.Drawing.Size(131, 39);
+            this.button35.TabIndex = 60;
+            this.button35.Text = "Mega terror maze find path";
+            this.button35.UseVisualStyleBackColor = true;
+            this.button35.Click += new System.EventHandler(this.button35_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(968, 615);
+            this.Controls.Add(this.button35);
             this.Controls.Add(this.button34);
             this.Controls.Add(this.button33);
             this.Controls.Add(this.button32);
@@ -822,6 +834,7 @@ namespace DeveMazeGeneratorGui
         private System.Windows.Forms.Button button32;
         private System.Windows.Forms.Button button33;
         private System.Windows.Forms.Button button34;
+        private System.Windows.Forms.Button button35;
     }
 }
 
