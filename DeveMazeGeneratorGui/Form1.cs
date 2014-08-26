@@ -768,7 +768,7 @@ namespace DeveMazeGeneratorGui
                         itworkedhereforpathfinding = false;
                     }
                 }
-                if (itworkedhereforpathfinding)
+                if (!itworkedhereforpathfinding)
                 {
                     DebugMSG("ERRORRRRRRR: path finder not working correctly!!!!");
                 }
@@ -1701,6 +1701,31 @@ namespace DeveMazeGeneratorGui
                 var path2 = PathFinderDepthFirstSmart.GoFind(maze.InnerMap, null);
                 w.Stop();
                 DebugMSG("PathFinderDepthFirstSmart: " + w.Elapsed.TotalSeconds);
+
+                DebugMSG("Comparing paths to be sure they match...");
+                if (path.Count != path2.Count)
+                {
+                    DebugMSG("ERRORRRRRRR: path length not equals!!!");
+                    return;
+                }
+
+                var itworkedhereforpathfinding = true;
+                for (int i = 0; i < path.Count; i++)
+                {
+                    if (path[i].X != path2[i].X || path[i].Y != path2[i].Y)
+                    {
+                        itworkedhereforpathfinding = false;
+                    }
+                }
+                if (!itworkedhereforpathfinding)
+                {
+                    DebugMSG("ERRORRRRRRR: path finder not working correctly!!!!");
+                }
+                else
+                {
+                    DebugMSG("Paths match :)");
+                }
+
                 DebugMSG("Done :)");
             }));
         }
