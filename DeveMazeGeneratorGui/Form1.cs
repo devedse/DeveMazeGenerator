@@ -1575,6 +1575,70 @@ namespace DeveMazeGeneratorGui
             Task.Run(() => aaaa(sizezzz));
         }
 
+        private void button33_Click(object sender, EventArgs e)
+        {
+            Task.Run(() =>
+            {
+                var g = panel1.CreateGraphics();
+
+                int sizemodifier = 20;
+
+                int width = panel1.Width;
+                int height = panel1.Height;
+
+                int mazeWidth = 12;
+                int mazeHeight = 12;
+
+                //int width = 100;
+                //int height = 150;
+
+                g.FillRectangle(Brushes.Black, 0, 0, width + 1, height + 1);
+
+
+
+
+
+                int randomnow = r.Next();
+                Maze m = new AlgorithmKruskal().Generate(mazeWidth, mazeHeight, InnerMapType.BitArreintjeFast, randomnow, (x, y, cur, tot) =>
+                {
+
+                    //Thread.Sleep(curDelay);
+
+                    g.FillRectangle(Brushes.White, x * sizemodifier, y * sizemodifier, sizemodifier, sizemodifier);
+
+                    curXInMaze = x;
+                    curYInMaze = y;
+
+                    this.currentStepsToCalcPercentage = cur;
+                    this.totalStepsToCalcPercentage = tot;
+
+                    //Thread.Sleep(200);
+                });
+
+
+                var path = PathFinderDepthFirstSmart.GoFind(m.InnerMap, (x, y, pathThing) =>
+                {
+
+                    Thread.Sleep(curDelay);
+
+                    if (pathThing)
+                    {
+                        g.FillRectangle(Brushes.Green, x * sizemodifier, y * sizemodifier, sizemodifier, sizemodifier);
+                    }
+                    else
+                    {
+                        g.FillRectangle(Brushes.Gray, x * sizemodifier, y * sizemodifier, sizemodifier, sizemodifier);
+                    }
+
+                });
+
+                foreach (var pathnode in path)
+                {
+                    g.FillRectangle(Brushes.Red, pathnode.X * sizemodifier, pathnode.Y * sizemodifier, sizemodifier, sizemodifier);
+                }
+            });
+        }
+
     }
 
 

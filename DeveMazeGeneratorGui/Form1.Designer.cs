@@ -85,6 +85,7 @@ namespace DeveMazeGeneratorGui
             this.button30 = new System.Windows.Forms.Button();
             this.button31 = new System.Windows.Forms.Button();
             this.button32 = new System.Windows.Forms.Button();
+            this.button33 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -672,11 +673,22 @@ namespace DeveMazeGeneratorGui
             this.button32.UseVisualStyleBackColor = true;
             this.button32.Click += new System.EventHandler(this.button32_Click);
             // 
+            // button33
+            // 
+            this.button33.Location = new System.Drawing.Point(186, 530);
+            this.button33.Name = "button33";
+            this.button33.Size = new System.Drawing.Size(123, 32);
+            this.button33.TabIndex = 58;
+            this.button33.Text = "TestSmartPathFinder";
+            this.button33.UseVisualStyleBackColor = true;
+            this.button33.Click += new System.EventHandler(this.button33_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(968, 615);
+            this.Controls.Add(this.button33);
             this.Controls.Add(this.button32);
             this.Controls.Add(this.button31);
             this.Controls.Add(this.button30);
@@ -796,6 +808,7 @@ namespace DeveMazeGeneratorGui
         private System.Windows.Forms.Button button30;
         private System.Windows.Forms.Button button31;
         private System.Windows.Forms.Button button32;
+        private System.Windows.Forms.Button button33;
     }
 }
 
