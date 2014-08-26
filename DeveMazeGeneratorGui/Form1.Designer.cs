@@ -86,6 +86,7 @@ namespace DeveMazeGeneratorGui
             this.button31 = new System.Windows.Forms.Button();
             this.button32 = new System.Windows.Forms.Button();
             this.button33 = new System.Windows.Forms.Button();
+            this.button34 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -234,10 +235,10 @@ namespace DeveMazeGeneratorGui
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(503, 324);
+            this.textBox1.Location = new System.Drawing.Point(503, 370);
             this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(291, 100);
+            this.textBox1.Size = new System.Drawing.Size(291, 54);
             this.textBox1.TabIndex = 18;
             this.textBox1.Text = "Info about mazes:\r\n0 = False = Wall = Black\r\n1 = True = Empty = White";
             // 
@@ -683,11 +684,22 @@ namespace DeveMazeGeneratorGui
             this.button33.UseVisualStyleBackColor = true;
             this.button33.Click += new System.EventHandler(this.button33_Click);
             // 
+            // button34
+            // 
+            this.button34.Location = new System.Drawing.Point(592, 323);
+            this.button34.Name = "button34";
+            this.button34.Size = new System.Drawing.Size(112, 41);
+            this.button34.TabIndex = 59;
+            this.button34.Text = "Path finder 16k benchmark";
+            this.button34.UseVisualStyleBackColor = true;
+            this.button34.Click += new System.EventHandler(this.button34_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(968, 615);
+            this.Controls.Add(this.button34);
             this.Controls.Add(this.button33);
             this.Controls.Add(this.button32);
             this.Controls.Add(this.button31);
@@ -809,6 +821,7 @@ namespace DeveMazeGeneratorGui
         private System.Windows.Forms.Button button31;
         private System.Windows.Forms.Button button32;
         private System.Windows.Forms.Button button33;
+        private System.Windows.Forms.Button button34;
     }
 }
 

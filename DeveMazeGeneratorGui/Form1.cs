@@ -1660,6 +1660,51 @@ namespace DeveMazeGeneratorGui
             });
         }
 
+        private void button34_Click(object sender, EventArgs e)
+        {
+            Task.Run(new Action(() =>
+            {
+
+                Algorithm curalg = new AlgorithmBacktrack();
+                InnerMapType innerMapType = InnerMapType.BitArreintjeFast;
+
+                Stopwatch w = new Stopwatch();
+                w.Start();
+                int size = 2048 * 8;
+                DebugMSG("Generating maze of size: " + size);
+                DebugMSG("Current algorithm: " + curalg.ToString());
+                DebugMSG("Current InnerMapType: " + innerMapType.ToString());
+                DebugMSG("Saved size it should be: " + Math.Pow((double)size, 2.0) / 1024.0 / 1024.0 / 8.0 + " mb");
+                DebugMSG("Or in GB: " + Math.Pow((double)size, 2.0) / 1024.0 / 1024.0 / 1024.0 / 8.0 + " gb");
+                Maze maze = curalg.Generate(size, size, innerMapType, 1337, (x, y, cur, tot) =>
+                {
+                    curXInMaze = x;
+                    curYInMaze = y;
+                    currentStepsToCalcPercentage = cur;
+                    totalStepsToCalcPercentage = tot;
+                });
+
+                w.Stop();
+                DebugMSG("Generating time: " + w.Elapsed.TotalSeconds);
+
+
+
+                DebugMSG("Finding Path...");
+                w.Reset();
+                w.Start();
+                var path = PathFinderDepthFirst.GoFind(maze.InnerMap, null);
+                w.Stop();
+                DebugMSG("PathFinderDepthFirst: " + w.Elapsed.TotalSeconds);
+
+                w.Reset();
+                w.Start();
+                var path2 = PathFinderDepthFirstSmart.GoFind(maze.InnerMap, null);
+                w.Stop();
+                DebugMSG("PathFinderDepthFirstSmart: " + w.Elapsed.TotalSeconds);
+                DebugMSG("Done :)");
+            }));
+        }
+
     }
 
 
