@@ -88,6 +88,7 @@ namespace DeveMazeGeneratorGui
             this.button33 = new System.Windows.Forms.Button();
             this.button34 = new System.Windows.Forms.Button();
             this.button35 = new System.Windows.Forms.Button();
+            this.button36 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -647,7 +648,7 @@ namespace DeveMazeGeneratorGui
             // 
             // button30
             // 
-            this.button30.Location = new System.Drawing.Point(824, 462);
+            this.button30.Location = new System.Drawing.Point(825, 430);
             this.button30.Name = "button30";
             this.button30.Size = new System.Drawing.Size(132, 44);
             this.button30.TabIndex = 55;
@@ -705,11 +706,22 @@ namespace DeveMazeGeneratorGui
             this.button35.UseVisualStyleBackColor = true;
             this.button35.Click += new System.EventHandler(this.button35_Click);
             // 
+            // button36
+            // 
+            this.button36.Location = new System.Drawing.Point(825, 481);
+            this.button36.Name = "button36";
+            this.button36.Size = new System.Drawing.Size(131, 43);
+            this.button36.TabIndex = 61;
+            this.button36.Text = "Save this maze as image (slow)";
+            this.button36.UseVisualStyleBackColor = true;
+            this.button36.Click += new System.EventHandler(this.button36_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(968, 615);
+            this.Controls.Add(this.button36);
             this.Controls.Add(this.button35);
             this.Controls.Add(this.button34);
             this.Controls.Add(this.button33);
@@ -835,6 +847,7 @@ namespace DeveMazeGeneratorGui
         private System.Windows.Forms.Button button33;
         private System.Windows.Forms.Button button34;
         private System.Windows.Forms.Button button35;
+        private System.Windows.Forms.Button button36;
     }
 }
 

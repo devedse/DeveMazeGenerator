@@ -1751,6 +1751,36 @@ namespace DeveMazeGeneratorGui
             });
         }
 
+        private void button36_Click(object sender, EventArgs e)
+        {
+            Task.Run(() =>
+            {
+                if (lastMegaTerrorMaze == null)
+                {
+                    DebugMSG("No Mega Terror Maze in memory, generate one first...");
+                    return;
+                }
+
+                DebugMSG("Saving Mega Terror Maze as image...");
+
+                var w = new Stopwatch();
+                w.Start();
+
+                if (lastMegaTerrorMazePath == null)
+                {
+                    DebugMSG("No path found, saving maze without path...");
+                    lastMegaTerrorMaze.SaveMazeAsImage("megaterrormaze-" + DateTime.Now.Ticks + ".png", ImageFormat.Png);
+                }
+                else
+                {
+                    DebugMSG("Path found, saving maze with path...");
+                    lastMegaTerrorMaze.SaveMazeAsImage("megaterrormaze-" + DateTime.Now.Ticks + ".png", ImageFormat.Png, lastMegaTerrorMazePath, MazeSaveType.ColorDepth4Bits);
+                }
+
+                DebugMSG("Saving time: " + w.Elapsed.TotalSeconds + " seconds.");
+            });
+        }
+
     }
 
 
