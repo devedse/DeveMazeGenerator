@@ -19,11 +19,13 @@ namespace DeveMazeGenerator
     public class PathPos
     {
         public int X;
-        public int Pos;
+        public int Y;
+        public byte Pos;
 
-        public PathPos(int X, int Pos)
+        public PathPos(int X, int Y, byte Pos)
         {
             this.X = X;
+            this.Y = Y;
             this.Pos = Pos;
         }
     }
@@ -43,19 +45,30 @@ namespace DeveMazeGenerator
                 lineSavingProgress = (cur, tot) => { };
             }
 
-            List<List<PathPos>> pathPosArray = new List<List<PathPos>>(this.Height - 1);
-            for (int y = 0; y < this.Height - 1; y++)
-            {
-                pathPosArray.Add(new List<PathPos>());
-                Queue<String> aaa = new Queue<string>();
-            }
+
+            PathPos[] pathPosjes = new PathPos[path.Count];
+
 
             for (int i = 0; i < path.Count; i++)
             {
-                var curMazePoint = path[i];
-                var pathPos = new PathPos(curMazePoint.X, i);
-                pathPosArray[curMazePoint.Y].Add(pathPos);
+                var curPathNode = path[i];
+                byte formulathing = (byte)((double)i / (double)path.Count * 255.0);
+                var pathPos = new PathPos(curPathNode.X, curPathNode.Y, formulathing);
+                pathPosjes[i] = pathPos;
             }
+
+            //pathPosjes = pathPosjes.OrderBy(t => t.Y).ThenBy(t => t.X).ToArray();
+
+
+            Array.Sort(pathPosjes, (first, second) =>
+            {
+                if (first.Y == second.Y)
+                {
+                    return first.X - second.X;
+                }
+                return first.Y - second.Y;
+            });
+
 
 
 
@@ -66,42 +79,36 @@ namespace DeveMazeGenerator
             // add some optional metadata (chunks)
             png.GetMetadata().SetDpi(100.0);
             png.GetMetadata().SetTimeNow(0); // 0 seconds fron now = now
-            png.GetMetadata().SetText(PngChunkTextVar.KEY_Title, "Just a text image");
-            PngChunk chunk = png.GetMetadata().SetText("my key", "my text .. bla bla");
-            chunk.Priority = true; // this chunk will be written as soon as possible
+            png.CompLevel = 0;
+            //png.GetMetadata().SetText(PngChunkTextVar.KEY_Title, "Just a text image");
+            //PngChunk chunk = png.GetMetadata().SetText("my key", "my text .. bla bla");
+            //chunk.Priority = true; // this chunk will be written as soon as possible
 
 
-
-            Boolean[] tempWidthMapper = new Boolean[this.Width - 1];
+            int curpos = 0;
 
             for (int y = 0; y < this.Height - 1; y++)
             {
                 ImageLine iline = new ImageLine(imi);
-                var curRow = pathPosArray[y];
-
-                Array.Clear(tempWidthMapper, 0, tempWidthMapper.Length);
-                for (int i = 0; i < curRow.Count; i++)
-                {
-                    var curItem = curRow[i];
-                    tempWidthMapper[curItem.X] = true;
-                }
-
-
 
                 for (int x = 0; x < this.Width - 1; x++)
                 {
+                    PathPos curPathPos = null;
+                    if (curpos < pathPosjes.Length)
+                    {
+                        curPathPos = pathPosjes[curpos];
+                    }
 
                     int r = 0;
                     int g = 0;
                     int b = 0;
-                    if (tempWidthMapper[x])
-                    {
-                        var curPathPos = curRow.FirstOrDefault(t => t.X == x);
 
-                        int formulathing = (int)((double)curPathPos.Pos / (double)path.Count * 255.0);
-                        r = formulathing;
-                        g = 255 - formulathing;
+                    if (curPathPos != null && curPathPos.X == x && curPathPos.Y == y)
+                    {
+                        r = curPathPos.Pos;
+                        g = 255 - curPathPos.Pos;
                         b = 0;
+                        curpos++;
                     }
                     else if (this.innerMap[x, y])
                     {
@@ -110,28 +117,12 @@ namespace DeveMazeGenerator
                         b = 255;
                     }
 
-
                     ImageLineHelper.SetPixel(iline, x, r, g, b);
                 }
                 png.WriteRow(iline, y);
                 lineSavingProgress(y, this.Height - 1);
             }
             png.End();
-
-
-            //for (int col = 0; col < imi.Cols; col++)
-            //{ // this line will be written to all rows  
-            //    int r = 255;
-            //    int g = 127;
-            //    int b = 255 * col / imi.Cols;
-            //    ImageLineHelper.SetPixel(iline, col, r, g, b); // orange-ish gradient
-            //}
-            //for (int row = 0; row < png.ImgInfo.Rows; row++)
-            //{
-            //    png.WriteRow(iline, row);
-            //}
-            //png.End();
-
         }
     }
 }
