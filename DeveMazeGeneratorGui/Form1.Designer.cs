@@ -93,6 +93,7 @@ namespace DeveMazeGeneratorGui
             this.button38 = new System.Windows.Forms.Button();
             this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
+            this.button39 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -702,7 +703,7 @@ namespace DeveMazeGeneratorGui
             // 
             // button35
             // 
-            this.button35.Location = new System.Drawing.Point(826, 295);
+            this.button35.Location = new System.Drawing.Point(824, 282);
             this.button35.Name = "button35";
             this.button35.Size = new System.Drawing.Size(131, 39);
             this.button35.TabIndex = 60;
@@ -758,11 +759,22 @@ namespace DeveMazeGeneratorGui
             this.label17.TabIndex = 65;
             this.label17.Text = "Saving maze:";
             // 
+            // button39
+            // 
+            this.button39.Location = new System.Drawing.Point(827, 327);
+            this.button39.Name = "button39";
+            this.button39.Size = new System.Drawing.Size(128, 37);
+            this.button39.TabIndex = 66;
+            this.button39.Text = "Mega terror maze find path with Pos";
+            this.button39.UseVisualStyleBackColor = true;
+            this.button39.Click += new System.EventHandler(this.button39_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(968, 644);
+            this.Controls.Add(this.button39);
             this.Controls.Add(this.label17);
             this.Controls.Add(this.label16);
             this.Controls.Add(this.button38);
@@ -898,6 +910,7 @@ namespace DeveMazeGeneratorGui
         private System.Windows.Forms.Button button38;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label17;
+        private System.Windows.Forms.Button button39;
     }
 }
 

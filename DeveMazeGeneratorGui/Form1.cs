@@ -22,6 +22,7 @@ namespace DeveMazeGeneratorGui
     {
         private Maze lastMegaTerrorMaze = null;
         private List<MazePoint> lastMegaTerrorMazePath = null;
+        private List<MazePointPos> lastMegaTerrorMazePathPos = null;
 
         private Boolean forceesStoppenEnzo = false;
         private Random r = new Random();
@@ -1537,6 +1538,7 @@ namespace DeveMazeGeneratorGui
         {
             lastMegaTerrorMaze = null;
             lastMegaTerrorMazePath = null;
+            lastMegaTerrorMazePathPos = null;
             GC.Collect(int.MaxValue);
         }
 
@@ -1846,15 +1848,20 @@ namespace DeveMazeGeneratorGui
                         this.mazeLinesToSave = tot;
                     };
 
-                    if (lastMegaTerrorMazePath == null)
-                    {
-                        DebugMSG("No path found, saving maze without path...");
-                        lastMegaTerrorMaze.SaveMazeAsImageDeluxe("megaterrormazedeluxe-" + DateTime.Now.Ticks + ".png", new List<MazePoint>(), callback);
-                    }
-                    else
+                    if (lastMegaTerrorMazePath != null)
                     {
                         DebugMSG("Path found, saving maze with path...");
                         lastMegaTerrorMaze.SaveMazeAsImageDeluxe("megaterrormazedeluxe-" + DateTime.Now.Ticks + ".png", lastMegaTerrorMazePath, callback);
+                    }
+                    else if (lastMegaTerrorMazePathPos != null)
+                    {
+                        DebugMSG("Path with pos found, saving maze with path...");
+                        lastMegaTerrorMaze.SaveMazeAsImageDeluxe("megaterrormazedeluxe-" + DateTime.Now.Ticks + ".png", lastMegaTerrorMazePathPos, callback);
+                    }
+                    else
+                    {
+                        DebugMSG("No path found, saving maze without path...");
+                        lastMegaTerrorMaze.SaveMazeAsImageDeluxe("megaterrormazedeluxe-" + DateTime.Now.Ticks + ".png", new List<MazePoint>(), callback);
                     }
 
                     DebugMSG("Saving time: " + w.Elapsed.TotalSeconds + " seconds.");
@@ -1864,6 +1871,25 @@ namespace DeveMazeGeneratorGui
                     DebugMSG("Exception occured while saving the maze (after " + w.Elapsed.TotalSeconds + " seconds):");
                     DebugMSG(ex.ToString());
                 }
+            });
+        }
+
+        private void button39_Click(object sender, EventArgs e)
+        {
+            Task.Run(() =>
+            {
+                if (lastMegaTerrorMaze == null)
+                {
+                    DebugMSG("No Mega Terror Maze in memory, generate one first...");
+                    return;
+                }
+
+                DebugMSG("Finding path with pos for current Mega Terror Maze...");
+                var w = new Stopwatch();
+                w.Start();
+                lastMegaTerrorMazePathPos = PathFinderDepthFirstSmartWithPos.GoFind(lastMegaTerrorMaze.InnerMap, null);
+                w.Stop();
+                DebugMSG("Path found in " + w.Elapsed.TotalSeconds + " seconds, length: " + lastMegaTerrorMazePathPos.Count);
             });
         }
 

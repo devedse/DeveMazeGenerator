@@ -91,7 +91,10 @@
     <Compile Include="InnerMaps\InnerMapHelpers\IntHDArray.cs" />
     <Compile Include="Maze.cs" />
     <Compile Include="Maze.SavingDeluxe.cs" />
+    <Compile Include="MazePoint.cs" />
+    <Compile Include="MazePointPos.cs" />
     <Compile Include="MazeWall.cs" />
+    <Compile Include="PathFinderDepthFirstSmartWithPos.cs" />
     <Compile Include="PathFinderDepthFirstSmart.cs" />
     <Compile Include="PathFinderDepthFirst.cs" />
     <Compile Include="Program.cs" />

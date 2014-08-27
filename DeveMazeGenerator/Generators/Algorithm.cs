@@ -28,21 +28,5 @@ namespace DeveMazeGenerator.Generators
         /// <param name="pixelChangedCallback">When a pixel is changed you can define a callback here to for example draw the maze while its being generated, add null if you don't want this. Last 2 longs are for the current step and the total steps (can be used to calculate how far the maze is done being generated)</param>
         /// <returns>A maze</returns>
         Maze Generate(int width, int height, InnerMapType innerMapType, int seed, Action<int, int, long, long> pixelChangedCallback);
-    }
-
-    public struct MazePoint
-    {
-        public int X, Y;
-
-        public MazePoint(int X, int Y)
-        {
-            this.X = X;
-            this.Y = Y;
-        }
-
-        public override string ToString()
-        {
-            return "MazePoint, X: " + X + ", Y: " + Y;
-        }
-    }
+    }   
 }
