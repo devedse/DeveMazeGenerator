@@ -94,6 +94,7 @@ namespace DeveMazeGeneratorGui
             this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.button39 = new System.Windows.Forms.Button();
+            this.button40 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -769,11 +770,22 @@ namespace DeveMazeGeneratorGui
             this.button39.UseVisualStyleBackColor = true;
             this.button39.Click += new System.EventHandler(this.button39_Click);
             // 
+            // button40
+            // 
+            this.button40.Location = new System.Drawing.Point(130, 610);
+            this.button40.Name = "button40";
+            this.button40.Size = new System.Drawing.Size(169, 23);
+            this.button40.TabIndex = 67;
+            this.button40.Text = "GC.Collect(); path.TrimExcess();";
+            this.button40.UseVisualStyleBackColor = true;
+            this.button40.Click += new System.EventHandler(this.button40_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(968, 644);
+            this.Controls.Add(this.button40);
             this.Controls.Add(this.button39);
             this.Controls.Add(this.label17);
             this.Controls.Add(this.label16);
@@ -911,6 +923,7 @@ namespace DeveMazeGeneratorGui
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Button button39;
+        private System.Windows.Forms.Button button40;
     }
 }
 

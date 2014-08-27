@@ -1893,7 +1893,17 @@ namespace DeveMazeGeneratorGui
             });
         }
 
+        private void button40_Click(object sender, EventArgs e)
+        {
+            if (lastMegaTerrorMazePath != null)
+            {
+                lastMegaTerrorMazePath.TrimExcess();
+            }
+            if (lastMegaTerrorMazePathPos != null)
+            {
+                lastMegaTerrorMazePathPos.TrimExcess();
+            }
+            GC.Collect();
+        }
     }
-
-
 }
