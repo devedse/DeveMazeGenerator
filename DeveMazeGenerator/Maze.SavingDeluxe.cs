@@ -72,20 +72,31 @@ namespace DeveMazeGenerator
 
 
 
+            Boolean[] tempWidthMapper = new Boolean[this.Width - 1];
+
             for (int y = 0; y < this.Height - 1; y++)
             {
                 ImageLine iline = new ImageLine(imi);
                 var curRow = pathPosArray[y];
 
+                Array.Clear(tempWidthMapper, 0, tempWidthMapper.Length);
+                for (int i = 0; i < curRow.Count; i++)
+                {
+                    var curItem = curRow[i];
+                    tempWidthMapper[curItem.X] = true;
+                }
+
+
+
                 for (int x = 0; x < this.Width - 1; x++)
                 {
-                    var curPathPos = curRow.FirstOrDefault(t => t.X == x);
 
                     int r = 0;
                     int g = 0;
                     int b = 0;
-                    if (curPathPos != null)
+                    if (tempWidthMapper[x])
                     {
+                        var curPathPos = curRow.FirstOrDefault(t => t.X == x);
 
                         int formulathing = (int)((double)curPathPos.Pos / (double)path.Count * 255.0);
                         r = formulathing;
