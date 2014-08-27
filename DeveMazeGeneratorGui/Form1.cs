@@ -1766,19 +1766,56 @@ namespace DeveMazeGeneratorGui
                 var w = new Stopwatch();
                 w.Start();
 
-                if (lastMegaTerrorMazePath == null)
+                try
                 {
-                    DebugMSG("No path found, saving maze without path...");
-                    lastMegaTerrorMaze.SaveMazeAsImage("megaterrormaze-" + DateTime.Now.Ticks + ".png", ImageFormat.Png);
-                }
-                else
-                {
-                    DebugMSG("Path found, saving maze with path...");
-                    lastMegaTerrorMaze.SaveMazeAsImage("megaterrormaze-" + DateTime.Now.Ticks + ".png", ImageFormat.Png, lastMegaTerrorMazePath, MazeSaveType.ColorDepth4Bits);
-                }
+                    if (lastMegaTerrorMazePath == null)
+                    {
+                        DebugMSG("No path found, saving maze without path...");
+                        lastMegaTerrorMaze.SaveMazeAsImage("megaterrormaze-" + DateTime.Now.Ticks + ".png", ImageFormat.Png);
+                    }
+                    else
+                    {
+                        DebugMSG("Path found, saving maze with path...");
+                        lastMegaTerrorMaze.SaveMazeAsImage("megaterrormaze-" + DateTime.Now.Ticks + ".png", ImageFormat.Png, lastMegaTerrorMazePath, MazeSaveType.ColorDepth4Bits);
+                    }
 
-                DebugMSG("Saving time: " + w.Elapsed.TotalSeconds + " seconds.");
+                    DebugMSG("Saving time: " + w.Elapsed.TotalSeconds + " seconds.");
+                }
+                catch (Exception ex)
+                {
+                    DebugMSG("Exception occured while saving the maze (after " + w.Elapsed.TotalSeconds + " seconds):");
+                    DebugMSG(ex.ToString());
+                }
             });
+        }
+
+        private void button37_Click(object sender, EventArgs e)
+        {
+            int sizezzz = int.Parse(comboBox4.SelectedItem.ToString().Replace(".", ""));
+
+            //Passing an int into the action like this is faster because else it will get stuck on the heap/stack or w/e I guess :o
+            var aaaa = new Action<int>((size) =>
+            {
+                AlgorithmBacktrackFastWithoutActionAndMazeAndFastRandomFastStackArray2 curalg = new AlgorithmBacktrackFastWithoutActionAndMazeAndFastRandomFastStackArray2();
+                Stopwatch w = new Stopwatch();
+                w.Start();
+                //int size = (int)Math.Pow(2.0, 19.0);                
+
+                DebugMSG("Generating maze of size: " + size);
+                DebugMSG("Saved size it should be: " + Math.Pow((double)size, 2.0) / 1024.0 / 1024.0 / 8.0 + " mb");
+                DebugMSG("Or in GB: " + Math.Pow((double)size, 2.0) / 1024.0 / 1024.0 / 1024.0 / 8.0 + " gb");
+                lastMegaTerrorMaze = curalg.Generate(size, size, InnerMapType.BitArreintjeFast, 1337, (x, y, cur, tot) =>
+                {
+                    curXInMaze = x;
+                    curYInMaze = y;
+                    currentStepsToCalcPercentage = cur;
+                    totalStepsToCalcPercentage = tot;
+                });
+                w.Stop();
+                DebugMSG("Generating time: " + w.Elapsed.TotalSeconds);
+            });
+
+            Task.Run(() => aaaa(sizezzz));
         }
 
     }
