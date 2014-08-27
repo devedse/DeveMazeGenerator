@@ -90,6 +90,7 @@
     <Compile Include="InnerMaps\InnerMapHelpers\CompleteHDArray.cs" />
     <Compile Include="InnerMaps\InnerMapHelpers\IntHDArray.cs" />
     <Compile Include="Maze.cs" />
+    <Compile Include="Maze.SavingDeluxe.cs" />
     <Compile Include="MazeWall.cs" />
     <Compile Include="PathFinderDepthFirstSmart.cs" />
     <Compile Include="PathFinderDepthFirst.cs" />
@@ -119,7 +120,12 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Hjg.Pngcs\Hjg.Pngcs.csproj">
+      <Project>{fd3b0d50-46b3-4a83-9a6d-c641569142cf}</Project>
+      <Name>Hjg.Pngcs</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -37,6 +37,9 @@ namespace DeveMazeGeneratorGui
         private int curXInMaze = 0;
         private int curYInMaze = 0;
 
+        private int mazeLinesToSave = 0;
+        private int curMazeLineSaving = 0;
+
         public Form1()
         {
             InitializeComponent();
@@ -45,12 +48,12 @@ namespace DeveMazeGeneratorGui
             comboBox3.SelectedIndex = 1;
             curDelay = int.Parse(comboBox2.SelectedItem.ToString());
 
-            for (int i = 14; i < 30; i++)
+            for (int i = 11; i < 30; i++)
             {
                 comboBox4.Items.Add(ConvertNumberToNiceString((long)Math.Pow(2, i)));
             }
 
-            comboBox4.SelectedIndex = 5;
+            comboBox4.SelectedIndex = 8;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -1123,6 +1126,8 @@ namespace DeveMazeGeneratorGui
 
             label13.Text = curXInMaze.ToString();
             label14.Text = curYInMaze.ToString();
+
+            label16.Text = curMazeLineSaving + "/" + mazeLinesToSave;
         }
 
 
@@ -1816,6 +1821,50 @@ namespace DeveMazeGeneratorGui
             });
 
             Task.Run(() => aaaa(sizezzz));
+        }
+
+        private void button38_Click(object sender, EventArgs e)
+        {
+            Task.Run(() =>
+            {
+                if (lastMegaTerrorMaze == null)
+                {
+                    DebugMSG("No Mega Terror Maze in memory, generate one first...");
+                    return;
+                }
+
+                DebugMSG("Saving Mega Terror Maze as image...");
+
+                var w = new Stopwatch();
+                w.Start();
+
+                try
+                {
+                    Action<int, int> callback = (cur, tot) =>
+                    {
+                        this.curMazeLineSaving = cur;
+                        this.mazeLinesToSave = tot;
+                    };
+
+                    if (lastMegaTerrorMazePath == null)
+                    {
+                        DebugMSG("No path found, saving maze without path...");
+                        lastMegaTerrorMaze.SaveMazeAsImageDeluxe("megaterrormazedeluxe-" + DateTime.Now.Ticks + ".png", new List<MazePoint>(), callback);
+                    }
+                    else
+                    {
+                        DebugMSG("Path found, saving maze with path...");
+                        lastMegaTerrorMaze.SaveMazeAsImageDeluxe("megaterrormazedeluxe-" + DateTime.Now.Ticks + ".png", lastMegaTerrorMazePath, callback);
+                    }
+
+                    DebugMSG("Saving time: " + w.Elapsed.TotalSeconds + " seconds.");
+                }
+                catch (Exception ex)
+                {
+                    DebugMSG("Exception occured while saving the maze (after " + w.Elapsed.TotalSeconds + " seconds):");
+                    DebugMSG(ex.ToString());
+                }
+            });
         }
 
     }
