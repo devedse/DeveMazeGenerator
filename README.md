@@ -10,6 +10,9 @@ If you want to create a MASSIVE maze take "AlgorithmBacktrackSmartMemory" as alg
 
 Above, a 4096*4096 maze (Generated in 0,5 seconds)
 
+The largest maze I generated and saved was 262.144*262.144. It can be found on the following website:
+http://gigapan.com/gigapans/161644
+
 ### Current functionality:
 * Generate mazes
 * See them being generated live
