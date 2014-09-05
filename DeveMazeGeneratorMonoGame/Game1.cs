@@ -73,7 +73,7 @@ namespace DeveMazeGeneratorMonoGame
             graphics = new GraphicsDeviceManager(this);
 
             graphics.PreferMultiSampling = true;
-            GraphicsDevice.PresentationParameters.MultiSampleCount = 16;
+            //GraphicsDevice.PresentationParameters.MultiSampleCount = 16;
 
             IsMouseVisible = false;
 
@@ -90,13 +90,8 @@ namespace DeveMazeGeneratorMonoGame
                 graphics.PreferredBackBufferHeight = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height;
                 graphics.IsFullScreen = true;
             }
-
-            GenerateMaze();
-
+            
             Content.RootDirectory = "Content";
-
-            camera = new Camera(this);
-
         }
 
         /// <summary>
@@ -118,6 +113,9 @@ namespace DeveMazeGeneratorMonoGame
         /// </summary>
         protected override void LoadContent()
         {
+            GenerateMaze();
+            camera = new Camera(this);
+
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             effect = new BasicEffect(GraphicsDevice);
