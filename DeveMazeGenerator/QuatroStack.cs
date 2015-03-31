@@ -10,18 +10,18 @@ namespace DeveMazeGenerator
     public class QuatroStack
     {
         private int cur = -1;
-        public QuatroList innerList;
+        public QuatroList InnerList;
 
         public QuatroStack()
         {
-            innerList = new QuatroList();
+            InnerList = new QuatroList();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Push(int input)
         {
             cur++;
-            innerList[cur] = input;
+            InnerList[cur] = input;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -29,7 +29,7 @@ namespace DeveMazeGenerator
         {
             if (cur == -1)
                 throw new ArgumentException("Stack is empty");
-            return innerList[cur];
+            return InnerList[cur];
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -38,7 +38,7 @@ namespace DeveMazeGenerator
             if (cur == -1)
                 throw new ArgumentException("Stack is empty");
             cur--;
-            return innerList[cur + 1];
+            return InnerList[cur + 1];
         }
 
         public int Count

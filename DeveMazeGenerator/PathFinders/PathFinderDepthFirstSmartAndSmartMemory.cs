@@ -94,18 +94,6 @@ namespace DeveMazeGenerator.PathFinders
                 }
 
                 possibleDirectionsCount = 0;
-                if ((prev.X != x + 1 || prev.Y != y) && isValid(x + 1, y, map, width, height))
-                {
-                    possibleDirections[possibleDirectionsCount].X = x + 1;
-                    possibleDirections[possibleDirectionsCount].Y = y;
-                    possibleDirectionsCount++;
-                }
-                if ((prev.X != x || prev.Y != y + 1) && isValid(x, y + 1, map, width, height))
-                {
-                    possibleDirections[possibleDirectionsCount].X = x;
-                    possibleDirections[possibleDirectionsCount].Y = y + 1;
-                    possibleDirectionsCount++;
-                }
                 if ((prev.X != x - 1 || prev.Y != y) && isValid(x - 1, y, map, width, height))
                 {
                     possibleDirections[possibleDirectionsCount].X = x - 1;
@@ -116,6 +104,18 @@ namespace DeveMazeGenerator.PathFinders
                 {
                     possibleDirections[possibleDirectionsCount].X = x;
                     possibleDirections[possibleDirectionsCount].Y = y - 1;
+                    possibleDirectionsCount++;
+                }
+                if ((prev.X != x + 1 || prev.Y != y) && isValid(x + 1, y, map, width, height))
+                {
+                    possibleDirections[possibleDirectionsCount].X = x + 1;
+                    possibleDirections[possibleDirectionsCount].Y = y;
+                    possibleDirectionsCount++;
+                }
+                if ((prev.X != x || prev.Y != y + 1) && isValid(x, y + 1, map, width, height))
+                {
+                    possibleDirections[possibleDirectionsCount].X = x;
+                    possibleDirections[possibleDirectionsCount].Y = y + 1;
                     possibleDirectionsCount++;
                 }
 
@@ -185,19 +185,19 @@ namespace DeveMazeGenerator.PathFinders
 
                             //Set the direction we backtracked from
                             var lastBackTrackDir = -1;
-                            if (prev.X > cur.X)
+                            if (prev.X < cur.X)
                             {
                                 lastBackTrackDir = 0;
                             }
-                            else if (prev.Y > cur.Y)
+                            else if (prev.Y < cur.Y)
                             {
                                 lastBackTrackDir = 1;
                             }
-                            else if (prev.X < cur.X)
+                            else if (prev.X > cur.X)
                             {
                                 lastBackTrackDir = 2;
                             }
-                            else if (prev.Y < cur.Y)
+                            else if (prev.Y > cur.Y)
                             {
                                 lastBackTrackDir = 3;
                             }
@@ -229,19 +229,19 @@ namespace DeveMazeGenerator.PathFinders
                                 if (probDir.X != x + previousDirectionX || probDir.Y != y + previousDirectionY)
                                 {
                                     var directionOfThisDir = -1;
-                                    if (probDir.X > cur.X)
+                                    if (probDir.X < cur.X)
                                     {
                                         directionOfThisDir = 0;
                                     }
-                                    else if (probDir.Y > cur.Y)
+                                    else if (probDir.Y < cur.Y)
                                     {
                                         directionOfThisDir = 1;
                                     }
-                                    else if (probDir.X < cur.X)
+                                    else if (probDir.X > cur.X)
                                     {
                                         directionOfThisDir = 2;
                                     }
-                                    else if (probDir.Y < cur.Y)
+                                    else if (probDir.Y > cur.Y)
                                     {
                                         directionOfThisDir = 3;
                                     }

@@ -24,6 +24,7 @@ namespace DeveMazeGeneratorGui
         private Maze lastMegaTerrorMaze = null;
         private List<MazePoint> lastMegaTerrorMazePath = null;
         private List<MazePointPos> lastMegaTerrorMazePathPos = null;
+        private QuatroStack lastMegaTerrorMazeQuatroDirections = null;
 
         private Boolean forceesStoppenEnzo = false;
         private Random r = new Random();
@@ -1540,6 +1541,7 @@ namespace DeveMazeGeneratorGui
             lastMegaTerrorMaze = null;
             lastMegaTerrorMazePath = null;
             lastMegaTerrorMazePathPos = null;
+            lastMegaTerrorMazeQuatroDirections = null;
             GC.Collect(int.MaxValue);
         }
 
@@ -1989,35 +1991,61 @@ namespace DeveMazeGeneratorGui
 
                 });
 
-                while (path.Count > 0)
-                {
-                    switch (path.Pop())
-                    {
-                        case 0:
-                            DebugMSG("UP");
-                            Console.WriteLine("UP");
-                            break;
-                        case 1:
-                            DebugMSG("RIGHT");
-                            Console.WriteLine("RIGHT");
-                            break;
-                        case 2:
-                            DebugMSG("DOWN");
-                            Console.WriteLine("DOWN");
-                            break;
-                        case 3:
-                            DebugMSG("LEFT");
-                            Console.WriteLine("LEFT");
-                            break;
-                        default:
-                            break;
-                    }
-                }
+                PrintQuatroList(path);
 
                 //foreach (var pathnode in path)
                 //{
                 //    g.FillRectangle(Brushes.Red, pathnode.X * sizemodifier, pathnode.Y * sizemodifier, sizemodifier, sizemodifier);
                 //}
+            });
+        }
+
+        private void PrintQuatroList(QuatroStack quatroStack)
+        {
+            var count = quatroStack.Count;
+            for (int i = count-1; i >= 0; i--)
+            {
+                switch (quatroStack.InnerList[i])
+                {
+                    case 0:
+                        DebugMSG("UP");
+                        Console.WriteLine("UP");
+                        break;
+                    case 1:
+                        DebugMSG("RIGHT");
+                        Console.WriteLine("RIGHT");
+                        break;
+                    case 2:
+                        DebugMSG("DOWN");
+                        Console.WriteLine("DOWN");
+                        break;
+                    case 3:
+                        DebugMSG("LEFT");
+                        Console.WriteLine("LEFT");
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
+        private void button42_Click(object sender, EventArgs e)
+        {
+            Task.Run(() =>
+            {
+                if (lastMegaTerrorMaze == null)
+                {
+                    DebugMSG("No Mega Terror Maze in memory, generate one first...");
+                    return;
+                }
+
+                DebugMSG("Finding directions for current Mega Terror Maze...");
+                var w = new Stopwatch();
+                w.Start();
+                lastMegaTerrorMazeQuatroDirections = PathFinderDepthFirstSmartAndSmartMemory.GoFind(lastMegaTerrorMaze.InnerMap, null);
+                w.Stop();
+                DebugMSG("Directions found in " + w.Elapsed.TotalSeconds + " seconds, length: " + lastMegaTerrorMazeQuatroDirections.Count);
+                //PrintQuatroList(lastMegaTerrorMazeQuatroDirections);
             });
         }
     }
