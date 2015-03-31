@@ -1848,15 +1848,15 @@ namespace DeveMazeGeneratorGui
                         this.mazeLinesToSave = tot;
                     };
 
-                    if (lastMegaTerrorMazePath != null)
-                    {
-                        DebugMSG("Path found, saving maze with path...");
-                        lastMegaTerrorMaze.SaveMazeAsImageDeluxe("megaterrormazedeluxe-" + DateTime.Now.Ticks + ".png", lastMegaTerrorMazePath, callback);
-                    }
-                    else if (lastMegaTerrorMazePathPos != null)
+                    if (lastMegaTerrorMazePathPos != null)
                     {
                         DebugMSG("Path with pos found, saving maze with path...");
                         lastMegaTerrorMaze.SaveMazeAsImageDeluxe("megaterrormazedeluxe-" + DateTime.Now.Ticks + ".png", lastMegaTerrorMazePathPos, callback);
+                    }
+                    else if (lastMegaTerrorMazePath != null)
+                    {
+                        DebugMSG("Path found, saving maze with path...");
+                        lastMegaTerrorMaze.SaveMazeAsImageDeluxe("megaterrormazedeluxe-" + DateTime.Now.Ticks + ".png", lastMegaTerrorMazePath, callback);
                     }
                     else
                     {
