@@ -15,6 +15,7 @@ using System.IO;
 using System.Threading;
 using System.Drawing.Imaging;
 using DeveMazeGenerator.Generators.Tests;
+using DeveMazeGenerator.PathFinders;
 
 namespace DeveMazeGeneratorGui
 {
@@ -1904,6 +1905,120 @@ namespace DeveMazeGeneratorGui
                 lastMegaTerrorMazePathPos.TrimExcess();
             }
             GC.Collect();
+        }
+
+        private void button41_Click(object sender, EventArgs e)
+        {
+            comboBox1.SelectedIndex = 19;
+            Task.Run(() =>
+            {
+                var g = panel1.CreateGraphics();
+
+                int sizemodifier = 1;
+
+                this.Invoke(new Action(() =>
+                {
+                    sizemodifier = int.Parse(comboBox1.SelectedItem.ToString());
+                }));
+
+                int width = panel1.Width;
+                int height = panel1.Height;
+
+                int mazeWidth = width / sizemodifier / 2 * 2;
+                int mazeHeight = height / sizemodifier / 2 * 2;
+
+                //int width = 100;
+                //int height = 150;
+
+                g.FillRectangle(Brushes.Black, 0, 0, width + 1, height + 1);
+
+                var intrandomvalue = 284434191;
+                DebugMSG("Random: " + intrandomvalue);
+
+                Maze m = new AlgorithmKruskal().Generate(mazeWidth, mazeHeight, InnerMapType.BitArreintjeFast, intrandomvalue, (x, y, cur, tot) =>
+                {
+
+                    //Thread.Sleep(curDelay);
+
+                    g.FillRectangle(Brushes.White, x * sizemodifier, y * sizemodifier, sizemodifier, sizemodifier);
+
+                    curXInMaze = x;
+                    curYInMaze = y;
+
+                    this.currentStepsToCalcPercentage = cur;
+                    this.totalStepsToCalcPercentage = tot;
+
+                    //Thread.Sleep(200);
+                });
+
+                var path = PathFinderDepthFirstSmartAndSmartMemory.GoFind(m.InnerMap, (x, y, pathFinderAction) =>
+                {
+
+                    int sleepTime = 50;
+
+                    Thread.Sleep(sleepTime);
+
+                    Brush colorToUse = Brushes.Pink;
+                    g.FillRectangle(colorToUse, x * sizemodifier, y * sizemodifier, sizemodifier, sizemodifier);
+
+                    Thread.Sleep(sleepTime);
+
+                    switch (pathFinderAction)
+                    {
+                        case PathFinderAction.Step:
+                            colorToUse = Brushes.Green;
+                            break;
+                        case PathFinderAction.Backtrack:
+                            colorToUse = Brushes.Gray;
+                            break;
+                        case PathFinderAction.Junction:
+                            colorToUse = Brushes.Blue;
+                            break;
+                        case PathFinderAction.RemovingJunction:
+                            colorToUse = Brushes.Red;
+                            break;
+                        case PathFinderAction.RefoundJunction:
+                            colorToUse = Brushes.Purple;
+                            break;
+                        default:
+                            break;
+                    }
+
+                    g.FillRectangle(colorToUse, x * sizemodifier, y * sizemodifier, sizemodifier, sizemodifier);
+
+
+                });
+
+                while (path.Count > 0)
+                {
+                    switch (path.Pop())
+                    {
+                        case 0:
+                            DebugMSG("UP");
+                            Console.WriteLine("UP");
+                            break;
+                        case 1:
+                            DebugMSG("RIGHT");
+                            Console.WriteLine("RIGHT");
+                            break;
+                        case 2:
+                            DebugMSG("DOWN");
+                            Console.WriteLine("DOWN");
+                            break;
+                        case 3:
+                            DebugMSG("LEFT");
+                            Console.WriteLine("LEFT");
+                            break;
+                        default:
+                            break;
+                    }
+                }
+
+                //foreach (var pathnode in path)
+                //{
+                //    g.FillRectangle(Brushes.Red, pathnode.X * sizemodifier, pathnode.Y * sizemodifier, sizemodifier, sizemodifier);
+                //}
+            });
         }
     }
 }

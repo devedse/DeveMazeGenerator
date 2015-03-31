@@ -94,9 +94,10 @@
     <Compile Include="MazePoint.cs" />
     <Compile Include="MazePointPos.cs" />
     <Compile Include="MazeWall.cs" />
-    <Compile Include="PathFinderDepthFirstSmartWithPos.cs" />
-    <Compile Include="PathFinderDepthFirstSmart.cs" />
-    <Compile Include="PathFinderDepthFirst.cs" />
+    <Compile Include="PathFinders\PathFinderDepthFirstSmartAndSmartMemory.cs" />
+    <Compile Include="PathFinders\PathFinderDepthFirstSmartWithPos.cs" />
+    <Compile Include="PathFinders\PathFinderDepthFirstSmart.cs" />
+    <Compile Include="PathFinders\PathFinderDepthFirst.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="QuatroList.cs" />

@@ -8,8 +8,11 @@ using System.Text;
 using System.Threading.Tasks;
 using DeveMazeGenerator.InnerMaps;
 
-namespace DeveMazeGenerator
+namespace DeveMazeGenerator.PathFinders
 {
+    /// <summary>
+    /// This class should not be used anymore because the Smart version of this one is simply "better"
+    /// </summary>
     public class PathFinderDepthFirst
     {
         private static Random r = new Random();

@@ -95,6 +95,7 @@ namespace DeveMazeGeneratorGui
             this.label17 = new System.Windows.Forms.Label();
             this.button39 = new System.Windows.Forms.Button();
             this.button40 = new System.Windows.Forms.Button();
+            this.button41 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -780,11 +781,22 @@ namespace DeveMazeGeneratorGui
             this.button40.UseVisualStyleBackColor = true;
             this.button40.Click += new System.EventHandler(this.button40_Click);
             // 
+            // button41
+            // 
+            this.button41.Location = new System.Drawing.Point(13, 610);
+            this.button41.Name = "button41";
+            this.button41.Size = new System.Drawing.Size(111, 23);
+            this.button41.TabIndex = 68;
+            this.button41.Text = "SmartMemPathFind";
+            this.button41.UseVisualStyleBackColor = true;
+            this.button41.Click += new System.EventHandler(this.button41_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(968, 644);
+            this.Controls.Add(this.button41);
             this.Controls.Add(this.button40);
             this.Controls.Add(this.button39);
             this.Controls.Add(this.label17);
@@ -924,6 +936,7 @@ namespace DeveMazeGeneratorGui
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Button button39;
         private System.Windows.Forms.Button button40;
+        private System.Windows.Forms.Button button41;
     }
 }
 
