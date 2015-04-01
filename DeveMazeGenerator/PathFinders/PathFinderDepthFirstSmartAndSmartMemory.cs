@@ -290,8 +290,7 @@ namespace DeveMazeGenerator.PathFinders
 
             }
 
-            //return stackje;
-            return null;
+            return new QuatroStack();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
