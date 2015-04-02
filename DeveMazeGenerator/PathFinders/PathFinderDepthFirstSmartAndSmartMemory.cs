@@ -306,13 +306,7 @@ namespace DeveMazeGenerator.PathFinders
             }
         }
 
-        public static IEnumerable<MazePointPos> DeterminePathFromDirections(QuatroStack directions, InnerMap map)
-        {
-            return DeterminePathFromDirections(directions, new MazePoint(1, 1), new MazePoint(map.Width - 3, map.Height - 3), map);
-
-        }
-
-        public static IEnumerable<MazePointPos> DeterminePathFromDirections(QuatroStack directions, MazePoint start, MazePoint end, InnerMap map)
+        public static long DeterminePathLength(QuatroStack directions, MazePoint start, MazePoint end, InnerMap map)
         {
             int currentDirectionPos = directions.Count - 1;
 
@@ -329,9 +323,105 @@ namespace DeveMazeGenerator.PathFinders
 
             while (true)
             {
-                byte formulathing = (byte)((double)current / (double)directions.Count * 255.0);
-                cur.RelativePos = formulathing;
+                if (cur.X == end.X && cur.Y == end.Y)
+                {
+                    return current;
+                }
 
+                int x = cur.X;
+                int y = cur.Y;
+
+                possibleDirectionsCount = 0;
+                if ((prev.X != x - 1 || prev.Y != y) && isValid(x - 1, y, map, width, height))
+                {
+                    possibleDirections[possibleDirectionsCount].X = x - 1;
+                    possibleDirections[possibleDirectionsCount].Y = y;
+                    possibleDirectionsCount++;
+                }
+                if ((prev.X != x || prev.Y != y - 1) && isValid(x, y - 1, map, width, height))
+                {
+                    possibleDirections[possibleDirectionsCount].X = x;
+                    possibleDirections[possibleDirectionsCount].Y = y - 1;
+                    possibleDirectionsCount++;
+                }
+                if ((prev.X != x + 1 || prev.Y != y) && isValid(x + 1, y, map, width, height))
+                {
+                    possibleDirections[possibleDirectionsCount].X = x + 1;
+                    possibleDirections[possibleDirectionsCount].Y = y;
+                    possibleDirectionsCount++;
+                }
+                if ((prev.X != x || prev.Y != y + 1) && isValid(x, y + 1, map, width, height))
+                {
+                    possibleDirections[possibleDirectionsCount].X = x;
+                    possibleDirections[possibleDirectionsCount].Y = y + 1;
+                    possibleDirectionsCount++;
+                }
+
+                if (possibleDirectionsCount == 1)
+                {
+                    prev = cur;
+                    cur = possibleDirections[0];
+                }
+                else if (possibleDirectionsCount > 1)
+                {
+                    int directionToGo = directions.InnerList[currentDirectionPos];
+                    currentDirectionPos--;
+
+                    prev = cur;
+                    switch (directionToGo)
+                    {
+                        case 0:
+                            cur.Y -= 1;
+                            break;
+                        case 1:
+                            cur.X += 1;
+                            break;
+                        case 2:
+                            cur.Y += 1;
+                            break;
+                        case 3:
+                            cur.X -= 1;
+                            break;
+                    }
+                }
+                current++;
+            }
+        }
+
+        public static IEnumerable<MazePointPos> DeterminePathFromDirections(QuatroStack directions, InnerMap map)
+        {
+            return DeterminePathFromDirections(directions, new MazePoint(1, 1), new MazePoint(map.Width - 3, map.Height - 3), map);
+
+        }
+
+        public static IEnumerable<MazePointPos> DeterminePathFromDirections(QuatroStack directions, MazePoint start, MazePoint end, InnerMap map)
+        {
+            long current = 0;
+            long max = DeterminePathFromDirectionsInternal(directions, start, end, map).Count(); //This needs to happen twice sadly but else it we can't know the complete path length
+
+            foreach (var point in DeterminePathFromDirectionsInternal(directions, start, end, map))
+            {
+                byte formulathing = (byte)((double)current / (double)max * 255.0);
+                current++;
+                yield return new MazePointPos(point.X, point.Y, formulathing);
+            }
+        }
+
+        public static IEnumerable<MazePointPos> DeterminePathFromDirectionsInternal(QuatroStack directions, MazePoint start, MazePoint end, InnerMap map)
+        {
+            int currentDirectionPos = directions.Count - 1;
+
+            var possibleDirections = new MazePointPos[4];
+            int possibleDirectionsCount = 0;
+
+            MazePointPos prev = new MazePointPos();
+            MazePointPos cur = new MazePointPos(start.X, start.Y, 0);
+
+            int width = map.Width;
+            int height = map.Height;
+
+            while (true)
+            {
                 yield return cur;
 
                 if (cur.X == end.X && cur.Y == end.Y)
@@ -396,7 +486,6 @@ namespace DeveMazeGenerator.PathFinders
                             break;
                     }
                 }
-                current++;
             }
         }
     }
