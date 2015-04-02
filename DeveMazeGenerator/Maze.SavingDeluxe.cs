@@ -153,8 +153,6 @@ namespace DeveMazeGenerator
             //chunk.Priority = true; // this chunk will be written as soon as possible
 
 
-            int curpos = 0;
-
             int lineChunks = 20000;
 
             for (int yChunkStart = 0; yChunkStart < this.Height - 1; yChunkStart += lineChunks)
@@ -170,6 +168,7 @@ namespace DeveMazeGenerator
                     }
                     return first.Y - second.Y;
                 });
+                int curpos = 0;
 
                 for (int y = yChunkStart; y < yChunkEnd; y++)
                 {
