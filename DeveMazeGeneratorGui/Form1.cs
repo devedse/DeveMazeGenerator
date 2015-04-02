@@ -1851,15 +1851,21 @@ namespace DeveMazeGeneratorGui
                         this.mazeLinesToSave = tot;
                     };
 
-                    if (lastMegaTerrorMazePathPos != null)
+                    if (lastMegaTerrorMazeQuatroDirections != null)
+                    {
+                        DebugMSG("Path with directions found, dynamically generating path and saving maze...");
+                        var ienumerablePathBasedOnDirections = PathFinderDepthFirstSmartAndSmartMemory.DeterminePathFromDirections(lastMegaTerrorMazeQuatroDirections, lastMegaTerrorMaze.InnerMap);
+                        lastMegaTerrorMaze.SaveMazeAsImageDeluxeWithDynamicallyGeneratedPath("megaterrormazedeluxe-directions-" + DateTime.Now.Ticks + ".png", ienumerablePathBasedOnDirections, callback);
+                    }
+                    else if (lastMegaTerrorMazePathPos != null)
                     {
                         DebugMSG("Path with pos found, saving maze with path...");
-                        lastMegaTerrorMaze.SaveMazeAsImageDeluxe("megaterrormazedeluxe-" + DateTime.Now.Ticks + ".png", lastMegaTerrorMazePathPos, callback);
+                        lastMegaTerrorMaze.SaveMazeAsImageDeluxe("megaterrormazedeluxe-pathpos-" + DateTime.Now.Ticks + ".png", lastMegaTerrorMazePathPos, callback);
                     }
                     else if (lastMegaTerrorMazePath != null)
                     {
                         DebugMSG("Path found, saving maze with path...");
-                        lastMegaTerrorMaze.SaveMazeAsImageDeluxe("megaterrormazedeluxe-" + DateTime.Now.Ticks + ".png", lastMegaTerrorMazePath, callback);
+                        lastMegaTerrorMaze.SaveMazeAsImageDeluxe("megaterrormazedeluxe-path-" + DateTime.Now.Ticks + ".png", lastMegaTerrorMazePath, callback);
                     }
                     else
                     {
@@ -2006,7 +2012,7 @@ namespace DeveMazeGeneratorGui
         private void PrintQuatroList(QuatroStack quatroStack)
         {
             var count = quatroStack.Count;
-            for (int i = count-1; i >= 0; i--)
+            for (int i = count - 1; i >= 0; i--)
             {
                 switch (quatroStack.InnerList[i])
                 {
@@ -2048,6 +2054,32 @@ namespace DeveMazeGeneratorGui
                 lastMegaTerrorMazeQuatroDirections = PathFinderDepthFirstSmartAndSmartMemory.GoFind(lastMegaTerrorMaze.InnerMap, null);
                 w.Stop();
                 DebugMSG("Directions found in " + w.Elapsed.TotalSeconds + " seconds, length: " + lastMegaTerrorMazeQuatroDirections.Count);
+                //PrintQuatroList(lastMegaTerrorMazeQuatroDirections);
+            });
+        }
+
+        private void button43_Click(object sender, EventArgs e)
+        {
+            Task.Run(() =>
+            {
+                if (lastMegaTerrorMaze == null)
+                {
+                    DebugMSG("No Mega Terror Maze in memory, generate one first...");
+                    return;
+                }
+
+                if (lastMegaTerrorMazeQuatroDirections == null)
+                {
+                    DebugMSG("No QuatroDirections found in memory, generate these first...");
+                    return;
+                }
+
+                DebugMSG("Finding path based on directions for current Mega Terror Maze...");
+                var w = new Stopwatch();
+                w.Start();
+                var generatedPath = PathFinderDepthFirstSmartAndSmartMemory.DeterminePathFromDirections(lastMegaTerrorMazeQuatroDirections, lastMegaTerrorMaze.InnerMap).ToList();
+                w.Stop();
+                DebugMSG("Path based on directions found in " + w.Elapsed.TotalSeconds + " seconds, length: " + generatedPath.Count);
                 //PrintQuatroList(lastMegaTerrorMazeQuatroDirections);
             });
         }
