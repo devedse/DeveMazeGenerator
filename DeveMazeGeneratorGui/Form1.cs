@@ -1953,10 +1953,10 @@ namespace DeveMazeGeneratorGui
                     //Thread.Sleep(200);
                 });
 
-                var path = PathFinderDepthFirstSmartAndSmartMemory.GoFind(m.InnerMap, (x, y, pathFinderAction) =>
+                var directions = PathFinderDepthFirstSmartAndSmartMemory.GoFind(m.InnerMap, (x, y, pathFinderAction) =>
                 {
 
-                    int sleepTime = 50;
+                    int sleepTime = 25;
 
                     Thread.Sleep(sleepTime);
 
@@ -1991,12 +1991,15 @@ namespace DeveMazeGeneratorGui
 
                 });
 
-                PrintQuatroList(path);
+                //PrintQuatroList(path);
 
-                //foreach (var pathnode in path)
-                //{
-                //    g.FillRectangle(Brushes.Red, pathnode.X * sizemodifier, pathnode.Y * sizemodifier, sizemodifier, sizemodifier);
-                //}
+                var path = PathFinderDepthFirstSmartAndSmartMemory.DeterminePathFromDirections(directions, m.InnerMap);
+
+                foreach (var pathnode in path)
+                {
+                    g.FillRectangle(Brushes.DarkBlue, pathnode.X * sizemodifier, pathnode.Y * sizemodifier, sizemodifier, sizemodifier);
+                    Thread.Sleep(50);
+                }
             });
         }
 

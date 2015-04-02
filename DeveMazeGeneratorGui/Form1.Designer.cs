@@ -214,7 +214,7 @@ namespace DeveMazeGeneratorGui
             // 
             // button15
             // 
-            this.button15.Location = new System.Drawing.Point(224, 580);
+            this.button15.Location = new System.Drawing.Point(213, 580);
             this.button15.Name = "button15";
             this.button15.Size = new System.Drawing.Size(75, 23);
             this.button15.TabIndex = 15;
@@ -774,7 +774,7 @@ namespace DeveMazeGeneratorGui
             // 
             // button40
             // 
-            this.button40.Location = new System.Drawing.Point(130, 610);
+            this.button40.Location = new System.Drawing.Point(140, 609);
             this.button40.Name = "button40";
             this.button40.Size = new System.Drawing.Size(169, 23);
             this.button40.TabIndex = 67;
@@ -784,11 +784,11 @@ namespace DeveMazeGeneratorGui
             // 
             // button41
             // 
-            this.button41.Location = new System.Drawing.Point(13, 610);
+            this.button41.Location = new System.Drawing.Point(157, 638);
             this.button41.Name = "button41";
-            this.button41.Size = new System.Drawing.Size(111, 23);
+            this.button41.Size = new System.Drawing.Size(150, 23);
             this.button41.TabIndex = 68;
-            this.button41.Text = "SmartMemPathFind";
+            this.button41.Text = "SmartMemDirectionsFind";
             this.button41.UseVisualStyleBackColor = true;
             this.button41.Click += new System.EventHandler(this.button41_Click);
             // 
