@@ -2077,7 +2077,7 @@ namespace DeveMazeGeneratorGui
                 DebugMSG("Finding path based on directions for current Mega Terror Maze...");
                 var w = new Stopwatch();
                 w.Start();
-                var generatedPathCount = PathFinderDepthFirstSmartAndSmartMemory.DeterminePathFromDirections(lastMegaTerrorMazeQuatroDirections, lastMegaTerrorMaze.InnerMap).Count();
+                var generatedPathCount = PathFinderDepthFirstSmartAndSmartMemory.DeterminePathFromDirections(lastMegaTerrorMazeQuatroDirections, lastMegaTerrorMaze.InnerMap).LongCount();
                 w.Stop();
                 DebugMSG("Path based on directions found in " + w.Elapsed.TotalSeconds + " seconds, length: " + generatedPathCount);
                 //PrintQuatroList(lastMegaTerrorMazeQuatroDirections);
