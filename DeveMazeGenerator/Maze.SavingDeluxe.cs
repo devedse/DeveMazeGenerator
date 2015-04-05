@@ -161,7 +161,7 @@ namespace DeveMazeGenerator
             {
                 var yChunkEnd = Math.Min(yChunkStart + Maze.LineChunks, this.Height - 1);
 
-                var pathPointsHere = pathPosjes.Where(t => t.Y >= yChunkStart && yChunkStart < yChunkEnd).ToList();
+                var pathPointsHere = pathPosjes.Where(t => t.Y >= yChunkStart && t.Y < yChunkEnd).ToList();
                 pathPointsHere.Sort((first, second) =>
                 {
                     if (first.Y == second.Y)
