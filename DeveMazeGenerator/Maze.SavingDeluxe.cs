@@ -18,7 +18,7 @@ namespace DeveMazeGenerator
 {
     public partial class Maze
     {
-        public const int LineChunks = 20000;
+        public static int LineChunks = 20000;
 
         /// <summary>
         /// Saves the maze with a specified path as PNG
@@ -155,7 +155,7 @@ namespace DeveMazeGenerator
             //chunk.Priority = true; // this chunk will be written as soon as possible
 
 
-            
+
 
             for (int yChunkStart = 0; yChunkStart < this.Height - 1; yChunkStart += Maze.LineChunks)
             {
