@@ -2083,5 +2083,33 @@ namespace DeveMazeGeneratorGui
                 //PrintQuatroList(lastMegaTerrorMazeQuatroDirections);
             });
         }
+
+        private void button44_Click(object sender, EventArgs e)
+        {
+            Task.Run(() =>
+            {
+                if (lastMegaTerrorMaze == null)
+                {
+                    DebugMSG("No Mega Terror Maze in memory, generate one first...");
+                    return;
+                }
+
+                if (lastMegaTerrorMazeQuatroDirections == null)
+                {
+                    DebugMSG("No QuatroDirections found in memory, generate these first...");
+                    return;
+                }
+
+                DebugMSG("Finding path based on directions for current Mega Terror Maze...");
+                var w = new Stopwatch();
+                w.Start();
+                var ienumerablePath = PathFinderDepthFirstSmartAndSmartMemory.DeterminePathFromDirections(lastMegaTerrorMazeQuatroDirections, lastMegaTerrorMaze.InnerMap);
+                var filteredPath = ienumerablePath.Where(t => t.Y >= 0 && t.Y < Maze.LineChunks);
+                var longCount = filteredPath.LongCount();
+                w.Stop();
+                DebugMSG("Path based on directions found and filtered in " + w.Elapsed.TotalSeconds + " seconds, length of the first '" + Maze.LineChunks + "' Y lines: " + longCount);
+                //PrintQuatroList(lastMegaTerrorMazeQuatroDirections);
+            });
+        }
     }
 }

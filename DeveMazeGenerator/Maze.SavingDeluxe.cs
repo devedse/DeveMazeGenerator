@@ -18,6 +18,8 @@ namespace DeveMazeGenerator
 {
     public partial class Maze
     {
+        public static int LineChunks = 20000;
+
         /// <summary>
         /// Saves the maze with a specified path as PNG
         /// Uses more memory then saving without a path (depending on the selected MazeSaveType)
@@ -153,13 +155,13 @@ namespace DeveMazeGenerator
             //chunk.Priority = true; // this chunk will be written as soon as possible
 
 
-            int lineChunks = 20000;
 
-            for (int yChunkStart = 0; yChunkStart < this.Height - 1; yChunkStart += lineChunks)
+
+            for (int yChunkStart = 0; yChunkStart < this.Height - 1; yChunkStart += Maze.LineChunks)
             {
-                var yChunkEnd = Math.Min(yChunkStart + lineChunks, this.Height - 1);
+                var yChunkEnd = Math.Min(yChunkStart + Maze.LineChunks, this.Height - 1);
 
-                var pathPointsHere = pathPosjes.Where(t => t.Y >= yChunkStart && yChunkStart < yChunkEnd).ToList();
+                var pathPointsHere = pathPosjes.Where(t => t.Y >= yChunkStart && t.Y < yChunkEnd).ToList();
                 pathPointsHere.Sort((first, second) =>
                 {
                     if (first.Y == second.Y)
