@@ -27,7 +27,7 @@ namespace DeveMazeGenerator.InnerMaps
         {
             mapParts = new HybridInnerMapPart[amountOfMapPartsLoadedMax];
 
-            completeHDArray = new CompleteHDArray((width / 8) * (height / 8));
+            completeHDArray = new CompleteHDArray((width / 8L) * (height / 8L));
 
             //innerData = new InnerMapArray[width];
             //for (int i = 0; i < width; i++)
