@@ -55,6 +55,9 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BitMiracle.LibTiff.NET">
+      <HintPath>..\packages\BitMiracle.LibTiff.NET.2.4.508.0\lib\net20\BitMiracle.LibTiff.NET.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -90,6 +93,7 @@
     <Compile Include="InnerMaps\InnerMapHelpers\CompleteHDArray.cs" />
     <Compile Include="InnerMaps\InnerMapHelpers\IntHDArray.cs" />
     <Compile Include="Maze.cs" />
+    <Compile Include="Maze.SavingDeluxeTiff.cs" />
     <Compile Include="Maze.SavingDeluxe.cs" />
     <Compile Include="MazePoint.cs" />
     <Compile Include="MazePointPos.cs" />
@@ -106,6 +110,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <Compile Include="Maze.Saving.cs" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5">
