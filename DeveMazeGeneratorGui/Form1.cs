@@ -56,7 +56,7 @@ namespace DeveMazeGeneratorGui
                 comboBox4.Items.Add(ConvertNumberToNiceString((long)Math.Pow(2, i)));
             }
 
-            comboBox4.SelectedIndex = 0;
+            comboBox4.SelectedIndex = 9;
         }
 
         private void button1_Click(object sender, EventArgs e)
