@@ -12,6 +12,7 @@ using DeveMazeGenerator;
 using DeveMazeGenerator.Generators;
 using DeveMazeGeneratorMonoGame.LineOfSight;
 using System.Diagnostics;
+using DeveMazeGenerator.PathFinders;
 #endregion
 
 namespace DeveMazeGeneratorMonoGame
@@ -79,7 +80,7 @@ namespace DeveMazeGeneratorMonoGame
 
             //TargetElapsedTime = TimeSpan.FromTicks((long)10000000 / (long)500);
 
-            if (!true)
+            if (true)
             {
                 graphics.PreferredBackBufferWidth = 1600;
                 graphics.PreferredBackBufferHeight = 800;
