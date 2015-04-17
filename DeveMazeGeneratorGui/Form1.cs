@@ -1159,7 +1159,7 @@ namespace DeveMazeGeneratorGui
 
                 g.FillRectangle(Brushes.White, 0, 0, this.Width + 1, this.Height + 1);
 
-                Maze m = new AlgorithmDivision().Generate(width, height, InnerMapType.BitArreintjeFast, r.Next(), (x, y, cur, tot) =>
+                Maze m = new AlgorithmBacktrack().Generate(width, height, InnerMapType.BitArreintjeFast, r.Next(), (x, y, cur, tot) =>
                 {
                     curXInMaze = x;
                     curYInMaze = y;

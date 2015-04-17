@@ -404,10 +404,10 @@ namespace DeveMazeGeneratorGui
             // 
             // button7
             // 
-            this.button7.Location = new System.Drawing.Point(213, 205);
+            this.button7.Location = new System.Drawing.Point(503, 323);
             this.button7.Margin = new System.Windows.Forms.Padding(2);
             this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(115, 72);
+            this.button7.Size = new System.Drawing.Size(83, 41);
             this.button7.TabIndex = 31;
             this.button7.Text = "HUUGE MAZE";
             this.button7.UseVisualStyleBackColor = true;
@@ -560,7 +560,7 @@ namespace DeveMazeGeneratorGui
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(296, 181);
+            this.label9.Location = new System.Drawing.Point(133, 208);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(41, 13);
             this.label9.TabIndex = 44;
@@ -569,7 +569,7 @@ namespace DeveMazeGeneratorGui
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(343, 181);
+            this.label10.Location = new System.Drawing.Point(183, 208);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(10, 13);
             this.label10.TabIndex = 45;
@@ -608,7 +608,7 @@ namespace DeveMazeGeneratorGui
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(130, 217);
+            this.label11.Location = new System.Drawing.Point(130, 248);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(17, 13);
             this.label11.TabIndex = 49;
@@ -617,7 +617,7 @@ namespace DeveMazeGeneratorGui
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(131, 245);
+            this.label12.Location = new System.Drawing.Point(131, 270);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(17, 13);
             this.label12.TabIndex = 50;
@@ -626,7 +626,7 @@ namespace DeveMazeGeneratorGui
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(154, 217);
+            this.label13.Location = new System.Drawing.Point(154, 249);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(10, 13);
             this.label13.TabIndex = 51;
@@ -635,7 +635,7 @@ namespace DeveMazeGeneratorGui
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(155, 245);
+            this.label14.Location = new System.Drawing.Point(155, 270);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(10, 13);
             this.label14.TabIndex = 52;
