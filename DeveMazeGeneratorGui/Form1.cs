@@ -2194,22 +2194,22 @@ namespace DeveMazeGeneratorGui
                     {
                         //DebugMSG("Path with directions found, dynamically generating path and saving maze...");
                         //var ienumerablePathBasedOnDirections = PathFinderDepthFirstSmartAndSmartMemory.DeterminePathFromDirections(lastMegaTerrorMazeQuatroDirections, lastMegaTerrorMaze.InnerMap);
-                        //lastMegaTerrorMaze.SaveMazeAsImageDeluxeWithDynamicallyGeneratedPathWithColorMap("megaterrormazedeluxe-tiffcolormap-directions-" + DateTime.Now.Ticks + ".tif", ienumerablePathBasedOnDirections, callback);
+                        //lastMegaTerrorMaze.SaveMazeAsImageDeluxeWithDynamicallyGeneratedPathWithColorMap("megaterrormazedeluxe-tiff-colormap-directions-" + DateTime.Now.Ticks + ".tif", ienumerablePathBasedOnDirections, callback);
                     }
                     else if (lastMegaTerrorMazePathPos != null)
                     {
                         DebugMSG("Path with pos found, saving maze with path...");
-                        lastMegaTerrorMaze.SaveMazeAsImageDeluxeTiffWithColorMap("megaterrormazedeluxe-tiffcolormap-pathpos-" + DateTime.Now.Ticks + ".tif", lastMegaTerrorMazePathPos, callback);
+                        lastMegaTerrorMaze.SaveMazeAsImageDeluxeTiffWithColorMap("megaterrormazedeluxe-tiff-colormap-pathpos-" + DateTime.Now.Ticks + ".tif", lastMegaTerrorMazePathPos, callback);
                     }
                     else if (lastMegaTerrorMazePath != null)
                     {
                         DebugMSG("Path found, saving maze with path...");
-                        lastMegaTerrorMaze.SaveMazeAsImageDeluxeTiffWithColorMap("megaterrormazedeluxe-tiffcolormap-path-" + DateTime.Now.Ticks + ".tif", lastMegaTerrorMazePath, callback);
+                        lastMegaTerrorMaze.SaveMazeAsImageDeluxeTiffWithColorMap("megaterrormazedeluxe-tiff-colormap-path-" + DateTime.Now.Ticks + ".tif", lastMegaTerrorMazePath, callback);
                     }
                     else
                     {
                         //DebugMSG("No path found, saving maze without path...");
-                        //lastMegaTerrorMaze.SaveMazeAsImageDeluxeWithColorMap("megaterrormazedeluxe-tiffcolormap-" + DateTime.Now.Ticks + ".tif", new List<MazePoint>(), callback);
+                        //lastMegaTerrorMaze.SaveMazeAsImageDeluxeWithColorMap("megaterrormazedeluxe-tiff-colormap-" + DateTime.Now.Ticks + ".tif", new List<MazePoint>(), callback);
                     }
 
                     DebugMSG("Saving time: " + w.Elapsed.TotalSeconds + " seconds.");
