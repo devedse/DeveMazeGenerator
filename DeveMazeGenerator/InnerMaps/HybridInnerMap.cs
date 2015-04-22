@@ -14,7 +14,7 @@ namespace DeveMazeGenerator.InnerMaps
     {
         public HybridInnerMapPart currentMapPart = new HybridInnerMapPart(-1, -1, -1, -1, null); //-1 because no nullchecks needed etc :)
 
-        public int gridSize = 4096;
+        public const int GridSize = 4096;
         public int amountOfMapPartsLoadedMax = 10;
         public int currentMapCycleFactor = 0;
 
@@ -43,16 +43,16 @@ namespace DeveMazeGenerator.InnerMaps
             {
                 if (!(x > currentMapPart.StartX && x < currentMapPart.EndX && y > currentMapPart.StartY && y < currentMapPart.EndY))
                 {
-                    LoadNewMapPart(x / gridSize, y / gridSize);
+                    LoadNewMapPart(x / GridSize, y / GridSize);
                 }
 
-                int ything = y % gridSize;
-                int xthing = x % gridSize;
+                int ything = y % GridSize;
+                int xthing = x % GridSize;
 
                 //Console.WriteLine("Get: " + x + ", " + y + ": " + currentMapPart.innerMapInPart[ything * gridSize + xthing]);
                 //Thread.Sleep(100);
 
-                return currentMapPart.innerMapInPart[ything * gridSize + xthing];
+                return currentMapPart.innerMapInPart[ything * GridSize + xthing];
             }
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             set
@@ -63,13 +63,13 @@ namespace DeveMazeGenerator.InnerMaps
 
                 if (!(x > currentMapPart.StartX && x < currentMapPart.EndX && y > currentMapPart.StartY && y < currentMapPart.EndY))
                 {
-                    LoadNewMapPart(x / gridSize, y / gridSize);
+                    LoadNewMapPart(x / GridSize, y / GridSize);
                 }
 
-                int ything = y % gridSize;
-                int xthing = x % gridSize;
+                int ything = y % GridSize;
+                int xthing = x % GridSize;
 
-                currentMapPart.innerMapInPart[ything * gridSize + xthing] = value;
+                currentMapPart.innerMapInPart[ything * GridSize + xthing] = value;
             }
         }
 
@@ -77,7 +77,7 @@ namespace DeveMazeGenerator.InnerMaps
         {
             //Console.WriteLine("Loading mappart: " + x + ", " + y);
 
-            long sizeinbytes = (gridSize * gridSize) / 8; //Divide by 8 because of 8
+            long sizeinbytes = (GridSize * GridSize) / 8; //Divide by 8 because of 8
 
 
 
@@ -90,7 +90,7 @@ namespace DeveMazeGenerator.InnerMaps
             {
                 var mapToCheck = mapParts[i];
 
-                if (mapToCheck != null && mapToCheck.StartX == x * gridSize && mapToCheck.StartY == y * gridSize && mapToCheck.EndX == (x + 1) * gridSize && mapToCheck.EndY == (y + 1) * gridSize)
+                if (mapToCheck != null && mapToCheck.StartX == x * GridSize && mapToCheck.StartY == y * GridSize && mapToCheck.EndX == (x + 1) * GridSize && mapToCheck.EndY == (y + 1) * GridSize)
                 {
                     //Console.WriteLine("From memory");
                     //Thread.Sleep(2000);
@@ -112,7 +112,7 @@ namespace DeveMazeGenerator.InnerMaps
                     //If not save the oldest one
                     var oldone = mapParts[currentMapCycleFactor];
 
-                    long posToStoreAt = sizeinbytes * (long)(Width / gridSize) * (long)(oldone.StartY / gridSize) + (long)sizeinbytes * (long)(oldone.StartX / gridSize);
+                    long posToStoreAt = sizeinbytes * (long)(Width / GridSize) * (long)(oldone.StartY / GridSize) + (long)sizeinbytes * (long)(oldone.StartX / GridSize);
                     //Console.WriteLine("Storing at: " + posToStoreAt);
                     //Thread.Sleep(5000);
                     oldone.Store(posToStoreAt);
@@ -125,9 +125,9 @@ namespace DeveMazeGenerator.InnerMaps
 
 
                 //Load a new one
-                currentMapPart = new HybridInnerMapPart(x * gridSize, y * gridSize, (x + 1) * gridSize, (y + 1) * gridSize, completeHDArray);
+                currentMapPart = new HybridInnerMapPart(x * GridSize, y * GridSize, (x + 1) * GridSize, (y + 1) * GridSize, completeHDArray);
 
-                long posToLoadFrom = sizeinbytes * (long)(Width / gridSize) * (long)y + (long)(sizeinbytes * x);
+                long posToLoadFrom = sizeinbytes * (long)(Width / GridSize) * (long)y + (long)(sizeinbytes * x);
                 //Thread.Sleep(1000);
                 //Console.WriteLine(posToLoadFrom);
 
