@@ -101,6 +101,8 @@ namespace DeveMazeGeneratorGui
             this.button44 = new System.Windows.Forms.Button();
             this.button46 = new System.Windows.Forms.Button();
             this.button47 = new System.Windows.Forms.Button();
+            this.button45 = new System.Windows.Forms.Button();
+            this.button48 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -828,7 +830,7 @@ namespace DeveMazeGeneratorGui
             // 
             // button46
             // 
-            this.button46.Location = new System.Drawing.Point(962, 574);
+            this.button46.Location = new System.Drawing.Point(965, 499);
             this.button46.Name = "button46";
             this.button46.Size = new System.Drawing.Size(132, 35);
             this.button46.TabIndex = 73;
@@ -838,7 +840,7 @@ namespace DeveMazeGeneratorGui
             // 
             // button47
             // 
-            this.button47.Location = new System.Drawing.Point(962, 527);
+            this.button47.Location = new System.Drawing.Point(965, 458);
             this.button47.Name = "button47";
             this.button47.Size = new System.Drawing.Size(132, 35);
             this.button47.TabIndex = 74;
@@ -846,11 +848,33 @@ namespace DeveMazeGeneratorGui
             this.button47.UseVisualStyleBackColor = true;
             this.button47.Click += new System.EventHandler(this.button47_Click);
             // 
+            // button45
+            // 
+            this.button45.Location = new System.Drawing.Point(965, 540);
+            this.button45.Name = "button45";
+            this.button45.Size = new System.Drawing.Size(132, 37);
+            this.button45.TabIndex = 75;
+            this.button45.Text = "Deluxe Save Chunks (TIFF)";
+            this.button45.UseVisualStyleBackColor = true;
+            this.button45.Click += new System.EventHandler(this.button45_Click);
+            // 
+            // button48
+            // 
+            this.button48.Location = new System.Drawing.Point(965, 580);
+            this.button48.Name = "button48";
+            this.button48.Size = new System.Drawing.Size(132, 43);
+            this.button48.TabIndex = 76;
+            this.button48.Text = "Deluxe Save Chunks (TIFF with ColorMap)";
+            this.button48.UseVisualStyleBackColor = true;
+            this.button48.Click += new System.EventHandler(this.button48_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1100, 724);
+            this.Controls.Add(this.button48);
+            this.Controls.Add(this.button45);
             this.Controls.Add(this.button47);
             this.Controls.Add(this.button46);
             this.Controls.Add(this.button44);
@@ -1002,6 +1026,8 @@ namespace DeveMazeGeneratorGui
         private System.Windows.Forms.Button button44;
         private System.Windows.Forms.Button button46;
         private System.Windows.Forms.Button button47;
+        private System.Windows.Forms.Button button45;
+        private System.Windows.Forms.Button button48;
     }
 }
 
