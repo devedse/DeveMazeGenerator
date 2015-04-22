@@ -21,6 +21,7 @@ namespace DeveMazeGenerator
     public partial class Maze
     {
         public static int LineChunks = 20000;
+        public static int LineChunkCount = 4;
 
         /// <summary>
         /// Saves the maze with a specified path
@@ -136,8 +137,15 @@ namespace DeveMazeGenerator
             }
             else if (mazeSaveFileType == MazeSaveFileType.Tif)
             {
-                //Currently dynamic paths are not supported for Tif
-                return false;
+                if (useTiles == false && useColorMap == false)
+                {
+                    SaveMazeAsImageDeluxeTiffWithDynamicallyGeneratedPath(fileName, dynamicallyGeneratedPath, lineSavingProgress);
+                }
+                else
+                {
+                    //No other modes are supported here
+                    return false;
+                }
             }
 
             return true;
