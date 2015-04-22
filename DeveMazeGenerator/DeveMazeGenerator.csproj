@@ -97,6 +97,7 @@
     <Compile Include="Maze.SavingDeluxe.cs" />
     <Compile Include="MazePoint.cs" />
     <Compile Include="MazePointPos.cs" />
+    <Compile Include="MazeSaveFileType.cs" />
     <Compile Include="MazeWall.cs" />
     <Compile Include="PathFinders\PathFinderDepthFirstSmartAndSmartMemory.cs" />
     <Compile Include="PathFinders\PathFinderDepthFirstSmartWithPos.cs" />
@@ -110,6 +111,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <Compile Include="Maze.Saving.cs" />
+    <Compile Include="Maze.SavingDeluxePng.cs" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

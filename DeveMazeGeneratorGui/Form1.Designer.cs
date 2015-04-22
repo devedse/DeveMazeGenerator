@@ -90,7 +90,6 @@ namespace DeveMazeGeneratorGui
             this.button35 = new System.Windows.Forms.Button();
             this.button36 = new System.Windows.Forms.Button();
             this.button37 = new System.Windows.Forms.Button();
-            this.button38 = new System.Windows.Forms.Button();
             this.label16 = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.button39 = new System.Windows.Forms.Button();
@@ -99,10 +98,12 @@ namespace DeveMazeGeneratorGui
             this.button42 = new System.Windows.Forms.Button();
             this.button43 = new System.Windows.Forms.Button();
             this.button44 = new System.Windows.Forms.Button();
-            this.button46 = new System.Windows.Forms.Button();
-            this.button47 = new System.Windows.Forms.Button();
-            this.button45 = new System.Windows.Forms.Button();
-            this.button48 = new System.Windows.Forms.Button();
+            this.comboBoxImageSaveType = new System.Windows.Forms.ComboBox();
+            this.label18 = new System.Windows.Forms.Label();
+            this.checkBoxUseTiles = new System.Windows.Forms.CheckBox();
+            this.checkBoxUseColorMap = new System.Windows.Forms.CheckBox();
+            this.buttonSaveMazeAsImageDeluxe = new System.Windows.Forms.Button();
+            this.label19 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // button1
@@ -173,9 +174,9 @@ namespace DeveMazeGeneratorGui
             // 
             this.listBox1.FormattingEnabled = true;
             this.listBox1.HorizontalScrollbar = true;
-            this.listBox1.Location = new System.Drawing.Point(315, 430);
+            this.listBox1.Location = new System.Drawing.Point(211, 441);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(482, 251);
+            this.listBox1.Size = new System.Drawing.Size(603, 251);
             this.listBox1.TabIndex = 10;
             // 
             // button11
@@ -210,7 +211,7 @@ namespace DeveMazeGeneratorGui
             // 
             // button14
             // 
-            this.button14.Location = new System.Drawing.Point(168, 487);
+            this.button14.Location = new System.Drawing.Point(10, 608);
             this.button14.Name = "button14";
             this.button14.Size = new System.Drawing.Size(141, 37);
             this.button14.TabIndex = 14;
@@ -220,7 +221,7 @@ namespace DeveMazeGeneratorGui
             // 
             // button15
             // 
-            this.button15.Location = new System.Drawing.Point(213, 580);
+            this.button15.Location = new System.Drawing.Point(480, 698);
             this.button15.Name = "button15";
             this.button15.Size = new System.Drawing.Size(75, 23);
             this.button15.TabIndex = 15;
@@ -302,7 +303,7 @@ namespace DeveMazeGeneratorGui
             this.button21.Location = new System.Drawing.Point(213, 410);
             this.button21.Margin = new System.Windows.Forms.Padding(2);
             this.button21.Name = "button21";
-            this.button21.Size = new System.Drawing.Size(95, 38);
+            this.button21.Size = new System.Drawing.Size(95, 26);
             this.button21.TabIndex = 23;
             this.button21.Text = "Png vs Bmp";
             this.button21.UseVisualStyleBackColor = true;
@@ -521,12 +522,13 @@ namespace DeveMazeGeneratorGui
             // 
             // button25
             // 
+            this.button25.BackColor = System.Drawing.Color.Aqua;
             this.button25.Location = new System.Drawing.Point(824, 71);
             this.button25.Name = "button25";
             this.button25.Size = new System.Drawing.Size(132, 40);
             this.button25.TabIndex = 40;
             this.button25.Text = "Mega terror maze (hybrid map)";
-            this.button25.UseVisualStyleBackColor = true;
+            this.button25.UseVisualStyleBackColor = false;
             this.button25.Click += new System.EventHandler(this.button25_Click);
             // 
             // button26
@@ -646,7 +648,7 @@ namespace DeveMazeGeneratorGui
             // label15
             // 
             this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(861, 13);
+            this.label15.Location = new System.Drawing.Point(839, 26);
             this.label15.Name = "label15";
             this.label15.Size = new System.Drawing.Size(30, 13);
             this.label15.TabIndex = 53;
@@ -655,14 +657,14 @@ namespace DeveMazeGeneratorGui
             // comboBox4
             // 
             this.comboBox4.FormattingEnabled = true;
-            this.comboBox4.Location = new System.Drawing.Point(824, 30);
+            this.comboBox4.Location = new System.Drawing.Point(826, 44);
             this.comboBox4.Name = "comboBox4";
             this.comboBox4.Size = new System.Drawing.Size(132, 21);
             this.comboBox4.TabIndex = 54;
             // 
             // button30
             // 
-            this.button30.Location = new System.Drawing.Point(827, 475);
+            this.button30.Location = new System.Drawing.Point(824, 475);
             this.button30.Name = "button30";
             this.button30.Size = new System.Drawing.Size(132, 44);
             this.button30.TabIndex = 55;
@@ -687,12 +689,12 @@ namespace DeveMazeGeneratorGui
             this.button32.Size = new System.Drawing.Size(132, 50);
             this.button32.TabIndex = 57;
             this.button32.Text = "Mega terror maze in memory (Smart Backtrack)";
-            this.button32.UseVisualStyleBackColor = true;
+            this.button32.UseVisualStyleBackColor = false;
             this.button32.Click += new System.EventHandler(this.button32_Click);
             // 
             // button33
             // 
-            this.button33.Location = new System.Drawing.Point(186, 530);
+            this.button33.Location = new System.Drawing.Point(12, 660);
             this.button33.Name = "button33";
             this.button33.Size = new System.Drawing.Size(123, 32);
             this.button33.TabIndex = 58;
@@ -740,16 +742,6 @@ namespace DeveMazeGeneratorGui
             this.button37.UseVisualStyleBackColor = true;
             this.button37.Click += new System.EventHandler(this.button37_Click);
             // 
-            // button38
-            // 
-            this.button38.Location = new System.Drawing.Point(824, 574);
-            this.button38.Name = "button38";
-            this.button38.Size = new System.Drawing.Size(132, 35);
-            this.button38.TabIndex = 63;
-            this.button38.Text = "Save this maze as image DELUXE (slow)";
-            this.button38.UseVisualStyleBackColor = true;
-            this.button38.Click += new System.EventHandler(this.button38_Click);
-            // 
             // label16
             // 
             this.label16.AutoSize = true;
@@ -780,7 +772,7 @@ namespace DeveMazeGeneratorGui
             // 
             // button40
             // 
-            this.button40.Location = new System.Drawing.Point(140, 609);
+            this.button40.Location = new System.Drawing.Point(574, 698);
             this.button40.Name = "button40";
             this.button40.Size = new System.Drawing.Size(169, 23);
             this.button40.TabIndex = 67;
@@ -790,22 +782,23 @@ namespace DeveMazeGeneratorGui
             // 
             // button41
             // 
-            this.button41.Location = new System.Drawing.Point(157, 638);
+            this.button41.Location = new System.Drawing.Point(13, 698);
             this.button41.Name = "button41";
-            this.button41.Size = new System.Drawing.Size(150, 23);
+            this.button41.Size = new System.Drawing.Size(165, 23);
             this.button41.TabIndex = 68;
-            this.button41.Text = "SmartMemDirectionsFind";
+            this.button41.Text = "SmartMemDirectionsFindTest";
             this.button41.UseVisualStyleBackColor = true;
             this.button41.Click += new System.EventHandler(this.button41_Click);
             // 
             // button42
             // 
+            this.button42.BackColor = System.Drawing.Color.Aqua;
             this.button42.Location = new System.Drawing.Point(824, 366);
             this.button42.Name = "button42";
             this.button42.Size = new System.Drawing.Size(127, 36);
             this.button42.TabIndex = 69;
             this.button42.Text = "Mega terror maze find directions only";
-            this.button42.UseVisualStyleBackColor = true;
+            this.button42.UseVisualStyleBackColor = false;
             this.button42.Click += new System.EventHandler(this.button42_Click);
             // 
             // button43
@@ -828,55 +821,74 @@ namespace DeveMazeGeneratorGui
             this.button44.UseVisualStyleBackColor = true;
             this.button44.Click += new System.EventHandler(this.button44_Click);
             // 
-            // button46
+            // comboBoxImageSaveType
             // 
-            this.button46.Location = new System.Drawing.Point(965, 499);
-            this.button46.Name = "button46";
-            this.button46.Size = new System.Drawing.Size(132, 35);
-            this.button46.TabIndex = 73;
-            this.button46.Text = "Deluxe Save (TIFF with ColorMap)";
-            this.button46.UseVisualStyleBackColor = true;
-            this.button46.Click += new System.EventHandler(this.button46_Click);
+            this.comboBoxImageSaveType.FormattingEnabled = true;
+            this.comboBoxImageSaveType.Location = new System.Drawing.Point(967, 435);
+            this.comboBoxImageSaveType.Name = "comboBoxImageSaveType";
+            this.comboBoxImageSaveType.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxImageSaveType.TabIndex = 77;
             // 
-            // button47
+            // label18
             // 
-            this.button47.Location = new System.Drawing.Point(965, 458);
-            this.button47.Name = "button47";
-            this.button47.Size = new System.Drawing.Size(132, 35);
-            this.button47.TabIndex = 74;
-            this.button47.Text = "Deluxe Save (TIFF)";
-            this.button47.UseVisualStyleBackColor = true;
-            this.button47.Click += new System.EventHandler(this.button47_Click);
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(967, 409);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(94, 13);
+            this.label18.TabIndex = 78;
+            this.label18.Text = "Image Save Type:";
             // 
-            // button45
+            // checkBoxUseTiles
             // 
-            this.button45.Location = new System.Drawing.Point(965, 540);
-            this.button45.Name = "button45";
-            this.button45.Size = new System.Drawing.Size(132, 37);
-            this.button45.TabIndex = 75;
-            this.button45.Text = "Deluxe Save Chunks (TIFF)";
-            this.button45.UseVisualStyleBackColor = true;
-            this.button45.Click += new System.EventHandler(this.button45_Click);
+            this.checkBoxUseTiles.AutoSize = true;
+            this.checkBoxUseTiles.Location = new System.Drawing.Point(970, 475);
+            this.checkBoxUseTiles.Name = "checkBoxUseTiles";
+            this.checkBoxUseTiles.Size = new System.Drawing.Size(70, 17);
+            this.checkBoxUseTiles.TabIndex = 79;
+            this.checkBoxUseTiles.Text = "Use Tiles";
+            this.checkBoxUseTiles.UseVisualStyleBackColor = true;
             // 
-            // button48
+            // checkBoxUseColorMap
             // 
-            this.button48.Location = new System.Drawing.Point(965, 580);
-            this.button48.Name = "button48";
-            this.button48.Size = new System.Drawing.Size(132, 43);
-            this.button48.TabIndex = 76;
-            this.button48.Text = "Deluxe Save Chunks (TIFF with ColorMap)";
-            this.button48.UseVisualStyleBackColor = true;
-            this.button48.Click += new System.EventHandler(this.button48_Click);
+            this.checkBoxUseColorMap.AutoSize = true;
+            this.checkBoxUseColorMap.Location = new System.Drawing.Point(970, 501);
+            this.checkBoxUseColorMap.Name = "checkBoxUseColorMap";
+            this.checkBoxUseColorMap.Size = new System.Drawing.Size(96, 17);
+            this.checkBoxUseColorMap.TabIndex = 80;
+            this.checkBoxUseColorMap.Text = "Use Color Map";
+            this.checkBoxUseColorMap.UseVisualStyleBackColor = true;
+            // 
+            // buttonSaveMazeAsImageDeluxe
+            // 
+            this.buttonSaveMazeAsImageDeluxe.BackColor = System.Drawing.Color.Aqua;
+            this.buttonSaveMazeAsImageDeluxe.Location = new System.Drawing.Point(970, 530);
+            this.buttonSaveMazeAsImageDeluxe.Name = "buttonSaveMazeAsImageDeluxe";
+            this.buttonSaveMazeAsImageDeluxe.Size = new System.Drawing.Size(118, 73);
+            this.buttonSaveMazeAsImageDeluxe.TabIndex = 81;
+            this.buttonSaveMazeAsImageDeluxe.Text = "Save this maze as image deluxe";
+            this.buttonSaveMazeAsImageDeluxe.UseVisualStyleBackColor = false;
+            this.buttonSaveMazeAsImageDeluxe.Click += new System.EventHandler(this.buttonSaveMazeAsImageDeluxe_Click);
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(874, -1);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(204, 13);
+            this.label19.TabIndex = 82;
+            this.label19.Text = "To create biggest mazes use blue buttons";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1100, 724);
-            this.Controls.Add(this.button48);
-            this.Controls.Add(this.button45);
-            this.Controls.Add(this.button47);
-            this.Controls.Add(this.button46);
+            this.Controls.Add(this.label19);
+            this.Controls.Add(this.buttonSaveMazeAsImageDeluxe);
+            this.Controls.Add(this.checkBoxUseColorMap);
+            this.Controls.Add(this.checkBoxUseTiles);
+            this.Controls.Add(this.label18);
+            this.Controls.Add(this.comboBoxImageSaveType);
             this.Controls.Add(this.button44);
             this.Controls.Add(this.button43);
             this.Controls.Add(this.button42);
@@ -885,7 +897,6 @@ namespace DeveMazeGeneratorGui
             this.Controls.Add(this.button39);
             this.Controls.Add(this.label17);
             this.Controls.Add(this.label16);
-            this.Controls.Add(this.button38);
             this.Controls.Add(this.button37);
             this.Controls.Add(this.button36);
             this.Controls.Add(this.button35);
@@ -1015,7 +1026,6 @@ namespace DeveMazeGeneratorGui
         private System.Windows.Forms.Button button35;
         private System.Windows.Forms.Button button36;
         private System.Windows.Forms.Button button37;
-        private System.Windows.Forms.Button button38;
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.Label label17;
         private System.Windows.Forms.Button button39;
@@ -1024,10 +1034,12 @@ namespace DeveMazeGeneratorGui
         private System.Windows.Forms.Button button42;
         private System.Windows.Forms.Button button43;
         private System.Windows.Forms.Button button44;
-        private System.Windows.Forms.Button button46;
-        private System.Windows.Forms.Button button47;
-        private System.Windows.Forms.Button button45;
-        private System.Windows.Forms.Button button48;
+        private System.Windows.Forms.ComboBox comboBoxImageSaveType;
+        private System.Windows.Forms.Label label18;
+        private System.Windows.Forms.CheckBox checkBoxUseTiles;
+        private System.Windows.Forms.CheckBox checkBoxUseColorMap;
+        private System.Windows.Forms.Button buttonSaveMazeAsImageDeluxe;
+        private System.Windows.Forms.Label label19;
     }
 }
 

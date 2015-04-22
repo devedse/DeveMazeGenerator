@@ -55,8 +55,14 @@ namespace DeveMazeGeneratorGui
             {
                 comboBox4.Items.Add(ConvertNumberToNiceString((long)Math.Pow(2, i)));
             }
-
             comboBox4.SelectedIndex = 9;
+
+            foreach (var saveType in Enum.GetValues(typeof(MazeSaveFileType)))
+            {
+                comboBoxImageSaveType.Items.Add(saveType);
+            }
+            comboBoxImageSaveType.SelectedIndex = 1;
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -1828,61 +1834,6 @@ namespace DeveMazeGeneratorGui
             Task.Run(() => aaaa(sizezzz));
         }
 
-        private void button38_Click(object sender, EventArgs e)
-        {
-            Task.Run(() =>
-            {
-                if (lastMegaTerrorMaze == null)
-                {
-                    DebugMSG("No Mega Terror Maze in memory, generate one first...");
-                    return;
-                }
-
-                DebugMSG("Saving Mega Terror Maze as image...");
-
-                var w = new Stopwatch();
-                w.Start();
-
-                try
-                {
-                    Action<int, int> callback = (cur, tot) =>
-                    {
-                        this.curMazeLineSaving = cur;
-                        this.mazeLinesToSave = tot;
-                    };
-
-                    if (lastMegaTerrorMazeQuatroDirections != null)
-                    {
-                        DebugMSG("Path with directions found, dynamically generating path and saving maze...");
-                        var ienumerablePathBasedOnDirections = PathFinderDepthFirstSmartAndSmartMemory.DeterminePathFromDirections(lastMegaTerrorMazeQuatroDirections, lastMegaTerrorMaze.InnerMap);
-                        lastMegaTerrorMaze.SaveMazeAsImageDeluxeWithDynamicallyGeneratedPath("megaterrormazedeluxe-png-directions-" + DateTime.Now.Ticks + ".png", ienumerablePathBasedOnDirections, callback);
-                    }
-                    else if (lastMegaTerrorMazePathPos != null)
-                    {
-                        DebugMSG("Path with pos found, saving maze with path...");
-                        lastMegaTerrorMaze.SaveMazeAsImageDeluxe("megaterrormazedeluxe-png-pathpos-" + DateTime.Now.Ticks + ".png", lastMegaTerrorMazePathPos, callback);
-                    }
-                    else if (lastMegaTerrorMazePath != null)
-                    {
-                        DebugMSG("Path found, saving maze with path...");
-                        lastMegaTerrorMaze.SaveMazeAsImageDeluxe("megaterrormazedeluxe-png-path-" + DateTime.Now.Ticks + ".png", lastMegaTerrorMazePath, callback);
-                    }
-                    else
-                    {
-                        DebugMSG("No path found, saving maze without path...");
-                        lastMegaTerrorMaze.SaveMazeAsImageDeluxe("megaterrormazedeluxe-png-" + DateTime.Now.Ticks + ".png", new List<MazePoint>(), callback);
-                    }
-
-                    DebugMSG("Saving time: " + w.Elapsed.TotalSeconds + " seconds.");
-                }
-                catch (Exception ex)
-                {
-                    DebugMSG("Exception occured while saving the maze (after " + w.Elapsed.TotalSeconds + " seconds):");
-                    DebugMSG(ex.ToString());
-                }
-            });
-        }
-
         private void button39_Click(object sender, EventArgs e)
         {
             Task.Run(() =>
@@ -2112,8 +2063,20 @@ namespace DeveMazeGeneratorGui
             });
         }
 
-        private void button47_Click(object sender, EventArgs e)
+
+        private void buttonSaveMazeAsImageDeluxe_Click(object sender, EventArgs e)
         {
+            var useTiles = checkBoxUseTiles.Checked;
+            var useColorMap = checkBoxUseColorMap.Checked;
+
+            var selectedImageSaveTypeValue = comboBoxImageSaveType.SelectedItem;
+            if (!(selectedImageSaveTypeValue is MazeSaveFileType))
+            {
+                DebugMSG("This is not a valid MazeSaveFileType... (Please not not manually edit this Combobox...)");
+                return;
+            }
+            var mazeSaveFileType = (MazeSaveFileType)selectedImageSaveTypeValue;
+
             Task.Run(() =>
             {
                 if (lastMegaTerrorMaze == null)
@@ -2122,7 +2085,7 @@ namespace DeveMazeGeneratorGui
                     return;
                 }
 
-                DebugMSG("Saving Mega Terror Maze as image (TIFF)...");
+                DebugMSG("Saving Mega Terror Maze as image...");
 
                 var w = new Stopwatch();
                 w.Start();
@@ -2135,194 +2098,44 @@ namespace DeveMazeGeneratorGui
                         this.mazeLinesToSave = tot;
                     };
 
-                    if (lastMegaTerrorMazeQuatroDirections != null)
-                    {
-                        //DebugMSG("Path with directions found, dynamically generating path and saving maze...");
-                        //var ienumerablePathBasedOnDirections = PathFinderDepthFirstSmartAndSmartMemory.DeterminePathFromDirections(lastMegaTerrorMazeQuatroDirections, lastMegaTerrorMaze.InnerMap);
-                        //lastMegaTerrorMaze.SaveMazeAsImageDeluxeWithDynamicallyGeneratedPath("megaterrormazedeluxe-tiff-directions-" + DateTime.Now.Ticks + ".tif", ienumerablePathBasedOnDirections, callback);
-                    }
-                    else if (lastMegaTerrorMazePathPos != null)
-                    {
-                        DebugMSG("Path with pos found, saving maze with path...");
-                        lastMegaTerrorMaze.SaveMazeAsImageDeluxeTiff("megaterrormazedeluxe-tiff-pathpos-" + DateTime.Now.Ticks + ".tif", lastMegaTerrorMazePathPos, callback);
-                    }
-                    else if (lastMegaTerrorMazePath != null)
-                    {
-                        DebugMSG("Path found, saving maze with path...");
-                        lastMegaTerrorMaze.SaveMazeAsImageDeluxeTiff("megaterrormazedeluxe-tiff-path-" + DateTime.Now.Ticks + ".tif", lastMegaTerrorMazePath, callback);
-                    }
-                    else
-                    {
-                        //DebugMSG("No path found, saving maze without path...");
-                        //lastMegaTerrorMaze.SaveMazeAsImageDeluxe("megaterrormazedeluxe-tiff-" + DateTime.Now.Ticks + ".tif", new List<MazePoint>(), callback);
-                    }
+                    var formattedFileName = string.Format("MegaTerrorMaze-{0}-{1}-{2}.{3}", "{0}", useTiles ? "WithTiles" : "NoTiles", useColorMap ? "WithColorMap" : "NoColorMap", mazeSaveFileType.ToString().ToLower());
 
-                    DebugMSG("Saving time: " + w.Elapsed.TotalSeconds + " seconds.");
-                }
-                catch (Exception ex)
-                {
-                    DebugMSG("Exception occured while saving the maze (after " + w.Elapsed.TotalSeconds + " seconds):");
-                    DebugMSG(ex.ToString());
-                }
-            });
-        }
-
-        private void button46_Click(object sender, EventArgs e)
-        {
-            Task.Run(() =>
-            {
-                if (lastMegaTerrorMaze == null)
-                {
-                    DebugMSG("No Mega Terror Maze in memory, generate one first...");
-                    return;
-                }
-
-                DebugMSG("Saving Mega Terror Maze as image (TIFF with ColorMap)...");
-
-                var w = new Stopwatch();
-                w.Start();
-
-                try
-                {
-                    Action<int, int> callback = (cur, tot) =>
-                    {
-                        this.curMazeLineSaving = cur;
-                        this.mazeLinesToSave = tot;
-                    };
+                    Boolean saveResult = false;
 
                     if (lastMegaTerrorMazeQuatroDirections != null)
                     {
-                        //DebugMSG("Path with directions found, dynamically generating path and saving maze...");
-                        //var ienumerablePathBasedOnDirections = PathFinderDepthFirstSmartAndSmartMemory.DeterminePathFromDirections(lastMegaTerrorMazeQuatroDirections, lastMegaTerrorMaze.InnerMap);
-                        //lastMegaTerrorMaze.SaveMazeAsImageDeluxeWithDynamicallyGeneratedPathWithColorMap("megaterrormazedeluxe-tiff-colormap-directions-" + DateTime.Now.Ticks + ".tif", ienumerablePathBasedOnDirections, callback);
+                        formattedFileName = string.Format(formattedFileName, "DynamicPath");
+                        DebugMSG("Path with directions found, dynamically generating path and saving maze... (" + formattedFileName + ")");
+                        var ienumerablePathBasedOnDirections = PathFinderDepthFirstSmartAndSmartMemory.DeterminePathFromDirections(lastMegaTerrorMazeQuatroDirections, lastMegaTerrorMaze.InnerMap);
+                        saveResult = lastMegaTerrorMaze.SaveMazeAsImageDeluxeWithDynamicallyGeneratedPath(mazeSaveFileType, formattedFileName, ienumerablePathBasedOnDirections, callback, useTiles, useColorMap);
                     }
                     else if (lastMegaTerrorMazePathPos != null)
                     {
-                        DebugMSG("Path with pos found, saving maze with path...");
-                        lastMegaTerrorMaze.SaveMazeAsImageDeluxeTiffWithColorMap("megaterrormazedeluxe-tiff-colormap-pathpos-" + DateTime.Now.Ticks + ".tif", lastMegaTerrorMazePathPos, callback);
+                        formattedFileName = string.Format(formattedFileName, "PathPos");
+                        DebugMSG("Path with pos found, saving maze with path... (" + formattedFileName + ")");
+                        saveResult = lastMegaTerrorMaze.SaveMazeAsImageDeluxe(mazeSaveFileType, formattedFileName, lastMegaTerrorMazePathPos, callback, useTiles, useColorMap);
                     }
                     else if (lastMegaTerrorMazePath != null)
                     {
-                        DebugMSG("Path found, saving maze with path...");
-                        lastMegaTerrorMaze.SaveMazeAsImageDeluxeTiffWithColorMap("megaterrormazedeluxe-tiff-colormap-path-" + DateTime.Now.Ticks + ".tif", lastMegaTerrorMazePath, callback);
+                        formattedFileName = string.Format(formattedFileName, "Path");
+                        DebugMSG("Path found, saving maze with path... (" + formattedFileName + ")");
+                        saveResult = lastMegaTerrorMaze.SaveMazeAsImageDeluxe(mazeSaveFileType, formattedFileName, lastMegaTerrorMazePath, callback, useTiles, useColorMap);
                     }
                     else
                     {
-                        //DebugMSG("No path found, saving maze without path...");
-                        //lastMegaTerrorMaze.SaveMazeAsImageDeluxeWithColorMap("megaterrormazedeluxe-tiff-colormap-" + DateTime.Now.Ticks + ".tif", new List<MazePoint>(), callback);
+                        formattedFileName = string.Format(formattedFileName, "NoPath");
+                        DebugMSG("No path found, saving maze without path... (" + formattedFileName + ")");
+                        saveResult = lastMegaTerrorMaze.SaveMazeAsImageDeluxe(mazeSaveFileType, formattedFileName, new List<MazePointPos>(), callback, useTiles, useColorMap);
                     }
 
-                    DebugMSG("Saving time: " + w.Elapsed.TotalSeconds + " seconds.");
-                }
-                catch (Exception ex)
-                {
-                    DebugMSG("Exception occured while saving the maze (after " + w.Elapsed.TotalSeconds + " seconds):");
-                    DebugMSG(ex.ToString());
-                }
-            });
-        }
-
-        private void button45_Click(object sender, EventArgs e)
-        {
-            Task.Run(() =>
-            {
-                if (lastMegaTerrorMaze == null)
-                {
-                    DebugMSG("No Mega Terror Maze in memory, generate one first...");
-                    return;
-                }
-
-                DebugMSG("Saving Mega Terror Maze as image (TIFF with Chunks)...");
-
-                var w = new Stopwatch();
-                w.Start();
-
-                try
-                {
-                    Action<int, int> callback = (cur, tot) =>
+                    if (saveResult)
                     {
-                        this.curMazeLineSaving = cur;
-                        this.mazeLinesToSave = tot;
-                    };
-
-                    if (lastMegaTerrorMazeQuatroDirections != null)
-                    {
-                        //DebugMSG("Path with directions found, dynamically generating path and saving maze...");
-                        //var ienumerablePathBasedOnDirections = PathFinderDepthFirstSmartAndSmartMemory.DeterminePathFromDirections(lastMegaTerrorMazeQuatroDirections, lastMegaTerrorMaze.InnerMap);
-                        //lastMegaTerrorMaze.SaveMazeAsImageDeluxeTiffWithChunksWithDynamicallyGeneratedPath("megaterrormazedeluxe-tiff-chunks-directions-" + DateTime.Now.Ticks + ".tif", ienumerablePathBasedOnDirections, callback);
-                    }
-                    else if (lastMegaTerrorMazePathPos != null)
-                    {
-                        DebugMSG("Path with pos found, saving maze with path...");
-                        lastMegaTerrorMaze.SaveMazeAsImageDeluxeTiffWithChunks("megaterrormazedeluxe-tiff-chunks-pathpos-" + DateTime.Now.Ticks + ".tif", lastMegaTerrorMazePathPos, callback);
-                    }
-                    else if (lastMegaTerrorMazePath != null)
-                    {
-                        DebugMSG("Path found, saving maze with path...");
-                        lastMegaTerrorMaze.SaveMazeAsImageDeluxeTiffWithChunks("megaterrormazedeluxe-tiff-chunks-path-" + DateTime.Now.Ticks + ".tif", lastMegaTerrorMazePath, callback);
+                        DebugMSG("Saving time: " + w.Elapsed.TotalSeconds + " seconds.");
                     }
                     else
                     {
-                        //DebugMSG("No path found, saving maze without path...");
-                        //lastMegaTerrorMaze.SaveMazeAsImageDeluxeTiffWithChunks("megaterrormazedeluxe-tiff-chunks-" + DateTime.Now.Ticks + ".tif", new List<MazePoint>(), callback);
+                        DebugMSG("This saving mode is not supported, please try something else :)");
                     }
-
-                    DebugMSG("Saving time: " + w.Elapsed.TotalSeconds + " seconds.");
-                }
-                catch (Exception ex)
-                {
-                    DebugMSG("Exception occured while saving the maze (after " + w.Elapsed.TotalSeconds + " seconds):");
-                    DebugMSG(ex.ToString());
-                }
-            });
-        }
-
-        private void button48_Click(object sender, EventArgs e)
-        {
-            Task.Run(() =>
-            {
-                if (lastMegaTerrorMaze == null)
-                {
-                    DebugMSG("No Mega Terror Maze in memory, generate one first...");
-                    return;
-                }
-
-                DebugMSG("Saving Mega Terror Maze as image (TIFF with Chunks and ColorMap)...");
-
-                var w = new Stopwatch();
-                w.Start();
-
-                try
-                {
-                    Action<int, int> callback = (cur, tot) =>
-                    {
-                        this.curMazeLineSaving = cur;
-                        this.mazeLinesToSave = tot;
-                    };
-
-                    if (lastMegaTerrorMazeQuatroDirections != null)
-                    {
-                        //DebugMSG("Path with directions found, dynamically generating path and saving maze...");
-                        //var ienumerablePathBasedOnDirections = PathFinderDepthFirstSmartAndSmartMemory.DeterminePathFromDirections(lastMegaTerrorMazeQuatroDirections, lastMegaTerrorMaze.InnerMap);
-                        //lastMegaTerrorMaze.SaveMazeAsImageDeluxeTiffWithChunksWithColorMapWithDynamicallyGeneratedPath("megaterrormazedeluxe-tiff-chunks-colormap-directions-" + DateTime.Now.Ticks + ".tif", ienumerablePathBasedOnDirections, callback);
-                    }
-                    else if (lastMegaTerrorMazePathPos != null)
-                    {
-                        //DebugMSG("Path with pos found, saving maze with path...");
-                        //lastMegaTerrorMaze.SaveMazeAsImageDeluxeTiffWithChunksWithColorMap("megaterrormazedeluxe-tiff-chunks-colormap-pathpos-" + DateTime.Now.Ticks + ".tif", lastMegaTerrorMazePathPos, callback);
-                    }
-                    else if (lastMegaTerrorMazePath != null)
-                    {
-                        //DebugMSG("Path found, saving maze with path...");
-                        //lastMegaTerrorMaze.SaveMazeAsImageDeluxeTiffWithChunksWithColorMap("megaterrormazedeluxe-tiff-chunks-colormap-path-" + DateTime.Now.Ticks + ".tif", lastMegaTerrorMazePath, callback);
-                    }
-                    else
-                    {
-                        //DebugMSG("No path found, saving maze without path...");
-                        //lastMegaTerrorMaze.SaveMazeAsImageDeluxeWithChunksWithColorMap("megaterrormazedeluxe-tiff-chunks-colormap" + DateTime.Now.Ticks + ".tif", new List<MazePoint>(), callback);
-                    }
-
-                    DebugMSG("Saving time: " + w.Elapsed.TotalSeconds + " seconds.");
                 }
                 catch (Exception ex)
                 {
