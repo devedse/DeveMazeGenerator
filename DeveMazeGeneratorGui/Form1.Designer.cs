@@ -689,7 +689,7 @@ namespace DeveMazeGeneratorGui
             this.button32.Size = new System.Drawing.Size(132, 50);
             this.button32.TabIndex = 57;
             this.button32.Text = "Mega terror maze in memory (Smart Backtrack)";
-            this.button32.UseVisualStyleBackColor = false;
+            this.button32.UseVisualStyleBackColor = true;
             this.button32.Click += new System.EventHandler(this.button32_Click);
             // 
             // button33
