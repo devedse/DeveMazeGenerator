@@ -715,7 +715,7 @@ namespace DeveMazeGeneratorGui
                                 }
                             }
                         }
-                        catch (Exception eee)
+                        catch (Exception)
                         {
                             theyarethesame = false;
                         }
@@ -990,15 +990,14 @@ namespace DeveMazeGeneratorGui
 
                 using (FileStream stream = new FileStream("mazeSavedAsWalls.txt", FileMode.Create))
                 {
-                    using (BinaryWriter writer = new BinaryWriter(stream))
+                    BinaryWriter writer = new BinaryWriter(stream);
+
+                    foreach (MazeWall w in walls)
                     {
-                        foreach (MazeWall w in walls)
-                        {
-                            writer.Write(w.xstart);
-                            writer.Write(w.xend);
-                            writer.Write(w.ystart);
-                            writer.Write(w.yend);
-                        }
+                        writer.Write(w.xstart);
+                        writer.Write(w.xend);
+                        writer.Write(w.ystart);
+                        writer.Write(w.yend);
                     }
                 }
 

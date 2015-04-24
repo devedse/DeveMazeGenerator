@@ -122,7 +122,6 @@ namespace DeveMazeGenerator
                 }
 
                 tif.FlushData();
-                tif.Close();
             }
         }
 
@@ -254,7 +253,6 @@ namespace DeveMazeGenerator
                 }
 
                 tif.FlushData();
-                tif.Close();
             }
         }
 
@@ -323,7 +321,6 @@ namespace DeveMazeGenerator
                 }
 
                 tif.FlushData();
-                tif.Close();
             }
         }
 
@@ -468,7 +465,6 @@ namespace DeveMazeGenerator
                 }
 
                 tif.FlushData();
-                tif.Close();
             }
         }
     }
