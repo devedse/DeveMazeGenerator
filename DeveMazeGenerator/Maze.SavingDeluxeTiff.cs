@@ -132,7 +132,7 @@ namespace DeveMazeGenerator
 
             //Should actually be Width -1 -1 but since we use the full Width it's only once -1
             //This will count the amount of tiles per line so if it's 15 Pixels we still want 2 tiles of 8
-            int tilesInWidth = (((this.Width - 1) / tileSize) + 1) * tileSize;
+            int tilesInWidth = (((this.Width - 1) / tileSize) + 1);
 
             pathPosjes.Sort((first, second) =>
             {
@@ -244,7 +244,7 @@ namespace DeveMazeGenerator
                         //var result = tif.WriteRawTile(tileNumber, color_ptr, tileSize * tileSize * 3);
                         //Result should not be -1
 
-                        lineSavingProgress(tileNumber * tileSize * tileSize, this.Height - 2);
+                        lineSavingProgress(Math.Min((tileNumber + 1) / tilesInWidth * tileSize, this.Height - 2), this.Height - 2);
 
                         tileNumber++;
                     }
@@ -334,7 +334,7 @@ namespace DeveMazeGenerator
 
             //Should actually be Width -1 -1 but since we use the full Width it's only once -1
             //This will count the amount of tiles per line so if it's 15 Pixels we still want 2 tiles of 8
-            int tilesInWidth = (((this.Width - 1) / tileSize) + 1) * tileSize;
+            int tilesInWidth = (((this.Width - 1) / tileSize) + 1);
 
 
 
@@ -455,7 +455,7 @@ namespace DeveMazeGenerator
                             //var result = tif.WriteRawTile(tileNumber, color_ptr, tileSize * tileSize * 3);
                             //Result should not be -1
 
-                            lineSavingProgress(tileNumber * tileSize * tileSize, this.Height - 2);
+                            lineSavingProgress(Math.Min((tileNumber + 1) / tilesInWidth * tileSize, this.Height - 2), this.Height - 2);
 
                             tileNumber++;
                         }
