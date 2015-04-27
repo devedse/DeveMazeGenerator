@@ -244,7 +244,7 @@ namespace DeveMazeGenerator
                         //var result = tif.WriteRawTile(tileNumber, color_ptr, tileSize * tileSize * 3);
                         //Result should not be -1
 
-                        lineSavingProgress(Math.Min((tileNumber + 1) / tilesInWidth * tileSize, this.Height - 2), this.Height - 2);
+                        lineSavingProgress((int)Math.Min((tileNumber + 1L) * tileSize / tilesInWidth, this.Height - 2), this.Height - 2);
 
                         tileNumber++;
                     }
@@ -455,7 +455,7 @@ namespace DeveMazeGenerator
                             //var result = tif.WriteRawTile(tileNumber, color_ptr, tileSize * tileSize * 3);
                             //Result should not be -1
 
-                            lineSavingProgress(Math.Min((tileNumber + 1) / tilesInWidth * tileSize, this.Height - 2), this.Height - 2);
+                            lineSavingProgress((int)Math.Min((tileNumber + 1L) * tileSize / tilesInWidth, this.Height - 2), this.Height - 2);
 
                             tileNumber++;
                         }
