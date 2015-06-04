@@ -441,14 +441,15 @@ namespace DeveMazeGeneratorGui
 
         public void DebugMSG(String str)
         {
+            str = DateTime.Now.ToLongTimeString() + ":    " + str;
+
             lock (debugMsgWriter)
             {
                 debugMsgWriter.WriteLine(str);
                 debugMsgWriter.Flush();
             }
             listBox1.Invoke(new Action(() =>
-            {
-                str = DateTime.Now.ToLongTimeString() + ":    " + str;
+            {                
                 listBox1.Items.Insert(0, str);
             }));
         }
@@ -671,6 +672,8 @@ namespace DeveMazeGeneratorGui
 
         private void button15_Click(object sender, EventArgs e)
         {
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
             GC.Collect();
         }
 
@@ -1526,9 +1529,10 @@ namespace DeveMazeGeneratorGui
 
         private void button25_Click(object sender, EventArgs e)
         {
-            int size = int.Parse(comboBox4.SelectedItem.ToString().Replace(".", ""));
+            int sizezzz = int.Parse(comboBox4.SelectedItem.ToString().Replace(".", ""));
 
-            Task.Run(new Action(() =>
+            //Passing an int into the action like this is faster because else it will get stuck on the heap/stack or w/e I guess :o
+            var actionToRun = new Action<int>((size) =>
             {
                 Algorithm curalg = new AlgorithmBacktrackSmartMemory();
                 Stopwatch w = new Stopwatch();
@@ -1547,7 +1551,10 @@ namespace DeveMazeGeneratorGui
                 });
                 w.Stop();
                 DebugMSG("Generating time: " + w.Elapsed.TotalSeconds);
-            }));
+                TrimAndGCCollect();
+            });
+
+            Task.Run(() => { actionToRun(sizezzz); TrimAndGCCollect(); });
         }
 
         private void button29_Click(object sender, EventArgs e)
@@ -1590,7 +1597,7 @@ namespace DeveMazeGeneratorGui
                 DebugMSG("Generating time: " + w.Elapsed.TotalSeconds);
             });
 
-            Task.Run(() => aaaa(sizezzz));
+            Task.Run(() => { aaaa(sizezzz); TrimAndGCCollect(); });
         }
 
         private void button31_Click(object sender, EventArgs e)
@@ -1619,7 +1626,7 @@ namespace DeveMazeGeneratorGui
                 DebugMSG("Generating time: " + w.Elapsed.TotalSeconds);
             });
 
-            Task.Run(() => aaaa(sizezzz));
+            Task.Run(() => { aaaa(sizezzz); TrimAndGCCollect(); });
         }
 
         private void button33_Click(object sender, EventArgs e)
@@ -1772,6 +1779,8 @@ namespace DeveMazeGeneratorGui
                 lastMegaTerrorMazePath = PathFinderDepthFirstSmart.GoFind(lastMegaTerrorMaze.InnerMap, null);
                 w.Stop();
                 DebugMSG("Path found in " + w.Elapsed.TotalSeconds + " seconds, length: " + lastMegaTerrorMazePath.Count);
+
+                TrimAndGCCollect();
             });
         }
 
@@ -1839,7 +1848,7 @@ namespace DeveMazeGeneratorGui
                 DebugMSG("Generating time: " + w.Elapsed.TotalSeconds);
             });
 
-            Task.Run(() => aaaa(sizezzz));
+            Task.Run(() => { aaaa(sizezzz); TrimAndGCCollect(); });
         }
 
         private void button39_Click(object sender, EventArgs e)
@@ -1858,10 +1867,17 @@ namespace DeveMazeGeneratorGui
                 lastMegaTerrorMazePathPos = PathFinderDepthFirstSmartWithPos.GoFind(lastMegaTerrorMaze.InnerMap, null);
                 w.Stop();
                 DebugMSG("Path found in " + w.Elapsed.TotalSeconds + " seconds, length: " + lastMegaTerrorMazePathPos.Count);
+
+                TrimAndGCCollect();
             });
         }
 
         private void button40_Click(object sender, EventArgs e)
+        {
+            TrimAndGCCollect();
+        }
+
+        private void TrimAndGCCollect()
         {
             if (lastMegaTerrorMazePath != null)
             {
@@ -1871,6 +1887,8 @@ namespace DeveMazeGeneratorGui
             {
                 lastMegaTerrorMazePathPos.TrimExcess();
             }
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
             GC.Collect();
         }
 
@@ -2014,6 +2032,7 @@ namespace DeveMazeGeneratorGui
                 w.Stop();
                 DebugMSG("Directions found in " + w.Elapsed.TotalSeconds + " seconds, length: " + lastMegaTerrorMazeQuatroDirections.Count);
                 //PrintQuatroList(lastMegaTerrorMazeQuatroDirections);
+                TrimAndGCCollect();
             });
         }
 
