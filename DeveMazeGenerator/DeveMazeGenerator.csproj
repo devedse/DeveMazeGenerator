@@ -58,6 +58,7 @@
     <Reference Include="BitMiracle.LibTiff.NET">
       <HintPath>..\packages\BitMiracle.LibTiff.NET.2.4.508.0\lib\net20\BitMiracle.LibTiff.NET.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />

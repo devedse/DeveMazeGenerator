@@ -333,11 +333,11 @@ namespace DeveMazeGenerator
             }
 
 
-            const int tileSize = HybridInnerMap.GridSize;
+            const int tifTileSize = HybridInnerMap.GridSize;
 
             //Should actually be Width -1 -1 but since we use the full Width it's only once -1
             //This will count the amount of tiles per line so if it's 15 Pixels we still want 2 tiles of 8
-            int tilesInWidth = (((this.Width - 1) / tileSize) + 1);
+            int tilesInWidth = (((this.Width - 1) / tifTileSize) + 1);
 
 
 
@@ -352,12 +352,12 @@ namespace DeveMazeGenerator
                 //tif.SetField(TiffTag.ROWSPERSTRIP, 1);
                 tif.SetField(TiffTag.COMPRESSION, Compression.LZW);
 
-                tif.SetField(TiffTag.TILEWIDTH, tileSize);
-                tif.SetField(TiffTag.TILELENGTH, tileSize);
+                tif.SetField(TiffTag.TILEWIDTH, tifTileSize);
+                tif.SetField(TiffTag.TILELENGTH, tifTileSize);
 
-                byte[] color_ptr = new byte[tileSize * tileSize * 3];
+                byte[] color_ptr = new byte[tifTileSize * tifTileSize * 3];
 
-                int stepsPerLoop = tileSize * Maze.LineChunkCount;
+                int stepsPerLoop = tifTileSize * Maze.LineChunkCount;
 
                 int tileNumber = 0;
                 int partNumber = 0;
@@ -370,11 +370,11 @@ namespace DeveMazeGenerator
                     var pathPointsHere = pathPosjes.Where(t => t.Y >= yChunkStart && t.Y < yChunkEnd).ToList();
                     pathPointsHere.Sort((first, second) =>
                     {
-                        int firstXTile = first.X / tileSize;
-                        int firstYTile = first.Y / tileSize;
+                        int firstXTile = first.X / tifTileSize;
+                        int firstYTile = first.Y / tifTileSize;
 
-                        int secondXTile = second.X / tileSize;
-                        int secondYTile = second.Y / tileSize;
+                        int secondXTile = second.X / tifTileSize;
+                        int secondYTile = second.Y / tifTileSize;
 
                         if (firstYTile != secondYTile)
                         {
@@ -385,11 +385,11 @@ namespace DeveMazeGenerator
                             return firstXTile - secondXTile;
                         }
 
-                        int firstXInTile = first.X % tileSize;
-                        int firstYInTile = first.Y % tileSize;
+                        int firstXInTile = first.X % tifTileSize;
+                        int firstYInTile = first.Y % tifTileSize;
 
-                        int secondXInTile = second.X % tileSize;
-                        int secondYInTile = second.Y % tileSize;
+                        int secondXInTile = second.X % tifTileSize;
+                        int secondYInTile = second.Y % tifTileSize;
 
                         if (firstYInTile == secondYInTile)
                         {
@@ -403,17 +403,17 @@ namespace DeveMazeGenerator
 
                     int curpos = 0;
 
-                    for (int startY = yChunkStart; startY < yChunkEnd; startY += tileSize)
+                    for (int startY = yChunkStart; startY < yChunkEnd; startY += tifTileSize)
                     {
 
-                        for (int startX = 0; startX < this.Width - 1; startX += tileSize)
+                        for (int startX = 0; startX < this.Width - 1; startX += tifTileSize)
                         {
-                            int xMax = Math.Min(this.Width - 1 - startX, tileSize);
-                            int yMax = Math.Min(this.Height - 1 - startY, tileSize);
+                            int xMax = Math.Min(this.Width - 1 - startX, tifTileSize);
+                            int yMax = Math.Min(this.Height - 1 - startY, tifTileSize);
 
-                            for (int y = startY, othery = 0; othery < tileSize; y++, othery++)
+                            for (int y = startY, othery = 0; othery < tifTileSize; y++, othery++)
                             {
-                                for (int x = startX, otherx = 0; otherx < tileSize; x++, otherx++)
+                                for (int x = startX, otherx = 0; otherx < tifTileSize; x++, otherx++)
                                 {
                                     byte r = 0;
                                     byte g = 0;
@@ -450,7 +450,7 @@ namespace DeveMazeGenerator
                                             b = 255;
                                         }
                                     }
-                                    int startPos = othery * tileSize * 3 + otherx * 3;
+                                    int startPos = othery * tifTileSize * 3 + otherx * 3;
 
                                     color_ptr[startPos + 0] = r;
                                     color_ptr[startPos + 1] = g;
@@ -459,12 +459,269 @@ namespace DeveMazeGenerator
 
                             }
 
-                            var result = tif.WriteEncodedTile(tileNumber, color_ptr, tileSize * tileSize * 3);
+                            var result = tif.WriteEncodedTile(tileNumber, color_ptr, tifTileSize * tifTileSize * 3);
                             //var result = tif.WriteTile(color_ptr, startX / tileSize, startY / tileSize, 0, 0);
                             //var result = tif.WriteRawTile(tileNumber, color_ptr, tileSize * tileSize * 3);
                             //Result should not be -1
 
-                            lineSavingProgress((int)Math.Min((tileNumber + 1L) * tileSize / tilesInWidth, this.Height - 2), this.Height - 2);
+                            lineSavingProgress((int)Math.Min((tileNumber + 1L) * tifTileSize / tilesInWidth, this.Height - 2), this.Height - 2);
+
+                            tileNumber++;
+                        }
+
+
+                    }
+
+                    //Do some forced garbage collection since we're finished with this loop
+                    pathPointsHere = null;
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
+                    GC.Collect();
+                }
+
+
+                tif.FlushData();
+            }
+        }
+
+
+        /// <summary>
+        /// This method performs a preanalysis on the path to make sure there's no super high memory usage for a certain area
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="pathPosjes"></param>
+        /// <param name="lineSavingProgress"></param>
+        /// <param name="debugMessageCallback"></param>
+        private void SaveMazeAsImageDeluxeTiffWithDynamicallyGeneratedPathWithAnalysis(String fileName, IEnumerable<MazePointPos> pathPosjes, Action<int, int> lineSavingProgress, Action<string> debugMessageCallback = null)
+        {
+            if (debugMessageCallback == null)
+            {
+                debugMessageCallback = (x) => { };
+            }
+
+            debugMessageCallback("Performing path analysis...");
+
+            var pathPointsPerRow = new int[this.Height];
+            long totalPathLength = 0;
+
+            for (int i = 0; i < this.Height; i++)
+            {
+                pathPointsPerRow[i] = 0;
+            }
+
+            foreach (var pathPos in pathPosjes)
+            {
+                pathPointsPerRow[pathPos.Y]++;
+                totalPathLength++;
+            }
+
+            debugMessageCallback("Path analysis completed. Total path length: " + totalPathLength);
+
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
+            GC.Collect();
+
+            var compinfo = new Microsoft.VisualBasic.Devices.ComputerInfo();
+            var memoryFree = compinfo.AvailablePhysicalMemory;
+            debugMessageCallback(string.Format("Memory free: {0}mb", memoryFree / 1024 / 1024));
+            memoryFree = (ulong)(memoryFree * 0.7);
+            debugMessageCallback(string.Format("Setting max usage to 70% of this: {0}mb", memoryFree / 1024 / 1024));
+
+            debugMessageCallback("Determining desired rows to generate each path cycle...");
+            int rowsPerPathDeterminingCycle = 8;
+            while (true)
+            {
+                int newTestSize = rowsPerPathDeterminingCycle * 2;
+                long maxSize = 0;
+                for (int i = 0; i < this.Height; i += rowsPerPathDeterminingCycle)
+                {
+                    long curSize = 0;
+                    for (int y = i; y < Math.Min(this.Height, y + rowsPerPathDeterminingCycle); y++)
+                    {
+                        curSize += pathPointsPerRow[y];
+                    }
+
+                    maxSize = Math.Max(curSize, maxSize);
+                }
+
+                if (maxSize > int.MaxValue)
+                {
+                    debugMessageCallback(string.Format("We would have to create a list bigger then int.MaxValue with RowsPerCycle '{0}', so we take '{1}'", newTestSize, rowsPerPathDeterminingCycle));
+                    break;
+                }
+
+                var expectedMemoryUsage = maxSize * 9; //9 bytes per path pos
+                if ((ulong)expectedMemoryUsage > memoryFree)
+                {
+                    debugMessageCallback(string.Format("Memory would be full with RowsPerCycle '{0}', so we take '{1}'", newTestSize, rowsPerPathDeterminingCycle));
+                    break;
+                }
+
+                rowsPerPathDeterminingCycle = newTestSize;
+
+                if (rowsPerPathDeterminingCycle >= this.Height)
+                {
+                    debugMessageCallback(string.Format("This RowsPerCycle is chosen because it fits in memory and we can do the complete maze in it: '{0}'", rowsPerPathDeterminingCycle));
+                    break;
+                }
+            }
+
+
+
+            int tifTileSize = HybridInnerMap.GridSize;
+
+            if (rowsPerPathDeterminingCycle < tifTileSize)
+            {
+                debugMessageCallback(string.Format("We can't work with the default tilesize of '{0}' so we have to scale it back to RowsPerCycle: '{1}'", tifTileSize, rowsPerPathDeterminingCycle));
+                tifTileSize = rowsPerPathDeterminingCycle;
+            }
+
+            debugMessageCallback("Starting generation of Maze Path and saving maze...");
+
+            //Should actually be Width -1 -1 but since we use the full Width it's only once -1
+            //This will count the amount of tiles per line so if it's 15 Pixels we still want 2 tiles of 8
+            int tilesInWidth = (((this.Width - 1) / tifTileSize) + 1);
+
+
+
+            using (var tif = Tiff.Open(fileName, "w"))
+            {
+                tif.SetField(TiffTag.IMAGEWIDTH, this.Width - 1);
+                tif.SetField(TiffTag.IMAGELENGTH, this.Height - 1);
+                tif.SetField(TiffTag.BITSPERSAMPLE, 8);
+                tif.SetField(TiffTag.SAMPLESPERPIXEL, 3);
+                tif.SetField(TiffTag.PHOTOMETRIC, Photometric.RGB);
+                tif.SetField(TiffTag.PLANARCONFIG, PlanarConfig.CONTIG);
+                //tif.SetField(TiffTag.ROWSPERSTRIP, 1);
+                tif.SetField(TiffTag.COMPRESSION, Compression.LZW);
+
+                tif.SetField(TiffTag.TILEWIDTH, tifTileSize);
+                tif.SetField(TiffTag.TILELENGTH, tifTileSize);
+
+                byte[] color_ptr = new byte[tifTileSize * tifTileSize * 3];
+
+                int stepsPerLoop = rowsPerPathDeterminingCycle;
+
+                int tileNumber = 0;
+                int partNumber = 0;
+                for (int yChunkStart = 0; yChunkStart < this.Height - 1; yChunkStart += stepsPerLoop)
+                {
+                    var yChunkEnd = Math.Min(yChunkStart + stepsPerLoop, this.Height - 1);
+
+                    var w = Stopwatch.StartNew();
+
+                    //We don't use a ToList here because we do actually know the expected list size beforehand. This way we make sure we don't have to do any internal Array Resizing.
+                    var expectedPathCount = pathPointsPerRow.Skip(yChunkStart).Take(yChunkEnd - yChunkStart).Sum();
+                    var pathPointsHere = new List<MazePointPos>(expectedPathCount);
+                    int currentPathPosPoint = 0;
+                    foreach (var pathPos in pathPosjes.Where(t => t.Y >= yChunkStart && t.Y < yChunkEnd))
+                    {
+                        pathPointsHere.Add(pathPos);
+                        currentPathPosPoint++;
+                    }
+
+                    if (pathPointsHere.Count != expectedPathCount)
+                    {
+                        debugMessageCallback(string.Format("Warning: Something strange is happening where the actual path point count '{0}' is not equal to the expected path point count '{1}' (Maze will still save correctly but it uses more memory then expected)", pathPointsHere.Count, expectedPathCount));
+                    }
+
+                    pathPointsHere.Sort((first, second) =>
+                    {
+                        int firstXTile = first.X / tifTileSize;
+                        int firstYTile = first.Y / tifTileSize;
+
+                        int secondXTile = second.X / tifTileSize;
+                        int secondYTile = second.Y / tifTileSize;
+
+                        if (firstYTile != secondYTile)
+                        {
+                            return firstYTile - secondYTile;
+                        }
+                        if (firstXTile != secondXTile)
+                        {
+                            return firstXTile - secondXTile;
+                        }
+
+                        int firstXInTile = first.X % tifTileSize;
+                        int firstYInTile = first.Y % tifTileSize;
+
+                        int secondXInTile = second.X % tifTileSize;
+                        int secondYInTile = second.Y % tifTileSize;
+
+                        if (firstYInTile == secondYInTile)
+                        {
+                            return firstXInTile - secondXInTile;
+                        }
+                        return firstYInTile - secondYInTile;
+                    });
+
+                    debugMessageCallback(string.Format("{0}: YChunkStart: {1}, YChunkEnd: {2}, Count: {3}, Time to generate this part: {4} sec, Size: {5}mb", partNumber, yChunkStart, yChunkEnd, pathPointsHere.Count, Math.Round(w.Elapsed.TotalSeconds, 2), Math.Round(pathPointsHere.Count * 9.0 / 1024.0 / 1024.0, 3)));
+                    partNumber++;
+
+                    int curpos = 0;
+
+                    for (int startY = yChunkStart; startY < yChunkEnd; startY += tifTileSize)
+                    {
+
+                        for (int startX = 0; startX < this.Width - 1; startX += tifTileSize)
+                        {
+                            int xMax = Math.Min(this.Width - 1 - startX, tifTileSize);
+                            int yMax = Math.Min(this.Height - 1 - startY, tifTileSize);
+
+                            for (int y = startY, othery = 0; othery < tifTileSize; y++, othery++)
+                            {
+                                for (int x = startX, otherx = 0; otherx < tifTileSize; x++, otherx++)
+                                {
+                                    byte r = 0;
+                                    byte g = 0;
+                                    byte b = 0;
+                                    if (otherx >= xMax || othery >= yMax)
+                                    {
+                                        //Not sure if needed but I'd like to ensure that any additional bytes
+                                        //written to the image are 0.
+                                    }
+                                    else
+                                    {
+                                        MazePointPos curPathPos;
+                                        if (curpos < pathPointsHere.Count)
+                                        {
+                                            curPathPos = pathPointsHere[curpos];
+                                            if (curPathPos.X == x && curPathPos.Y == y)
+                                            {
+                                                r = curPathPos.RelativePos;
+                                                g = (byte)(255 - curPathPos.RelativePos);
+                                                b = 0;
+                                                curpos++;
+                                            }
+                                            else if (this.innerMap[x, y])
+                                            {
+                                                r = 255;
+                                                g = 255;
+                                                b = 255;
+                                            }
+                                        }
+                                        else if (this.innerMap[x, y])
+                                        {
+                                            r = 255;
+                                            g = 255;
+                                            b = 255;
+                                        }
+                                    }
+                                    int startPos = othery * tifTileSize * 3 + otherx * 3;
+
+                                    color_ptr[startPos + 0] = r;
+                                    color_ptr[startPos + 1] = g;
+                                    color_ptr[startPos + 2] = b;
+                                }
+
+                            }
+
+                            var result = tif.WriteEncodedTile(tileNumber, color_ptr, tifTileSize * tifTileSize * 3);
+                            //var result = tif.WriteTile(color_ptr, startX / tileSize, startY / tileSize, 0, 0);
+                            //var result = tif.WriteRawTile(tileNumber, color_ptr, tileSize * tileSize * 3);
+                            //Result should not be -1
+
+                            lineSavingProgress((int)Math.Min((tileNumber + 1L) * tifTileSize / tilesInWidth, this.Height - 2), this.Height - 2);
 
                             tileNumber++;
                         }

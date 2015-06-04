@@ -807,7 +807,7 @@ namespace DeveMazeGeneratorGui
             this.button43.Name = "button43";
             this.button43.Size = new System.Drawing.Size(109, 23);
             this.button43.TabIndex = 70;
-            this.button43.Text = "TestDirections";
+            this.button43.Text = "Count Directions";
             this.button43.UseVisualStyleBackColor = true;
             this.button43.Click += new System.EventHandler(this.button43_Click);
             // 

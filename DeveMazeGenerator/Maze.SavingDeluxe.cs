@@ -141,7 +141,7 @@ namespace DeveMazeGenerator
             {
                 if (useTiles == false && useColorMap == false)
                 {
-                    SaveMazeAsImageDeluxeTiffWithDynamicallyGeneratedPath(fileName, dynamicallyGeneratedPath, lineSavingProgress, debugMessageCallback);
+                    SaveMazeAsImageDeluxeTiffWithDynamicallyGeneratedPathWithAnalysis(fileName, dynamicallyGeneratedPath, lineSavingProgress, debugMessageCallback);
                 }
                 else
                 {
