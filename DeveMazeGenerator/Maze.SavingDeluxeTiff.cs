@@ -526,7 +526,7 @@ namespace DeveMazeGenerator
 
             debugMessageCallback(string.Format("Memory free: {0}mb", memoryFree / 1024 / 1024));
             memoryFree = (ulong)(memoryFree * 0.4);
-            debugMessageCallback(string.Format("Setting max usage to 70% of this: {0}mb", memoryFree / 1024 / 1024));
+            debugMessageCallback(string.Format("Setting max usage to 40% of this: {0}mb", memoryFree / 1024 / 1024));
 
             debugMessageCallback("Determining desired rows to generate each path cycle...");
             int rowsPerPathDeterminingCycle = FindTheMinimalRowsToWrite(debugMessageCallback, pathPointsPerRow, memoryFree);
