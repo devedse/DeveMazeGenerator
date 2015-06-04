@@ -110,13 +110,15 @@ namespace DeveMazeGenerator
         /// Saves the maze with a specified path
         /// Note: This is the method that should be used together with the PathFinderDepthFirstSmartAndSmartMemory.DeterminePathFromDirections method
         /// </summary>
+        /// <param name="mazeSaveFileType">What format to save the maze in. Tif is currently the best to choose</param>
         /// <param name="fileName">The filename of the file</param>
         /// <param name="dynamicallyGeneratedPath">The dynamically generated path</param>
         /// <param name="lineSavingProgress">An action that will be called to obtain the status of the saving.</param>
         /// <param name="useTiles">Wether to save the maze with tiles (Might be faster) (Only works for TIFF)</param>
         /// <param name="useColorMap">Wether to save the maze ColorMap (Is faster and uses less disk space) (Only works for TIFF) (Note: Apparently GigaPan does not support this)</param>
+        /// <param name="debugMessageCallback">Some more advanced saving algorithms also return some debug messages, (e.g. Tif)</param>
         /// <returns>Boolean wether this mode is supported or not</returns>
-        public bool SaveMazeAsImageDeluxeWithDynamicallyGeneratedPath(MazeSaveFileType mazeSaveFileType, String fileName, IEnumerable<MazePointPos> dynamicallyGeneratedPath, Action<int, int> lineSavingProgress = null, Boolean useTiles = false, Boolean useColorMap = false)
+        public bool SaveMazeAsImageDeluxeWithDynamicallyGeneratedPath(MazeSaveFileType mazeSaveFileType, String fileName, IEnumerable<MazePointPos> dynamicallyGeneratedPath, Action<int, int> lineSavingProgress = null, Boolean useTiles = false, Boolean useColorMap = false, Action<string> debugMessageCallback = null)
         {
             if (lineSavingProgress == null)
             {
@@ -139,7 +141,7 @@ namespace DeveMazeGenerator
             {
                 if (useTiles == false && useColorMap == false)
                 {
-                    SaveMazeAsImageDeluxeTiffWithDynamicallyGeneratedPath(fileName, dynamicallyGeneratedPath, lineSavingProgress);
+                    SaveMazeAsImageDeluxeTiffWithDynamicallyGeneratedPath(fileName, dynamicallyGeneratedPath, lineSavingProgress, debugMessageCallback);
                 }
                 else
                 {

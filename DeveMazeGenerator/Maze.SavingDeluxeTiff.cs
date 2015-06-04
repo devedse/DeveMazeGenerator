@@ -325,9 +325,12 @@ namespace DeveMazeGenerator
         }
 
 
-        private void SaveMazeAsImageDeluxeTiffWithDynamicallyGeneratedPath(String fileName, IEnumerable<MazePointPos> pathPosjes, Action<int, int> lineSavingProgress)
+        private void SaveMazeAsImageDeluxeTiffWithDynamicallyGeneratedPath(String fileName, IEnumerable<MazePointPos> pathPosjes, Action<int, int> lineSavingProgress, Action<string> debugMessageCallback = null)
         {
-
+            if (debugMessageCallback == null)
+            {
+                debugMessageCallback = (x) => { };
+            }
 
 
             const int tileSize = HybridInnerMap.GridSize;
@@ -357,9 +360,12 @@ namespace DeveMazeGenerator
                 int stepsPerLoop = tileSize * Maze.LineChunkCount;
 
                 int tileNumber = 0;
+                int partNumber = 0;
                 for (int yChunkStart = 0; yChunkStart < this.Height - 1; yChunkStart += stepsPerLoop)
                 {
                     var yChunkEnd = Math.Min(yChunkStart + stepsPerLoop, this.Height - 1);
+
+                    var w = Stopwatch.StartNew();
 
                     var pathPointsHere = pathPosjes.Where(t => t.Y >= yChunkStart && t.Y < yChunkEnd).ToList();
                     pathPointsHere.Sort((first, second) =>
@@ -391,6 +397,9 @@ namespace DeveMazeGenerator
                         }
                         return firstYInTile - secondYInTile;
                     });
+
+                    debugMessageCallback(string.Format("{0}: YChunkStart: {1}, YChunkEnd: {2}, Count: {3}, Time to generate this part: {4} sec, Size: {5}mb", partNumber, yChunkStart, yChunkEnd, pathPointsHere.Count, Math.Round(w.Elapsed.TotalSeconds, 2), Math.Round(pathPointsHere.Count * 9.0 / 1024.0 / 1024.0, 3)));
+                    partNumber++;
 
                     int curpos = 0;
 
@@ -462,7 +471,14 @@ namespace DeveMazeGenerator
 
 
                     }
+
+                    //Do some forced garbage collection since we're finished with this loop
+                    pathPointsHere = null;
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
+                    GC.Collect();
                 }
+
 
                 tif.FlushData();
             }

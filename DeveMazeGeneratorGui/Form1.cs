@@ -43,8 +43,12 @@ namespace DeveMazeGeneratorGui
         private int mazeLinesToSave = 0;
         private int curMazeLineSaving = 0;
 
+        private StreamWriter debugMsgWriter;
+
         public Form1()
         {
+            debugMsgWriter = new StreamWriter(new FileStream("debugoutput.txt", FileMode.Create, FileAccess.Write, FileShare.Read)); //Autoflush is false because then it writes after every char. We do it every line.
+
             InitializeComponent();
             comboBox1.SelectedIndex = 1;
             comboBox2.SelectedIndex = 0;
@@ -437,6 +441,11 @@ namespace DeveMazeGeneratorGui
 
         public void DebugMSG(String str)
         {
+            lock (debugMsgWriter)
+            {
+                debugMsgWriter.WriteLine(str);
+                debugMsgWriter.Flush();
+            }
             listBox1.Invoke(new Action(() =>
             {
                 str = DateTime.Now.ToLongTimeString() + ":    " + str;
@@ -2106,7 +2115,7 @@ namespace DeveMazeGeneratorGui
                         formattedFileName = string.Format(formattedFileName, "DynamicPath");
                         DebugMSG("Path with directions found, dynamically generating path and saving maze... (" + formattedFileName + ")");
                         var ienumerablePathBasedOnDirections = PathFinderDepthFirstSmartAndSmartMemory.DeterminePathFromDirections(lastMegaTerrorMazeQuatroDirections, lastMegaTerrorMaze.InnerMap);
-                        saveResult = lastMegaTerrorMaze.SaveMazeAsImageDeluxeWithDynamicallyGeneratedPath(mazeSaveFileType, formattedFileName, ienumerablePathBasedOnDirections, callback, useTiles, useColorMap);
+                        saveResult = lastMegaTerrorMaze.SaveMazeAsImageDeluxeWithDynamicallyGeneratedPath(mazeSaveFileType, formattedFileName, ienumerablePathBasedOnDirections, callback, useTiles, useColorMap, (x) => DebugMSG("MazeDbg: " + x));
                     }
                     else if (lastMegaTerrorMazePathPos != null)
                     {
@@ -2142,6 +2151,12 @@ namespace DeveMazeGeneratorGui
                     DebugMSG(ex.ToString());
                 }
             });
+        }
+
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            debugMsgWriter.Flush();
+            debugMsgWriter.Dispose();
         }
     }
 }
