@@ -515,7 +515,7 @@ namespace DeveMazeGenerator
                 totalPathLength++;
             }
 
-            debugMessageCallback("Path analysis completed. Total path length: " + totalPathLength);
+            debugMessageCallback(string.Format("Path analysis completed. Total path length: {0}, this would take up {1}mb.", totalPathLength, Math.Round(totalPathLength * 9.0 / 1024.0 / 1024.0, 2)));
 
             GC.Collect();
             GC.WaitForPendingFinalizers();
@@ -578,7 +578,7 @@ namespace DeveMazeGenerator
                     //Or not I really need to think about this a bit more. Because if the chunk size is 1000 then you can never end up reading something smaller then that which works because the rowsperpath is always bigger.
                     //So yeah, because rows per path is always a multiple or equal to tiftilesize you can never go out of sync becuase no matter what happens, e.g. tiftile = 500 and perpath = 2000. When you're at 2500 you just need to read 500. And you are never forced in reading anything that was
                     //not measured. Because you can't end up in having to read somewhere from 1250 to 1750 because of the multiple thingy. Ok I'm quite sure now it needs to be tifTileSize.
-                    int stepsThisLoop = FindTheMaxPathRowsThatWouldFitInMemoryFromHere(debugMessageCallback, pathPointsPerRow, yChunkStart, tifTileSize, memoryFree); 
+                    int stepsThisLoop = FindTheMaxPathRowsThatWouldFitInMemoryFromHere(debugMessageCallback, pathPointsPerRow, yChunkStart, tifTileSize, memoryFree);
 
                     var yChunkEnd = Math.Min(yChunkStart + stepsThisLoop, this.Height - 1);
 
@@ -733,7 +733,7 @@ namespace DeveMazeGenerator
                 }
 
 
-                if (curSize > int.MaxValue)
+                if (curSize > GlobalVars.MaxArraySize)
                 {
                     break;
                 }
@@ -758,10 +758,13 @@ namespace DeveMazeGenerator
         private int FindTheMinimalRowsToWrite(Action<string> debugMessageCallback, int[] pathPointsPerRow, ulong memoryFree)
         {
             int rowsPerPathDeterminingCycle = 16;
+
+            long max = 0;
+
             while (true)
             {
                 int newTestSize = rowsPerPathDeterminingCycle * 2;
-                long maxSize = 0;
+                long maxSizeCur = 0;
                 for (int i = 0; i < this.Height; i += newTestSize)
                 {
                     long curSize = 0;
@@ -771,16 +774,16 @@ namespace DeveMazeGenerator
                         curSize += pathPointsPerRow[y];
                     }
 
-                    maxSize = Math.Max(curSize, maxSize);
+                    maxSizeCur = Math.Max(curSize, maxSizeCur);
                 }
 
-                if (maxSize > int.MaxValue)
+                if (maxSizeCur > GlobalVars.MaxArraySize)
                 {
                     debugMessageCallback(string.Format("We would have to create a list bigger then int.MaxValue with RowsPerCycle '{0}', so we take '{1}'", newTestSize, rowsPerPathDeterminingCycle));
                     break;
                 }
 
-                var expectedMemoryUsage = maxSize * 9; //9 bytes per path pos
+                var expectedMemoryUsage = maxSizeCur * 9; //9 bytes per path pos
                 if ((ulong)expectedMemoryUsage > memoryFree)
                 {
                     debugMessageCallback(string.Format("Memory would be full with RowsPerCycle '{0}', so we take '{1}'", newTestSize, rowsPerPathDeterminingCycle));
@@ -788,13 +791,18 @@ namespace DeveMazeGenerator
                 }
 
                 rowsPerPathDeterminingCycle = newTestSize;
+                max = maxSizeCur;
 
                 if (rowsPerPathDeterminingCycle >= this.Height)
                 {
                     debugMessageCallback(string.Format("This RowsPerCycle is chosen because it fits in memory and we can do the complete maze in it: '{0}'", rowsPerPathDeterminingCycle));
                     break;
                 }
+
             }
+
+            debugMessageCallback(string.Format("Max size of the minimal rows to write would be: {0}, taking up {1}mb of memory.", max, Math.Round(max * 9.0 / 1024.0 / 1024.0, 2)));
+
             return rowsPerPathDeterminingCycle;
         }
     }

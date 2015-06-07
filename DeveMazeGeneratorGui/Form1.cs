@@ -206,7 +206,7 @@ namespace DeveMazeGeneratorGui
                 DebugMSG("Location: " + System.IO.Directory.GetCurrentDirectory());
                 maze = null;
                 path = null;
-                GC.Collect(int.MaxValue);
+                GC.Collect();
             }));
         }
 
@@ -449,7 +449,7 @@ namespace DeveMazeGeneratorGui
                 debugMsgWriter.Flush();
             }
             listBox1.Invoke(new Action(() =>
-            {                
+            {
                 listBox1.Items.Insert(0, str);
             }));
         }
@@ -1563,7 +1563,7 @@ namespace DeveMazeGeneratorGui
             lastMegaTerrorMazePath = null;
             lastMegaTerrorMazePathPos = null;
             lastMegaTerrorMazeQuatroDirections = null;
-            GC.Collect(int.MaxValue);
+            TrimAndGCCollect();
         }
 
         private void button30_Click(object sender, EventArgs e)
