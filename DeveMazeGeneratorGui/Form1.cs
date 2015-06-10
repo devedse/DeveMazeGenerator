@@ -696,10 +696,10 @@ namespace DeveMazeGeneratorGui
                 algjes.Add(new AlgorithmBacktrackSmartMemory());
                 algjes.Add(new AlgorithmBacktrackFastWithoutAction());
                 algjes.Add(new AlgorithmBacktrackFastWithoutActionAndMaze());
+                algjes.Add(new AlgorithmBacktrackFastWithoutActionAndMazeAndFastRandomFastStackList());
                 algjes.Add(new AlgorithmBacktrackFastWithoutActionAndMazeAndFastRandomFastStackArray());
                 algjes.Add(new AlgorithmBacktrackFastWithoutActionAndMazeAndFastRandomFastStackArray2());
                 algjes.Add(new AlgorithmBacktrackFastWithoutActionAndMazeAndFastRandomFastStackArray3());
-                algjes.Add(new AlgorithmBacktrackFastWithoutActionAndMazeAndFastRandomFastStackList());
 
                 DebugMSG("Comparing all backtrack algorithms + all InnerMaps...");
                 DebugMSG("Generating reference maze...");
@@ -1508,6 +1508,7 @@ namespace DeveMazeGeneratorGui
         private void button28_Click(object sender, EventArgs e)
         {
             TestThisAlg(new AlgorithmBacktrack());
+            TestThisAlg(new AlgorithmBacktrackSmartMemory());
             TestThisAlg(new AlgorithmBacktrackFastWithoutAction());
             TestThisAlg(new AlgorithmBacktrackFastWithoutActionAndMaze());
             TestThisAlg(new AlgorithmBacktrackFastWithoutActionAndMazeAndFastRandomFastStackList());

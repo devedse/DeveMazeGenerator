@@ -46,19 +46,6 @@ namespace DeveMazeGenerator.Generators.Tests
             return maze;
         }
 
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static bool isValid(int x, int y, Boolean[,] map, int width, int height)
-        {
-            //Console.WriteLine(System.Reflection.MethodBase.GetCurrentMethod().Name);
-            if (x > 0 && x < width - 1 && y > 0 && y < height - 1)
-            {
-                return !map[x, y];
-            }
-            return false;
-        }
-
-
         private Boolean[,] GoGenerate(FastRandom r, int width, int height)
         {
             int x = 1;
@@ -89,25 +76,25 @@ namespace DeveMazeGenerator.Generators.Tests
                 y = stackjey[pointertje - 1];
 
                 int targetCount = 0;
-                if (isValid(x - 2, y, map, width, height))
+                if (x - 2 > 0 && !map[x - 2, y])
                 {
                     targets[targetCount].X = x - 2;
                     targets[targetCount].Y = y;
                     targetCount++;
                 }
-                if (isValid(x + 2, y, map, width, height))
+                if (x + 2 < width - 1 && !map[x + 2, y])
                 {
                     targets[targetCount].X = x + 2;
                     targets[targetCount].Y = y;
                     targetCount++;
                 }
-                if (isValid(x, y - 2, map, width, height))
+                if (y - 2 > 0 && !map[x, y - 2])
                 {
                     targets[targetCount].X = x;
                     targets[targetCount].Y = y - 2;
                     targetCount++;
                 }
-                if (isValid(x, y + 2, map, width, height))
+                if (y + 2 < height - 1 && !map[x, y + 2])
                 {
                     targets[targetCount].X = x;
                     targets[targetCount].Y = y + 2;

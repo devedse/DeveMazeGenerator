@@ -54,23 +54,13 @@ namespace DeveMazeGenerator.Generators
             return maze;
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static bool isValid(int x, int y, InnerMap map, Maze maze)
-        {
-            //Console.WriteLine(System.Reflection.MethodBase.GetCurrentMethod().Name);
-            if (x > 0 && x < maze.Width - 1 && y > 0 && y < maze.Height - 1)
-            {
-                return !map[x, y];
-            }
-            return false;
-        }
-
-
         private void GoGenerate(InnerMap map, Maze maze, Random r, Action<int, int, long, long> pixelChangedCallback)
         {
             long totSteps = (((long)maze.Width - 1L) / 2L) * (((long)maze.Height - 1L) / 2L);
             long currentStep = 1;
 
+            int width = maze.Width;
+            int height = maze.Height;
             int x = 1;
             int y = 1;
 
@@ -92,25 +82,25 @@ namespace DeveMazeGenerator.Generators
                 //Console.WriteLine(quatro.Count + ", X: " + x + " Y: " + y);
 
                 int targetCount = 0;
-                if (isValid(x - 2, y, map, maze))
+                if (x - 2 > 0 && !map[x - 2, y])
                 {
                     targets[targetCount].X = x - 2;
                     targets[targetCount].Y = y;
                     targetCount++;
                 }
-                if (isValid(x + 2, y, map, maze))
+                if (x + 2 < width - 1 && !map[x + 2, y])
                 {
                     targets[targetCount].X = x + 2;
                     targets[targetCount].Y = y;
                     targetCount++;
                 }
-                if (isValid(x, y - 2, map, maze))
+                if (y - 2 > 0 && !map[x, y - 2])
                 {
                     targets[targetCount].X = x;
                     targets[targetCount].Y = y - 2;
                     targetCount++;
                 }
-                if (isValid(x, y + 2, map, maze))
+                if (y + 2 < height - 1 && !map[x, y + 2])
                 {
                     targets[targetCount].X = x;
                     targets[targetCount].Y = y + 2;
