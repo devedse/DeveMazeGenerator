@@ -533,7 +533,7 @@ namespace DeveMazeGenerator
 
 
 
-            int tifTileSize = HybridInnerMap.GridSize / 16;
+            int tifTileSize = HybridInnerMap.GridSize;
 
             if (rowsPerPathDeterminingCycle < tifTileSize)
             {
