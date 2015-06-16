@@ -578,6 +578,8 @@ namespace DeveMazeGenerator
                     //Or not I really need to think about this a bit more. Because if the chunk size is 1000 then you can never end up reading something smaller then that which works because the rowsperpath is always bigger.
                     //So yeah, because rows per path is always a multiple or equal to tiftilesize you can never go out of sync becuase no matter what happens, e.g. tiftile = 500 and perpath = 2000. When you're at 2500 you just need to read 500. And you are never forced in reading anything that was
                     //not measured. Because you can't end up in having to read somewhere from 1250 to 1750 because of the multiple thingy. Ok I'm quite sure now it needs to be tifTileSize.
+                    //
+                    //Additional note, it always needs to be a multiple of tifTileSize because we write tiles at a time (we can't write half tiles). So that's why we don't want some supidly small numbers here.
                     int stepsThisLoop = FindTheMaxPathRowsThatWouldFitInMemoryFromHere(debugMessageCallback, pathPointsPerRow, yChunkStart, tifTileSize, memoryFree);
 
                     var yChunkEnd = Math.Min(yChunkStart + stepsThisLoop, this.Height - 1);
