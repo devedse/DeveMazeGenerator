@@ -18,8 +18,9 @@ namespace DeveMazeGeneratorUnitTest
         {
             int width = 32 * 8;
             int height = 32 * 12;
-            var v = new BitArrayMappedOnHardDiskInnerMap(width, height);
-
+            using (var v = new BitArrayMappedOnHardDiskInnerMap(width, height))
+            {
+            }
         }
 
         [TestMethod]

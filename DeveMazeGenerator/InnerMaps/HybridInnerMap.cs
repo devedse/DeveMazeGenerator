@@ -10,22 +10,22 @@ using System.Threading.Tasks;
 
 namespace DeveMazeGenerator.InnerMaps
 {
-    class HybridInnerMap : InnerMap
+    class HybridInnerMap : InnerMap, IDisposable
     {
-        public HybridInnerMapPart currentMapPart = new HybridInnerMapPart(-1, -1, -1, -1, null); //-1 because no nullchecks needed etc :)
+        private HybridInnerMapPart currentMapPart = new HybridInnerMapPart(-1, -1, -1, -1, null); //-1 because no nullchecks needed etc :)
 
         public const int GridSize = 4096;
-        public int amountOfMapPartsLoadedMax = 10;
-        public int currentMapCycleFactor = 0;
+        private const int AmountOfMapPartsLoadedMax = 10;
+        private int currentMapCycleFactor = 0;
 
-        public HybridInnerMapPart[] mapParts;
+        private HybridInnerMapPart[] mapParts;
 
-        public CompleteHDArray completeHDArray;
+        private CompleteHDArray completeHDArray;
 
         public HybridInnerMap(int width, int height)
             : base(width, height)
         {
-            mapParts = new HybridInnerMapPart[amountOfMapPartsLoadedMax];
+            mapParts = new HybridInnerMapPart[AmountOfMapPartsLoadedMax];
 
             completeHDArray = new CompleteHDArray((width / 8L) * (height / 8L));
 
@@ -143,12 +143,17 @@ namespace DeveMazeGenerator.InnerMaps
 
                 //Turn the cyclething
                 currentMapCycleFactor++;
-                if (currentMapCycleFactor >= amountOfMapPartsLoadedMax)
+                if (currentMapCycleFactor >= AmountOfMapPartsLoadedMax)
                 {
                     currentMapCycleFactor = 0;
                 }
             }
 
+        }
+
+        public void Dispose()
+        {
+            completeHDArray.Dispose();
         }
     }
 

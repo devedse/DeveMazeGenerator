@@ -104,6 +104,7 @@ namespace DeveMazeGeneratorGui
             this.checkBoxUseColorMap = new System.Windows.Forms.CheckBox();
             this.buttonSaveMazeAsImageDeluxe = new System.Windows.Forms.Button();
             this.label19 = new System.Windows.Forms.Label();
+            this.button38 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -878,11 +879,22 @@ namespace DeveMazeGeneratorGui
             this.label19.TabIndex = 82;
             this.label19.Text = "To create biggest mazes use blue buttons";
             // 
+            // button38
+            // 
+            this.button38.Location = new System.Drawing.Point(965, 118);
+            this.button38.Name = "button38";
+            this.button38.Size = new System.Drawing.Size(123, 59);
+            this.button38.TabIndex = 83;
+            this.button38.Text = "Mega terror maze HD array (BAD and SLOW)";
+            this.button38.UseVisualStyleBackColor = true;
+            this.button38.Click += new System.EventHandler(this.button38_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1100, 724);
+            this.Controls.Add(this.button38);
             this.Controls.Add(this.label19);
             this.Controls.Add(this.buttonSaveMazeAsImageDeluxe);
             this.Controls.Add(this.checkBoxUseColorMap);
@@ -1041,6 +1053,7 @@ namespace DeveMazeGeneratorGui
         private System.Windows.Forms.CheckBox checkBoxUseColorMap;
         private System.Windows.Forms.Button buttonSaveMazeAsImageDeluxe;
         private System.Windows.Forms.Label label19;
+        private System.Windows.Forms.Button button38;
     }
 }
 

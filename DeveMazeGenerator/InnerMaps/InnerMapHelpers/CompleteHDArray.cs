@@ -7,21 +7,21 @@ using System.Threading.Tasks;
 
 namespace DeveMazeGenerator.InnerMaps.InnerMapHelpers
 {
-    class CompleteHDArray
+    class CompleteHDArray : IDisposable
     {
-        public static String tempFolder = "temp\\";
-
         private FileStream fileStream;
         private String innerFileName;
 
         public CompleteHDArray(long size)
         {
-            if (!Directory.Exists(tempFolder))
+            var curFolder = Directory.GetCurrentDirectory();
+            var tempFolderHere = Path.Combine(curFolder, GlobalVars.TempFolderName);
+            if (!Directory.Exists(tempFolderHere))
             {
-                Directory.CreateDirectory(tempFolder);
+                Directory.CreateDirectory(tempFolderHere);
             }
-            innerFileName = tempFolder + GetRandomFileName();
-            fileStream = new FileStream(innerFileName, FileMode.Create);
+            innerFileName = Path.Combine(tempFolderHere, GetRandomFileName());
+            fileStream = new FileStream(innerFileName, FileMode.Create, FileAccess.ReadWrite, FileShare.Read, 4096, FileOptions.DeleteOnClose | FileOptions.RandomAccess);
             fileStream.SetLength(size);
         }
 
@@ -50,10 +50,9 @@ namespace DeveMazeGenerator.InnerMaps.InnerMapHelpers
             return intArray;
         }
 
-        ~CompleteHDArray()
+        public void Dispose()
         {
-            fileStream.Close();
-            File.Delete(innerFileName);
+            fileStream.Dispose();
         }
     }
 }

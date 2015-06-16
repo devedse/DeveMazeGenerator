@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hjg.Pngcs", "Hjg.Pngcs\Hjg.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A8D74987-9D8E-42EE-B8AC-5A9BD192F257}"
 	ProjectSection(SolutionItems) = preProject
-		Solution Items\Amazing.testsettings = Solution Items\Amazing.testsettings
+		Solution Items\Amazing.runsettings = Solution Items\Amazing.runsettings
 	EndProjectSection
 EndProject
 Global

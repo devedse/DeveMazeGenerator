@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DeveMazeGenerator.InnerMaps
 {
-    class BitArrayMappedOnHardDiskInnerMap : InnerMap
+    class BitArrayMappedOnHardDiskInnerMap : InnerMap, IDisposable
     {
         private IntHDArray inthdarray;
 
@@ -73,6 +73,11 @@ namespace DeveMazeGenerator.InnerMaps
         {
             int thePositionForBitShift = (int)(pos % 32);
             return (inthdarray[pos / 32] & (1 << thePositionForBitShift)) != 0;
+        }
+
+        public void Dispose()
+        {
+            inthdarray.Dispose();
         }
     }
 
