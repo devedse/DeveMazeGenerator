@@ -306,26 +306,51 @@ namespace DeveMazeGenerator.PathFinders
             }
         }
 
+        /// <summary>
+        /// Obtains the complete path based on directions and a map
+        /// </summary>
+        /// <param name="directions">The directions from start to end</param>
+        /// <param name="map">The map to find the path on</param>
+        /// <returns>An IEnumerable containing the complete path</returns>
         public static IEnumerable<MazePointPos> DeterminePathFromDirections(QuatroStack directions, InnerMap map)
         {
             return DeterminePathFromDirections(directions, new MazePoint(1, 1), new MazePoint(map.Width - 3, map.Height - 3), map);
 
         }
 
+        /// <summary>
+        /// Obtains the complete path based on directions, start, end and a map.
+        /// </summary>
+        /// <param name="directions">The directions from start to end</param>
+        /// <param name="map">The map to find the path on</param>
+        /// <param name="end">The start position of the path</param>
+        /// <param name="map">The end position of the path</param>
+        /// <returns>An IEnumerable containing the complete path</returns>
         public static IEnumerable<MazePointPos> DeterminePathFromDirections(QuatroStack directions, MazePoint start, MazePoint end, InnerMap map)
         {
+            //By first determining max and then returning a yield IEnumerable based on this max we only have to calculate the max value once instead of every time you look through the IEnumerable
+            //This is because a yield return is only executed when a foreach is ran. But the parameters are already precalculated in it.
+
+            //One additional note is calling this method to obtain the IEnumerable will instantly execute this max count instead of having this also done later. (This means that when you want to
+            //loop through the path once it will still do it one extra time to determine the max count). This shouldn't matter that much though :).
+            long max = DeterminePathFromDirectionsInternal(directions, start, end, map).LongCount();
+
+            return DeterminePathFromDirectionsInternalWithCount(directions, start, end, map, max);
+        }
+
+        private static IEnumerable<MazePointPos> DeterminePathFromDirectionsInternalWithCount(QuatroStack directions, MazePoint start, MazePoint end, InnerMap map, long maxCount)
+        {
             long current = 0;
-            long max = DeterminePathFromDirectionsInternal(directions, start, end, map).LongCount(); //This needs to happen twice sadly but else it we can't know the complete path length
 
             foreach (var point in DeterminePathFromDirectionsInternal(directions, start, end, map))
             {
-                byte formulathing = (byte)((double)current / (double)max * 255.0);
+                byte formulathing = (byte)((double)current / (double)maxCount * 255.0);
                 current++;
                 yield return new MazePointPos(point.X, point.Y, formulathing);
             }
         }
 
-        public static IEnumerable<MazePointPos> DeterminePathFromDirectionsInternal(QuatroStack directions, MazePoint start, MazePoint end, InnerMap map)
+        private static IEnumerable<MazePointPos> DeterminePathFromDirectionsInternal(QuatroStack directions, MazePoint start, MazePoint end, InnerMap map)
         {
             int currentDirectionPos = directions.Count - 1;
 

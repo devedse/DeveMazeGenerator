@@ -2134,6 +2134,7 @@ namespace DeveMazeGeneratorGui
                     {
                         formattedFileName = string.Format(formattedFileName, "DynamicPath");
                         DebugMSG("Path with directions found, dynamically generating path and saving maze... (" + formattedFileName + ")");
+                        DebugMSG("Obtaining IEnumerable... (Loops through dynamic path once to determine max length)");
                         var ienumerablePathBasedOnDirections = PathFinderDepthFirstSmartAndSmartMemory.DeterminePathFromDirections(lastMegaTerrorMazeQuatroDirections, lastMegaTerrorMaze.InnerMap);
                         saveResult = lastMegaTerrorMaze.SaveMazeAsImageDeluxeWithDynamicallyGeneratedPath(mazeSaveFileType, formattedFileName, ienumerablePathBasedOnDirections, callback, useTiles, useColorMap, (x) => DebugMSG("MazeDbg: " + x));
                     }
