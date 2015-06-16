@@ -582,7 +582,7 @@ namespace DeveMazeGenerator
 
                     var yChunkEnd = Math.Min(yChunkStart + stepsThisLoop, this.Height - 1);
 
-                    var w = Stopwatch.StartNew();
+                    var wObtainPathPart = Stopwatch.StartNew();
 
                     //We don't use a ToList here because we do actually know the expected list size beforehand. This way we make sure we don't have to do any internal Array Resizing.
                     var expectedPathCount = pathPointsPerRow.Skip(yChunkStart).Take(yChunkEnd - yChunkStart).Sum();
@@ -593,12 +593,14 @@ namespace DeveMazeGenerator
                         pathPointsHere.Add(pathPos);
                         currentPathPosPoint++;
                     }
+                    wObtainPathPart.Stop();
 
                     if (pathPointsHere.Count != expectedPathCount)
                     {
                         debugMessageCallback(string.Format("Warning: Something strange is happening where the actual path point count '{0}' is not equal to the expected path point count '{1}' (Maze will still save correctly but it uses more memory then expected)", pathPointsHere.Count, expectedPathCount));
                     }
 
+                    var wSort = Stopwatch.StartNew();
                     pathPointsHere.Sort((first, second) =>
                     {
                         int firstXTile = first.X / tifTileSize;
@@ -628,11 +630,11 @@ namespace DeveMazeGenerator
                         }
                         return firstYInTile - secondYInTile;
                     });
-
-                    debugMessageCallback(string.Format("{0}: YChunkStart: {1}, YChunkEnd: {2}, Rows written: {3}, Count: {4}, Time to generate this part: {5} sec, Size: {6}mb", partNumber, yChunkStart, yChunkEnd, stepsThisLoop, pathPointsHere.Count, Math.Round(w.Elapsed.TotalSeconds, 2), Math.Round(pathPointsHere.Count * 9.0 / 1024.0 / 1024.0, 3)));
-                    partNumber++;
+                    wSort.Stop();
 
                     int curpos = 0;
+
+                    var wSaveAsImage = Stopwatch.StartNew();
 
                     for (int startY = yChunkStart; startY < yChunkEnd; startY += tifTileSize)
                     {
@@ -702,6 +704,20 @@ namespace DeveMazeGenerator
 
 
                     }
+                    wSaveAsImage.Stop();
+
+                    debugMessageCallback(string.Format("{0}: YChunkStart: {1}, YChunkEnd: {2}, Rows written: {3}, Count: {4}, Time to generate this part: {5} sec, Time to sort this part: {6} sec, Time to save this part in the image: {7} sec, Combined time: {8} sec, Size: {9}mb",
+                        partNumber,
+                        yChunkStart,
+                        yChunkEnd,
+                        stepsThisLoop,
+                        pathPointsHere.Count,
+                        Math.Round(wObtainPathPart.Elapsed.TotalSeconds, 2),
+                        Math.Round(wSort.Elapsed.TotalSeconds, 2),
+                        Math.Round(wSaveAsImage.Elapsed.TotalSeconds, 2),
+                        Math.Round(wObtainPathPart.Elapsed.TotalSeconds + wSort.Elapsed.TotalSeconds + wSaveAsImage.Elapsed.TotalSeconds, 2),
+                        Math.Round(pathPointsHere.Count * 9.0 / 1024.0 / 1024.0, 3)));
+                    partNumber++;
 
                     yChunkStart += stepsThisLoop;
 
