@@ -77,7 +77,7 @@ namespace DeveMazeGenerator.InnerMaps
         {
             //Console.WriteLine("Loading mappart: " + x + ", " + y);
 
-            long sizeinbytes = (GridSize * GridSize) / 8; //Divide by 8 because of 8
+            const long sizeinbytes = (GridSize * GridSize) / 8; //Divide by 8 because of 8
 
 
 
