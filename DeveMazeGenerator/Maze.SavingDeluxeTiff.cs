@@ -608,6 +608,7 @@ namespace DeveMazeGenerator
                     int stepsThisLoop = FindTheMaxPathRowsThatWouldFitInMemoryFromHere(debugMessageCallback, pathPointsPerRow, yChunkStart, tifTileSize, memoryFree);
 
                     var yChunkEnd = Math.Min(yChunkStart + stepsThisLoop, this.Height - 1);
+                    stepsThisLoop = yChunkEnd - yChunkStart;
 
                     var wObtainPathPart = Stopwatch.StartNew();
 
