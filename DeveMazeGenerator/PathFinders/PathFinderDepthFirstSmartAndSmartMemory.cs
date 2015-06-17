@@ -94,25 +94,25 @@ namespace DeveMazeGenerator.PathFinders
                 }
 
                 possibleDirectionsCount = 0;
-                if ((prev.X != x - 1 || prev.Y != y) && isValid(x - 1, y, map, width, height))
+                if ((prev.X != x - 1 || prev.Y != y) && x - 1 > 0 && map[x - 1, y])
                 {
                     possibleDirections[possibleDirectionsCount].X = x - 1;
                     possibleDirections[possibleDirectionsCount].Y = y;
                     possibleDirectionsCount++;
                 }
-                if ((prev.X != x || prev.Y != y - 1) && isValid(x, y - 1, map, width, height))
+                if ((prev.X != x || prev.Y != y - 1) && y - 1 > 0 && map[x, y - 1])
                 {
                     possibleDirections[possibleDirectionsCount].X = x;
                     possibleDirections[possibleDirectionsCount].Y = y - 1;
                     possibleDirectionsCount++;
                 }
-                if ((prev.X != x + 1 || prev.Y != y) && isValid(x + 1, y, map, width, height))
+                if ((prev.X != x + 1 || prev.Y != y) && x + 1 < width - 1 && map[x + 1, y])
                 {
                     possibleDirections[possibleDirectionsCount].X = x + 1;
                     possibleDirections[possibleDirectionsCount].Y = y;
                     possibleDirectionsCount++;
                 }
-                if ((prev.X != x || prev.Y != y + 1) && isValid(x, y + 1, map, width, height))
+                if ((prev.X != x || prev.Y != y + 1) && y + 1 < height - 1 && map[x, y + 1])
                 {
                     possibleDirections[possibleDirectionsCount].X = x;
                     possibleDirections[possibleDirectionsCount].Y = y + 1;
@@ -293,19 +293,6 @@ namespace DeveMazeGenerator.PathFinders
             return new QuatroStack();
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Boolean isValid(int x, int y, InnerMap map, int width, int height)
-        {
-            if (x > 0 && x < width - 1 && y > 0 && y < height - 1)
-            {
-                return map[x, y];
-            }
-            else
-            {
-                return false;
-            }
-        }
-
         /// <summary>
         /// Obtains the complete path based on directions and a map
         /// </summary>
@@ -377,25 +364,25 @@ namespace DeveMazeGenerator.PathFinders
                 int y = cur.Y;
 
                 possibleDirectionsCount = 0;
-                if ((prev.X != x - 1 || prev.Y != y) && isValid(x - 1, y, map, width, height))
+                if ((prev.X != x - 1 || prev.Y != y) && x - 1 > 0 && map[x - 1, y])
                 {
                     possibleDirections[possibleDirectionsCount].X = x - 1;
                     possibleDirections[possibleDirectionsCount].Y = y;
                     possibleDirectionsCount++;
                 }
-                if ((prev.X != x || prev.Y != y - 1) && isValid(x, y - 1, map, width, height))
+                if ((prev.X != x || prev.Y != y - 1) && y - 1 > 0 && map[x, y - 1])
                 {
                     possibleDirections[possibleDirectionsCount].X = x;
                     possibleDirections[possibleDirectionsCount].Y = y - 1;
                     possibleDirectionsCount++;
                 }
-                if ((prev.X != x + 1 || prev.Y != y) && isValid(x + 1, y, map, width, height))
+                if ((prev.X != x + 1 || prev.Y != y) && x + 1 < width - 1 && map[x + 1, y])
                 {
                     possibleDirections[possibleDirectionsCount].X = x + 1;
                     possibleDirections[possibleDirectionsCount].Y = y;
                     possibleDirectionsCount++;
                 }
-                if ((prev.X != x || prev.Y != y + 1) && isValid(x, y + 1, map, width, height))
+                if ((prev.X != x || prev.Y != y + 1) && y + 1 < height - 1 && map[x, y + 1])
                 {
                     possibleDirections[possibleDirectionsCount].X = x;
                     possibleDirections[possibleDirectionsCount].Y = y + 1;
