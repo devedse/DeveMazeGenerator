@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace DeveMazeGenerator
 {
+    /// <summary>
+    /// Contains a position.
+    /// Note: Struct really is faster then class
+    /// </summary>
     public struct MazePoint
     {
         public int X, Y;

@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace DeveMazeGenerator
 {
+    /// <summary>
+    /// Contains a position with a byte that describes how far in the maze this point is (to determine the color).
+    /// Note: Struct really is faster then class
+    /// </summary>
     public struct MazePointPos
     {
         public int X, Y;
