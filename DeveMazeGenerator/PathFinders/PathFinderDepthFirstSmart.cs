@@ -71,20 +71,20 @@ namespace DeveMazeGenerator.PathFinders
 
 
                 MazePoint target = new MazePoint(-1, -1);
-                //Make sure the point was not the previous point, also make sure that the point is white, also make sure that if we backtracked we don't go to a direction we already went to
-                if ((prev.X != x + 1 || prev.Y != y) && isValid(x + 1, y, map, width, height) && lastBackTrackDir < 0)
+                //Make sure the point was not the previous point, also make sure that if we backtracked we don't go to a direction we already went to, also make sure that the point is white
+                if ((prev.X != x + 1 || prev.Y != y) && lastBackTrackDir < 0 && x + 1 < width - 1 && map[x + 1, y])
                 {
                     target = new MazePoint(x + 1, y);
                 }
-                else if ((prev.X != x || prev.Y != y + 1) && isValid(x, y + 1, map, width, height) && lastBackTrackDir < 1)
+                else if ((prev.X != x || prev.Y != y + 1) && lastBackTrackDir < 1 && y + 1 < height - 1 && map[x, y + 1])
                 {
                     target = new MazePoint(x, y + 1);
                 }
-                else if ((prev.X != x - 1 || prev.Y != y) && isValid(x - 1, y, map, width, height) && lastBackTrackDir < 2)
+                else if ((prev.X != x - 1 || prev.Y != y) && lastBackTrackDir < 2 && x - 1 > 0 && map[x - 1, y])
                 {
                     target = new MazePoint(x - 1, y);
                 }
-                else if ((prev.X != x || prev.Y != y - 1) && isValid(x, y - 1, map, width, height) && lastBackTrackDir < 3)
+                else if ((prev.X != x || prev.Y != y - 1) && lastBackTrackDir < 3 && y - 1 > 0 && map[x, y - 1])
                 {
                     target = new MazePoint(x, y - 1);
                 }
@@ -158,19 +158,6 @@ namespace DeveMazeGenerator.PathFinders
             }
 
             return stackje;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Boolean isValid(int x, int y, InnerMap map, int width, int height)
-        {
-            if (x > 0 && x < width - 1 && y > 0 && y < height - 1)
-            {
-                return map[x, y];
-            }
-            else
-            {
-                return false;
-            }
         }
     }
 }
