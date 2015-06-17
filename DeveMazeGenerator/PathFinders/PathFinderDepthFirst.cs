@@ -55,12 +55,7 @@ namespace DeveMazeGenerator.PathFinders
             int width = map.Width;
             int height = map.Height;
 
-            InnerMap visitedMap = new BitArreintjeFastInnerMap(width, height);
-
             List<MazePoint> pointlist = new List<MazePoint>();
-
-
-
 
 
             //@todo Controleer dit
@@ -101,22 +96,23 @@ namespace DeveMazeGenerator.PathFinders
                 }
 
                 MazePoint target = new MazePoint(-1, -1);
-                if (isValid(x + 1, y, map, visited, width, height))
+                if (x + 1 < width - 1 && !visited[x + 1, y] && map[x + 1, y])
                 {
                     target = new MazePoint(x + 1, y);
                 }
-                else if (isValid(x, y + 1, map, visited, width, height))
+                else if (y + 1 < height - 1 && !visited[x, y + 1] && map[x, y + 1])
                 {
                     target = new MazePoint(x, y + 1);
                 }
-                else if (isValid(x - 1, y, map, visited, width, height))
+                else if (x - 1 > 0 && !visited[x - 1, y] && map[x - 1, y])
                 {
                     target = new MazePoint(x - 1, y);
                 }
-                else if (isValid(x, y - 1, map, visited, width, height))
+                else if (y - 1 > 0 && !visited[x, y - 1] && map[x, y - 1])
                 {
                     target = new MazePoint(x, y - 1);
                 }
+
                 //Thread.Sleep(1000);
 
                 if (target.X != -1)
@@ -161,26 +157,6 @@ namespace DeveMazeGenerator.PathFinders
             pointlist.Reverse();
 
             return pointlist;
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        private static Boolean isValid(int x, int y, InnerMap map, InnerMap visitedmap, int width, int height)
-        {
-            if (x > 0 && x < width - 1 && y > 0 && y < height - 1)
-            {
-                if (visitedmap[x, y])
-                {
-                    return false;
-                }
-                else
-                {
-                    return map[x, y];
-                }
-            }
-            else
-            {
-                return false;
-            }
         }
     }
 }
