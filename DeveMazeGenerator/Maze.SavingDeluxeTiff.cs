@@ -65,6 +65,11 @@ namespace DeveMazeGenerator
 
             using (var tif = Tiff.Open(fileName, "w"))
             {
+                if (tif == null)
+                {
+                    throw new InvalidOperationException("Tif file could not be opened. It is probably in use: " + fileName);
+                }
+
                 tif.SetField(TiffTag.IMAGEWIDTH, this.Width - 1);
                 tif.SetField(TiffTag.IMAGELENGTH, this.Height - 1);
                 tif.SetField(TiffTag.BITSPERSAMPLE, 8);
@@ -166,6 +171,11 @@ namespace DeveMazeGenerator
 
             using (var tif = Tiff.Open(fileName, "w"))
             {
+                if (tif == null)
+                {
+                    throw new InvalidOperationException("Tif file could not be opened. It is probably in use: " + fileName);
+                }
+
                 tif.SetField(TiffTag.IMAGEWIDTH, this.Width - 1);
                 tif.SetField(TiffTag.IMAGELENGTH, this.Height - 1);
                 tif.SetField(TiffTag.BITSPERSAMPLE, 8);
@@ -272,6 +282,11 @@ namespace DeveMazeGenerator
 
             using (var tif = Tiff.Open(fileName, "w"))
             {
+                if (tif == null)
+                {
+                    throw new InvalidOperationException("Tif file could not be opened. It is probably in use: " + fileName);
+                }
+
                 tif.SetField(TiffTag.IMAGEWIDTH, this.Width - 1);
                 tif.SetField(TiffTag.IMAGELENGTH, this.Height - 1);
                 tif.SetField(TiffTag.BITSPERSAMPLE, 8);
@@ -343,6 +358,11 @@ namespace DeveMazeGenerator
 
             using (var tif = Tiff.Open(fileName, "w"))
             {
+                if (tif == null)
+                {
+                    throw new InvalidOperationException("Tif file could not be opened. It is probably in use: " + fileName);
+                }
+
                 tif.SetField(TiffTag.IMAGEWIDTH, this.Width - 1);
                 tif.SetField(TiffTag.IMAGELENGTH, this.Height - 1);
                 tif.SetField(TiffTag.BITSPERSAMPLE, 8);
@@ -551,6 +571,11 @@ namespace DeveMazeGenerator
 
             using (var tif = Tiff.Open(fileName, "w"))
             {
+                if (tif == null)
+                {
+                    throw new InvalidOperationException("Tif file could not be opened. It is probably in use: " + fileName);
+                }
+
                 tif.SetField(TiffTag.IMAGEWIDTH, this.Width - 1);
                 tif.SetField(TiffTag.IMAGELENGTH, this.Height - 1);
                 tif.SetField(TiffTag.BITSPERSAMPLE, 8);
