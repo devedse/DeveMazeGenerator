@@ -775,7 +775,7 @@ namespace DeveMazeGenerator
 
             int tifTileSize = 4096;
             int tilesInWidth = (((size - 1) / tifTileSize) + 1);
-            
+
             debugMessageCallback(string.Format("TiffTileSize: {0}", tifTileSize));
 
             var frandom = new FastRandom(1337);
@@ -1027,6 +1027,13 @@ namespace DeveMazeGenerator
             return maxRowsToCheck;
         }
 
+        /// <summary>
+        /// Note: This method returns the amount of rows it can obtain for the path in one go based on available memory, not the tifftilesize that should be used.
+        /// </summary>
+        /// <param name="debugMessageCallback"></param>
+        /// <param name="pathPointsPerRow"></param>
+        /// <param name="memoryFree"></param>
+        /// <returns></returns>
         private int FindTheMinimalRowsToWrite(Action<string> debugMessageCallback, int[] pathPointsPerRow, ulong memoryFree)
         {
             int rowsPerPathDeterminingCycle = 16;
