@@ -850,7 +850,8 @@ namespace DeveMazeGeneratorGui
                 {
                     Thread.Sleep(5000);
                     GC.Collect(int.MaxValue, GCCollectionMode.Forced, true);
-                }) { IsBackground = true }.Start();
+                })
+                { IsBackground = true }.Start();
 
                 DebugMSG("Ok done :D");
             });
@@ -2208,6 +2209,25 @@ namespace DeveMazeGeneratorGui
             });
 
             Task.Run(() => { actionToRun(sizezzz); TrimAndGCCollect(); });
+        }
+
+        private void button45_Click(object sender, EventArgs e)
+        {
+            Task.Run(() =>
+            {
+                Action<int, int> callback = (cur, tot) =>
+                {
+                    this.curMazeLineSaving = cur;
+                    this.mazeLinesToSave = tot;
+                };
+
+                int sizezzz = int.Parse(comboBox4.SelectedItem.ToString().Replace(".", ""));
+
+                var maze = new Maze(16, 16, InnerMapType.BooleanArray);
+                var w = Stopwatch.StartNew();
+                maze.Testje(sizezzz, callback, DebugMSG);
+                DebugMSG("Saving time: " + w.Elapsed.TotalSeconds + " seconds.");
+            });
         }
     }
 }

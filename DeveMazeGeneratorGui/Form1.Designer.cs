@@ -105,6 +105,7 @@ namespace DeveMazeGeneratorGui
             this.buttonSaveMazeAsImageDeluxe = new System.Windows.Forms.Button();
             this.label19 = new System.Windows.Forms.Label();
             this.button38 = new System.Windows.Forms.Button();
+            this.button45 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -889,11 +890,22 @@ namespace DeveMazeGeneratorGui
             this.button38.UseVisualStyleBackColor = true;
             this.button38.Click += new System.EventHandler(this.button38_Click);
             // 
+            // button45
+            // 
+            this.button45.Location = new System.Drawing.Point(979, 647);
+            this.button45.Name = "button45";
+            this.button45.Size = new System.Drawing.Size(109, 59);
+            this.button45.TabIndex = 84;
+            this.button45.Text = "Test Save Very Big Image";
+            this.button45.UseVisualStyleBackColor = true;
+            this.button45.Click += new System.EventHandler(this.button45_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1100, 724);
+            this.Controls.Add(this.button45);
             this.Controls.Add(this.button38);
             this.Controls.Add(this.label19);
             this.Controls.Add(this.buttonSaveMazeAsImageDeluxe);
@@ -1054,6 +1066,7 @@ namespace DeveMazeGeneratorGui
         private System.Windows.Forms.Button buttonSaveMazeAsImageDeluxe;
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Button button38;
+        private System.Windows.Forms.Button button45;
     }
 }
 
