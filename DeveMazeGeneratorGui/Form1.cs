@@ -441,7 +441,8 @@ namespace DeveMazeGeneratorGui
 
         public void DebugMSG(String str)
         {
-            str = DateTime.Now.ToLongTimeString() + ":    " + str;
+            var now = DateTime.Now;
+            str = now.ToShortDateString() + "   " + now.ToLongTimeString() + ":    " + str;
 
             lock (debugMsgWriter)
             {
