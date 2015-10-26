@@ -771,7 +771,7 @@ namespace DeveMazeGenerator
             {
                 debugMessageCallback = (x) => { };
             }
-            string fileName = "testje123123.tiff";
+            string fileName = "testje-" + size + ".tiff";
 
             int tifTileSize = 4096;
             int tilesInWidth = (((size - 1) / tifTileSize) + 1);
