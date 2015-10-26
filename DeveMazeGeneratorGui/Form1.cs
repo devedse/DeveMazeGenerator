@@ -2214,6 +2214,8 @@ namespace DeveMazeGeneratorGui
 
         private void button45_Click(object sender, EventArgs e)
         {
+            int sizezzz = int.Parse(comboBox4.SelectedItem.ToString().Replace(".", ""));
+
             Task.Run(() =>
             {
                 Action<int, int> callback = (cur, tot) =>
@@ -2221,8 +2223,6 @@ namespace DeveMazeGeneratorGui
                     this.curMazeLineSaving = cur;
                     this.mazeLinesToSave = tot;
                 };
-
-                int sizezzz = int.Parse(comboBox4.SelectedItem.ToString().Replace(".", ""));
 
                 //This is just a mocked maze that is not actually being read by the Testje function. That's why the size doesn't matter.
                 var maze = new Maze(16, 16, InnerMapType.BooleanArray);
