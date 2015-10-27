@@ -765,7 +765,7 @@ namespace DeveMazeGenerator
 
 
 
-        public void Testje(int size, Action<int, int> lineSavingProgress, int tiffTileSize, Action<string> debugMessageCallback = null)
+        public void Testje(int size, Action<int, int> lineSavingProgress, int tiffTileSize, bool useComplexImage, Action<string> debugMessageCallback = null)
         {
             if (debugMessageCallback == null)
             {
@@ -901,15 +901,37 @@ namespace DeveMazeGenerator
                                     }
                                     else
                                     {
-                                        r = (byte)(Math.Abs(((x * 2 % 512) - 256)) % 256);
-
-                                        if (y % 256 == 0 || x % 256 == 0)
+                                        if (useComplexImage)
                                         {
-                                            g = 255;
+                                            //This is way harder to compress
+                                            r = (byte)(Math.Abs(((x * 2 % 512) - 256)) % 256);
+
+                                            if (y % 256 == 0 || x % 256 == 0)
+                                            {
+                                                g = 255;
+                                            }
+
+                                            b = (byte)(Math.Abs(((y % 512) - 256)) % 256);
+
                                         }
+                                        else
+                                        {
+                                            //Quite easy to compress
+                                            if (x % 100 == 0 || y % 100 == 0)
+                                            {
+                                                r = 255;
+                                            }
 
-                                        b = (byte)(Math.Abs(((y % 512) - 256)) % 256);
+                                            if (x % 256 == 0 || y % 256 == 0)
+                                            {
+                                                g = 255;
+                                            }
 
+                                            if (x % 256 == y % 256)
+                                            {
+                                                b = 255;
+                                            }
+                                        }
                                         //some random stuff:
 
                                         //MazePointPos curPathPos;
