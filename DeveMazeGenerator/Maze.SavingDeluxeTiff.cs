@@ -348,11 +348,11 @@ namespace DeveMazeGenerator
             }
 
 
-            const int tifTileSize = HybridInnerMap.GridSize;
+            const int tiffTileSize = HybridInnerMap.GridSize;
 
             //Should actually be Width -1 -1 but since we use the full Width it's only once -1
             //This will count the amount of tiles per line so if it's 15 Pixels we still want 2 tiles of 8
-            int tilesInWidth = (((this.Width - 1) / tifTileSize) + 1);
+            int tilesInWidth = (((this.Width - 1) / tiffTileSize) + 1);
 
 
 
@@ -372,12 +372,12 @@ namespace DeveMazeGenerator
                 //tif.SetField(TiffTag.ROWSPERSTRIP, 1);
                 tif.SetField(TiffTag.COMPRESSION, Compression.LZW);
 
-                tif.SetField(TiffTag.TILEWIDTH, tifTileSize);
-                tif.SetField(TiffTag.TILELENGTH, tifTileSize);
+                tif.SetField(TiffTag.TILEWIDTH, tiffTileSize);
+                tif.SetField(TiffTag.TILELENGTH, tiffTileSize);
 
-                byte[] color_ptr = new byte[tifTileSize * tifTileSize * 3];
+                byte[] color_ptr = new byte[tiffTileSize * tiffTileSize * 3];
 
-                int stepsPerLoop = tifTileSize * Maze.LineChunkCount;
+                int stepsPerLoop = tiffTileSize * Maze.LineChunkCount;
 
                 int tileNumber = 0;
                 int partNumber = 0;
@@ -390,11 +390,11 @@ namespace DeveMazeGenerator
                     var pathPointsHere = pathPosjes.Where(t => t.Y >= yChunkStart && t.Y < yChunkEnd).ToList();
                     pathPointsHere.Sort((first, second) =>
                     {
-                        int firstXTile = first.X / tifTileSize;
-                        int firstYTile = first.Y / tifTileSize;
+                        int firstXTile = first.X / tiffTileSize;
+                        int firstYTile = first.Y / tiffTileSize;
 
-                        int secondXTile = second.X / tifTileSize;
-                        int secondYTile = second.Y / tifTileSize;
+                        int secondXTile = second.X / tiffTileSize;
+                        int secondYTile = second.Y / tiffTileSize;
 
                         if (firstYTile != secondYTile)
                         {
@@ -405,11 +405,11 @@ namespace DeveMazeGenerator
                             return firstXTile - secondXTile;
                         }
 
-                        int firstXInTile = first.X % tifTileSize;
-                        int firstYInTile = first.Y % tifTileSize;
+                        int firstXInTile = first.X % tiffTileSize;
+                        int firstYInTile = first.Y % tiffTileSize;
 
-                        int secondXInTile = second.X % tifTileSize;
-                        int secondYInTile = second.Y % tifTileSize;
+                        int secondXInTile = second.X % tiffTileSize;
+                        int secondYInTile = second.Y % tiffTileSize;
 
                         if (firstYInTile == secondYInTile)
                         {
@@ -423,17 +423,17 @@ namespace DeveMazeGenerator
 
                     int curpos = 0;
 
-                    for (int startY = yChunkStart; startY < yChunkEnd; startY += tifTileSize)
+                    for (int startY = yChunkStart; startY < yChunkEnd; startY += tiffTileSize)
                     {
 
-                        for (int startX = 0; startX < this.Width - 1; startX += tifTileSize)
+                        for (int startX = 0; startX < this.Width - 1; startX += tiffTileSize)
                         {
-                            int xMax = Math.Min(this.Width - 1 - startX, tifTileSize);
-                            int yMax = Math.Min(this.Height - 1 - startY, tifTileSize);
+                            int xMax = Math.Min(this.Width - 1 - startX, tiffTileSize);
+                            int yMax = Math.Min(this.Height - 1 - startY, tiffTileSize);
 
-                            for (int y = startY, othery = 0; othery < tifTileSize; y++, othery++)
+                            for (int y = startY, othery = 0; othery < tiffTileSize; y++, othery++)
                             {
-                                for (int x = startX, otherx = 0; otherx < tifTileSize; x++, otherx++)
+                                for (int x = startX, otherx = 0; otherx < tiffTileSize; x++, otherx++)
                                 {
                                     byte r = 0;
                                     byte g = 0;
@@ -470,7 +470,7 @@ namespace DeveMazeGenerator
                                             b = 255;
                                         }
                                     }
-                                    int startPos = othery * tifTileSize * 3 + otherx * 3;
+                                    int startPos = othery * tiffTileSize * 3 + otherx * 3;
 
                                     color_ptr[startPos + 0] = r;
                                     color_ptr[startPos + 1] = g;
@@ -479,12 +479,12 @@ namespace DeveMazeGenerator
 
                             }
 
-                            var result = tif.WriteEncodedTile(tileNumber, color_ptr, tifTileSize * tifTileSize * 3);
+                            var result = tif.WriteEncodedTile(tileNumber, color_ptr, tiffTileSize * tiffTileSize * 3);
                             //var result = tif.WriteTile(color_ptr, startX / tileSize, startY / tileSize, 0, 0);
                             //var result = tif.WriteRawTile(tileNumber, color_ptr, tileSize * tileSize * 3);
                             //Result should not be -1
 
-                            lineSavingProgress((int)Math.Min((tileNumber + 1L) * tifTileSize / tilesInWidth, this.Height - 2), this.Height - 2);
+                            lineSavingProgress((int)Math.Min((tileNumber + 1L) * tiffTileSize / tilesInWidth, this.Height - 2), this.Height - 2);
 
                             tileNumber++;
                         }
@@ -553,21 +553,21 @@ namespace DeveMazeGenerator
 
 
 
-            int tifTileSize = HybridInnerMap.GridSize;
+            int tiffTileSize = HybridInnerMap.GridSize;
 
-            if (rowsPerPathDeterminingCycle < tifTileSize)
+            if (rowsPerPathDeterminingCycle < tiffTileSize)
             {
-                debugMessageCallback(string.Format("We can't work with the default tilesize of '{0}' so we have to scale it back to RowsPerCycle: '{1}'", tifTileSize, rowsPerPathDeterminingCycle));
-                tifTileSize = rowsPerPathDeterminingCycle;
+                debugMessageCallback(string.Format("We can't work with the default tilesize of '{0}' so we have to scale it back to RowsPerCycle: '{1}'", tiffTileSize, rowsPerPathDeterminingCycle));
+                tiffTileSize = rowsPerPathDeterminingCycle;
             }
 
-            debugMessageCallback(string.Format("TiffTileSize: {0}", tifTileSize));
+            debugMessageCallback(string.Format("TiffTileSize: {0}", tiffTileSize));
 
             debugMessageCallback("Starting generation of Maze Path and saving maze...");
 
             //Should actually be Width -1 -1 but since we use the full Width it's only once -1
             //This will count the amount of tiles per line so if it's 15 Pixels we still want 2 tiles of 8
-            int tilesInWidth = (((this.Width - 1) / tifTileSize) + 1);
+            int tilesInWidth = (((this.Width - 1) / tiffTileSize) + 1);
 
 
 
@@ -587,10 +587,10 @@ namespace DeveMazeGenerator
                 //tif.SetField(TiffTag.ROWSPERSTRIP, 1);
                 tif.SetField(TiffTag.COMPRESSION, Compression.LZW);
 
-                tif.SetField(TiffTag.TILEWIDTH, tifTileSize);
-                tif.SetField(TiffTag.TILELENGTH, tifTileSize);
+                tif.SetField(TiffTag.TILEWIDTH, tiffTileSize);
+                tif.SetField(TiffTag.TILELENGTH, tiffTileSize);
 
-                byte[] color_ptr = new byte[tifTileSize * tifTileSize * 3];
+                byte[] color_ptr = new byte[tiffTileSize * tiffTileSize * 3];
 
                 //int stepsPerLoop = rowsPerPathDeterminingCycle;
 
@@ -600,14 +600,14 @@ namespace DeveMazeGenerator
                 int yChunkStart = 0;
                 while (yChunkStart < this.Height - 1)
                 {
-                    //We must use rowsperpathdeterminingcycle here instead of tiftilesize because else you might get into a scenario where the first 4 values and the second 4 values are beneath 1000. But if we would take value 2 to 6 which are also 4 values we would go above 1000.
+                    //We must use rowsperpathdeterminingcycle here instead of tifftilesize because else you might get into a scenario where the first 4 values and the second 4 values are beneath 1000. But if we would take value 2 to 6 which are also 4 values we would go above 1000.
                     //And yes I thought about this pretty well, it needs to be like this because you get forced into reading 500 lines of path from for example 1000 to 1500 where the other thing is 2000, hmmmm...
                     //Or not I really need to think about this a bit more. Because if the chunk size is 1000 then you can never end up reading something smaller then that which works because the rowsperpath is always bigger.
-                    //So yeah, because rows per path is always a multiple or equal to tiftilesize you can never go out of sync becuase no matter what happens, e.g. tiftile = 500 and perpath = 2000. When you're at 2500 you just need to read 500. And you are never forced in reading anything that was
-                    //not measured. Because you can't end up in having to read somewhere from 1250 to 1750 because of the multiple thingy. Ok I'm quite sure now it needs to be tifTileSize.
+                    //So yeah, because rows per path is always a multiple or equal to tifftilesize you can never go out of sync becuase no matter what happens, e.g. tifftile = 500 and perpath = 2000. When you're at 2500 you just need to read 500. And you are never forced in reading anything that was
+                    //not measured. Because you can't end up in having to read somewhere from 1250 to 1750 because of the multiple thingy. Ok I'm quite sure now it needs to be tiffTileSize.
                     //
-                    //Additional note, it always needs to be a multiple of tifTileSize because we write tiles at a time (we can't write half tiles). So that's why we don't want some stupidly small numbers here.
-                    int stepsThisLoop = FindTheMaxPathRowsThatWouldFitInMemoryFromHere(debugMessageCallback, pathPointsPerRow, yChunkStart, tifTileSize, memoryFree);
+                    //Additional note, it always needs to be a multiple of tiffTileSize because we write tiles at a time (we can't write half tiles). So that's why we don't want some stupidly small numbers here.
+                    int stepsThisLoop = FindTheMaxPathRowsThatWouldFitInMemoryFromHere(debugMessageCallback, pathPointsPerRow, yChunkStart, tiffTileSize, memoryFree);
 
                     var yChunkEnd = Math.Min(yChunkStart + stepsThisLoop, this.Height - 1);
                     stepsThisLoop = yChunkEnd - yChunkStart;
@@ -633,11 +633,11 @@ namespace DeveMazeGenerator
                     var wSort = Stopwatch.StartNew();
                     pathPointsHere.Sort((first, second) =>
                     {
-                        int firstXTile = first.X / tifTileSize;
-                        int firstYTile = first.Y / tifTileSize;
+                        int firstXTile = first.X / tiffTileSize;
+                        int firstYTile = first.Y / tiffTileSize;
 
-                        int secondXTile = second.X / tifTileSize;
-                        int secondYTile = second.Y / tifTileSize;
+                        int secondXTile = second.X / tiffTileSize;
+                        int secondYTile = second.Y / tiffTileSize;
 
                         if (firstYTile != secondYTile)
                         {
@@ -648,11 +648,11 @@ namespace DeveMazeGenerator
                             return firstXTile - secondXTile;
                         }
 
-                        int firstXInTile = first.X % tifTileSize;
-                        int firstYInTile = first.Y % tifTileSize;
+                        int firstXInTile = first.X % tiffTileSize;
+                        int firstYInTile = first.Y % tiffTileSize;
 
-                        int secondXInTile = second.X % tifTileSize;
-                        int secondYInTile = second.Y % tifTileSize;
+                        int secondXInTile = second.X % tiffTileSize;
+                        int secondYInTile = second.Y % tiffTileSize;
 
                         if (firstYInTile == secondYInTile)
                         {
@@ -666,17 +666,17 @@ namespace DeveMazeGenerator
 
                     var wSaveAsImage = Stopwatch.StartNew();
 
-                    for (int startY = yChunkStart; startY < yChunkEnd; startY += tifTileSize)
+                    for (int startY = yChunkStart; startY < yChunkEnd; startY += tiffTileSize)
                     {
 
-                        for (int startX = 0; startX < this.Width - 1; startX += tifTileSize)
+                        for (int startX = 0; startX < this.Width - 1; startX += tiffTileSize)
                         {
-                            int xMax = Math.Min(this.Width - 1 - startX, tifTileSize);
-                            int yMax = Math.Min(this.Height - 1 - startY, tifTileSize);
+                            int xMax = Math.Min(this.Width - 1 - startX, tiffTileSize);
+                            int yMax = Math.Min(this.Height - 1 - startY, tiffTileSize);
 
-                            for (int y = startY, othery = 0; othery < tifTileSize; y++, othery++)
+                            for (int y = startY, othery = 0; othery < tiffTileSize; y++, othery++)
                             {
-                                for (int x = startX, otherx = 0; otherx < tifTileSize; x++, otherx++)
+                                for (int x = startX, otherx = 0; otherx < tiffTileSize; x++, otherx++)
                                 {
                                     byte r = 0;
                                     byte g = 0;
@@ -713,7 +713,7 @@ namespace DeveMazeGenerator
                                             b = 255;
                                         }
                                     }
-                                    int startPos = othery * tifTileSize * 3 + otherx * 3;
+                                    int startPos = othery * tiffTileSize * 3 + otherx * 3;
 
                                     color_ptr[startPos + 0] = r;
                                     color_ptr[startPos + 1] = g;
@@ -722,12 +722,12 @@ namespace DeveMazeGenerator
 
                             }
 
-                            var result = tif.WriteEncodedTile(tileNumber, color_ptr, tifTileSize * tifTileSize * 3);
+                            var result = tif.WriteEncodedTile(tileNumber, color_ptr, tiffTileSize * tiffTileSize * 3);
                             //var result = tif.WriteTile(color_ptr, startX / tileSize, startY / tileSize, 0, 0);
                             //var result = tif.WriteRawTile(tileNumber, color_ptr, tileSize * tileSize * 3);
                             //Result should not be -1
 
-                            lineSavingProgress((int)Math.Min((tileNumber + 1L) * tifTileSize / tilesInWidth, this.Height - 2), this.Height - 2);
+                            lineSavingProgress((int)Math.Min((tileNumber + 1L) * tiffTileSize / tilesInWidth, this.Height - 2), this.Height - 2);
 
                             tileNumber++;
                         }
@@ -765,18 +765,18 @@ namespace DeveMazeGenerator
 
 
 
-        public void Testje(int size, Action<int, int> lineSavingProgress, Action<string> debugMessageCallback = null)
+        public void Testje(int size, Action<int, int> lineSavingProgress, int tiffTileSize, Action<string> debugMessageCallback = null)
         {
             if (debugMessageCallback == null)
             {
                 debugMessageCallback = (x) => { };
             }
-            string fileName = "testje-" + size + ".tiff";
 
-            int tifTileSize = 4096;
-            int tilesInWidth = (((size - 1) / tifTileSize) + 1);
+            string fileName = "testje-" + size + "-" + tiffTileSize + ".tiff";
 
-            debugMessageCallback(string.Format("TiffTileSize: {0}", tifTileSize));
+            int tilesInWidth = (((size - 1) / tiffTileSize) + 1);
+
+            debugMessageCallback(string.Format("TiffTileSize: {0}", tiffTileSize));
 
             var frandom = new FastRandom(1337);
 
@@ -798,10 +798,10 @@ namespace DeveMazeGenerator
                 //tif.SetField(TiffTag.ROWSPERSTRIP, 1);
                 tif.SetField(TiffTag.COMPRESSION, Compression.LZW);
 
-                tif.SetField(TiffTag.TILEWIDTH, tifTileSize);
-                tif.SetField(TiffTag.TILELENGTH, tifTileSize);
+                tif.SetField(TiffTag.TILEWIDTH, tiffTileSize);
+                tif.SetField(TiffTag.TILELENGTH, tiffTileSize);
 
-                byte[] color_ptr = new byte[tifTileSize * tifTileSize * 3];
+                byte[] color_ptr = new byte[tiffTileSize * tiffTileSize * 3];
 
                 //int stepsPerLoop = rowsPerPathDeterminingCycle;
 
@@ -811,14 +811,14 @@ namespace DeveMazeGenerator
                 int yChunkStart = 0;
                 while (yChunkStart < size - 1)
                 {
-                    //We must use rowsperpathdeterminingcycle here instead of tiftilesize because else you might get into a scenario where the first 4 values and the second 4 values are beneath 1000. But if we would take value 2 to 6 which are also 4 values we would go above 1000.
+                    //We must use rowsperpathdeterminingcycle here instead of tifftilesize because else you might get into a scenario where the first 4 values and the second 4 values are beneath 1000. But if we would take value 2 to 6 which are also 4 values we would go above 1000.
                     //And yes I thought about this pretty well, it needs to be like this because you get forced into reading 500 lines of path from for example 1000 to 1500 where the other thing is 2000, hmmmm...
                     //Or not I really need to think about this a bit more. Because if the chunk size is 1000 then you can never end up reading something smaller then that which works because the rowsperpath is always bigger.
-                    //So yeah, because rows per path is always a multiple or equal to tiftilesize you can never go out of sync becuase no matter what happens, e.g. tiftile = 500 and perpath = 2000. When you're at 2500 you just need to read 500. And you are never forced in reading anything that was
-                    //not measured. Because you can't end up in having to read somewhere from 1250 to 1750 because of the multiple thingy. Ok I'm quite sure now it needs to be tifTileSize.
+                    //So yeah, because rows per path is always a multiple or equal to tifftilesize you can never go out of sync becuase no matter what happens, e.g. tifftile = 500 and perpath = 2000. When you're at 2500 you just need to read 500. And you are never forced in reading anything that was
+                    //not measured. Because you can't end up in having to read somewhere from 1250 to 1750 because of the multiple thingy. Ok I'm quite sure now it needs to be tiffTileSize.
                     //
-                    //Additional note, it always needs to be a multiple of tifTileSize because we write tiles at a time (we can't write half tiles). So that's why we don't want some stupidly small numbers here.
-                    //int stepsThisLoop = FindTheMaxPathRowsThatWouldFitInMemoryFromHere(debugMessageCallback, pathPointsPerRow, yChunkStart, tifTileSize, memoryFree);
+                    //Additional note, it always needs to be a multiple of tiffTileSize because we write tiles at a time (we can't write half tiles). So that's why we don't want some stupidly small numbers here.
+                    //int stepsThisLoop = FindTheMaxPathRowsThatWouldFitInMemoryFromHere(debugMessageCallback, pathPointsPerRow, yChunkStart, tiffTileSize, memoryFree);
 
                     var stepsThisLoop = 8192;
 
@@ -846,11 +846,11 @@ namespace DeveMazeGenerator
                     //var wSort = Stopwatch.StartNew();
                     //pathPointsHere.Sort((first, second) =>
                     //{
-                    //    int firstXTile = first.X / tifTileSize;
-                    //    int firstYTile = first.Y / tifTileSize;
+                    //    int firstXTile = first.X / tiffTileSize;
+                    //    int firstYTile = first.Y / tiffTileSize;
 
-                    //    int secondXTile = second.X / tifTileSize;
-                    //    int secondYTile = second.Y / tifTileSize;
+                    //    int secondXTile = second.X / tiffTileSize;
+                    //    int secondYTile = second.Y / tiffTileSize;
 
                     //    if (firstYTile != secondYTile)
                     //    {
@@ -861,11 +861,11 @@ namespace DeveMazeGenerator
                     //        return firstXTile - secondXTile;
                     //    }
 
-                    //    int firstXInTile = first.X % tifTileSize;
-                    //    int firstYInTile = first.Y % tifTileSize;
+                    //    int firstXInTile = first.X % tiffTileSize;
+                    //    int firstYInTile = first.Y % tiffTileSize;
 
-                    //    int secondXInTile = second.X % tifTileSize;
-                    //    int secondYInTile = second.Y % tifTileSize;
+                    //    int secondXInTile = second.X % tiffTileSize;
+                    //    int secondYInTile = second.Y % tiffTileSize;
 
                     //    if (firstYInTile == secondYInTile)
                     //    {
@@ -879,17 +879,17 @@ namespace DeveMazeGenerator
 
                     var wSaveAsImage = Stopwatch.StartNew();
 
-                    for (int startY = yChunkStart; startY < yChunkEnd; startY += tifTileSize)
+                    for (int startY = yChunkStart; startY < yChunkEnd; startY += tiffTileSize)
                     {
 
-                        for (int startX = 0; startX < size - 1; startX += tifTileSize)
+                        for (int startX = 0; startX < size - 1; startX += tiffTileSize)
                         {
-                            int xMax = Math.Min(size - 1 - startX, tifTileSize);
-                            int yMax = Math.Min(size - 1 - startY, tifTileSize);
+                            int xMax = Math.Min(size - 1 - startX, tiffTileSize);
+                            int yMax = Math.Min(size - 1 - startY, tiffTileSize);
 
-                            for (int y = startY, othery = 0; othery < tifTileSize; y++, othery++)
+                            for (int y = startY, othery = 0; othery < tiffTileSize; y++, othery++)
                             {
-                                for (int x = startX, otherx = 0; otherx < tifTileSize; x++, otherx++)
+                                for (int x = startX, otherx = 0; otherx < tiffTileSize; x++, otherx++)
                                 {
                                     byte r = 0;
                                     byte g = 0;
@@ -901,12 +901,15 @@ namespace DeveMazeGenerator
                                     }
                                     else
                                     {
-                                        if (frandom.NextBool())
+                                        r = (byte)(Math.Abs(((x * 2 % 512) - 256)) % 256);
+
+                                        if (y % 256 == 0 || x % 256 == 0)
                                         {
-                                            r = 255;
-                                            g = 10;
-                                            b = 10;
+                                            g = 255;
                                         }
+
+                                        b = (byte)(Math.Abs(((y % 512) - 256)) % 256);
+
                                         //some random stuff:
 
                                         //MazePointPos curPathPos;
@@ -934,7 +937,7 @@ namespace DeveMazeGenerator
                                         //    b = 255;
                                         //}
                                     }
-                                    int startPos = othery * tifTileSize * 3 + otherx * 3;
+                                    int startPos = othery * tiffTileSize * 3 + otherx * 3;
 
                                     color_ptr[startPos + 0] = r;
                                     color_ptr[startPos + 1] = g;
@@ -944,7 +947,7 @@ namespace DeveMazeGenerator
                             }
 
                             var wblah = Stopwatch.StartNew();
-                            var result = tif.WriteEncodedTile(tileNumber, color_ptr, tifTileSize * tifTileSize * 3);
+                            var result = tif.WriteEncodedTile(tileNumber, color_ptr, tiffTileSize * tiffTileSize * 3);
                             wblah.Stop();
 
                             lastTime += wblah.Elapsed.TotalSeconds;
@@ -952,7 +955,7 @@ namespace DeveMazeGenerator
                             //var result = tif.WriteRawTile(tileNumber, color_ptr, tileSize * tileSize * 3);
                             //Result should not be -1
 
-                            lineSavingProgress((int)Math.Min((tileNumber + 1L) * tifTileSize / tilesInWidth, size - 2), size - 2);
+                            lineSavingProgress((int)Math.Min((tileNumber + 1L) * tiffTileSize / tilesInWidth, size - 2), size - 2);
 
                             tileNumber++;
                         }

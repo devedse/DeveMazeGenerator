@@ -2227,7 +2227,7 @@ namespace DeveMazeGeneratorGui
                 //This is just a mocked maze that is not actually being read by the Testje function. That's why the size doesn't matter.
                 var maze = new Maze(16, 16, InnerMapType.BooleanArray);
                 var w = Stopwatch.StartNew();
-                maze.Testje(sizezzz, callback, DebugMSG);
+                maze.Testje(sizezzz, callback, 256, DebugMSG);
                 DebugMSG("Saving time: " + w.Elapsed.TotalSeconds + " seconds.");
             });
         }
