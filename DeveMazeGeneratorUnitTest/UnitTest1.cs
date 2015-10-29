@@ -81,7 +81,7 @@ namespace DeveMazeGeneratorUnitTest
         [TestMethod]
         public void TestNogWat()
         {
-            int bb = 5 + 5;
+            Assert.AreEqual(10, 5 + 5);
         }
 
         [TestMethod]

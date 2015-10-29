@@ -70,7 +70,6 @@ namespace DeveMazeGenerator.Generators
         private void GoGenerate(InnerMap map, Maze maze, Random r, Action<int, int, long, long> pixelChangedCallback)
         {
             long totSteps = (((long)maze.Width - 1L) / 2L) * (((long)maze.Height - 1L) / 2L);
-            long currentStep = 1;
 
 
             //needs to be optimized
