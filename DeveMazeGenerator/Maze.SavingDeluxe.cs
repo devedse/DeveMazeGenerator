@@ -118,7 +118,7 @@ namespace DeveMazeGenerator
         /// <param name="useColorMap">Wether to save the maze ColorMap (Is faster and uses less disk space) (Only works for TIFF) (Note: Apparently GigaPan does not support this)</param>
         /// <param name="debugMessageCallback">Some more advanced saving algorithms also return some debug messages, (e.g. Tif)</param>
         /// <returns>Boolean wether this mode is supported or not</returns>
-        public bool SaveMazeAsImageDeluxeWithDynamicallyGeneratedPath(MazeSaveFileType mazeSaveFileType, String fileName, IEnumerable<MazePointPos> dynamicallyGeneratedPath, Action<int, int> lineSavingProgress = null, Boolean useTiles = false, Boolean useColorMap = false, Action<string> debugMessageCallback = null)
+        public bool SaveMazeAsImageDeluxeWithDynamicallyGeneratedPath(MazeSaveFileType mazeSaveFileType, String fileName, IEnumerable<MazePointPos> dynamicallyGeneratedPath, Action<int, int> lineSavingProgress = null, Boolean useTiles = false, Boolean useColorMap = false, Boolean saveAsSplittedImages = false, Action<string> debugMessageCallback = null)
         {
             if (lineSavingProgress == null)
             {
@@ -127,7 +127,7 @@ namespace DeveMazeGenerator
 
             if (mazeSaveFileType == MazeSaveFileType.Png)
             {
-                if (useTiles == false && useColorMap == false)
+                if (useTiles == false && useColorMap == false && saveAsSplittedImages == false)
                 {
                     SaveMazeAsImageDeluxePngWithDynamicallyGeneratedPath(fileName, dynamicallyGeneratedPath, lineSavingProgress);
                 }
@@ -139,9 +139,14 @@ namespace DeveMazeGenerator
             }
             else if (mazeSaveFileType == MazeSaveFileType.Tif)
             {
-                if (useTiles == false && useColorMap == false)
+                if (useTiles == false && useColorMap == false && saveAsSplittedImages == false)
                 {
                     SaveMazeAsImageDeluxeTiffWithDynamicallyGeneratedPathWithAnalysis(fileName, dynamicallyGeneratedPath, lineSavingProgress, debugMessageCallback);
+                }
+                else if (saveAsSplittedImages)
+                {
+                    SaveMazeAsImageDeluxeTiffWithDynamicallyGeneratedPathWithAnalysis(fileName, dynamicallyGeneratedPath, lineSavingProgress, debugMessageCallback);
+                    SaveMazeAsImageDeluxeTiffWithDynamicallyGeneratedPathWithAnalysisAndSplitImages(Path.GetFileNameWithoutExtension(fileName), dynamicallyGeneratedPath, lineSavingProgress, debugMessageCallback);
                 }
                 else
                 {

@@ -2098,6 +2098,7 @@ namespace DeveMazeGeneratorGui
         {
             var useTiles = checkBoxUseTiles.Checked;
             var useColorMap = checkBoxUseColorMap.Checked;
+            var useSplittedImages = checkBoxSplitImage.Checked;
 
             var selectedImageSaveTypeValue = comboBoxImageSaveType.SelectedItem;
             if (!(selectedImageSaveTypeValue is MazeSaveFileType))
@@ -2138,7 +2139,7 @@ namespace DeveMazeGeneratorGui
                         DebugMSG("Path with directions found, dynamically generating path and saving maze... (" + formattedFileName + ")");
                         DebugMSG("Obtaining IEnumerable... (Loops through dynamic path once to determine max length)");
                         var ienumerablePathBasedOnDirections = PathFinderDepthFirstSmartAndSmartMemory.DeterminePathFromDirections(lastMegaTerrorMazeQuatroDirections, lastMegaTerrorMaze.InnerMap);
-                        saveResult = lastMegaTerrorMaze.SaveMazeAsImageDeluxeWithDynamicallyGeneratedPath(mazeSaveFileType, formattedFileName, ienumerablePathBasedOnDirections, callback, useTiles, useColorMap, (x) => DebugMSG("MazeDbg: " + x));
+                        saveResult = lastMegaTerrorMaze.SaveMazeAsImageDeluxeWithDynamicallyGeneratedPath(mazeSaveFileType, formattedFileName, ienumerablePathBasedOnDirections, callback, useTiles, useColorMap, useSplittedImages, (x) => DebugMSG("MazeDbg: " + x));
                     }
                     else if (lastMegaTerrorMazePathPos != null)
                     {

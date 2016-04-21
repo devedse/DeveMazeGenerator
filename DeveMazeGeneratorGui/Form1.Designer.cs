@@ -106,6 +106,7 @@ namespace DeveMazeGeneratorGui
             this.label19 = new System.Windows.Forms.Label();
             this.button38 = new System.Windows.Forms.Button();
             this.button45 = new System.Windows.Forms.Button();
+            this.checkBoxSplitImage = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // button1
@@ -826,7 +827,7 @@ namespace DeveMazeGeneratorGui
             // comboBoxImageSaveType
             // 
             this.comboBoxImageSaveType.FormattingEnabled = true;
-            this.comboBoxImageSaveType.Location = new System.Drawing.Point(967, 435);
+            this.comboBoxImageSaveType.Location = new System.Drawing.Point(967, 410);
             this.comboBoxImageSaveType.Name = "comboBoxImageSaveType";
             this.comboBoxImageSaveType.Size = new System.Drawing.Size(121, 21);
             this.comboBoxImageSaveType.TabIndex = 77;
@@ -834,7 +835,7 @@ namespace DeveMazeGeneratorGui
             // label18
             // 
             this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(967, 409);
+            this.label18.Location = new System.Drawing.Point(967, 386);
             this.label18.Name = "label18";
             this.label18.Size = new System.Drawing.Size(94, 13);
             this.label18.TabIndex = 78;
@@ -843,7 +844,7 @@ namespace DeveMazeGeneratorGui
             // checkBoxUseTiles
             // 
             this.checkBoxUseTiles.AutoSize = true;
-            this.checkBoxUseTiles.Location = new System.Drawing.Point(970, 475);
+            this.checkBoxUseTiles.Location = new System.Drawing.Point(970, 443);
             this.checkBoxUseTiles.Name = "checkBoxUseTiles";
             this.checkBoxUseTiles.Size = new System.Drawing.Size(70, 17);
             this.checkBoxUseTiles.TabIndex = 79;
@@ -853,7 +854,7 @@ namespace DeveMazeGeneratorGui
             // checkBoxUseColorMap
             // 
             this.checkBoxUseColorMap.AutoSize = true;
-            this.checkBoxUseColorMap.Location = new System.Drawing.Point(970, 501);
+            this.checkBoxUseColorMap.Location = new System.Drawing.Point(970, 467);
             this.checkBoxUseColorMap.Name = "checkBoxUseColorMap";
             this.checkBoxUseColorMap.Size = new System.Drawing.Size(96, 17);
             this.checkBoxUseColorMap.TabIndex = 80;
@@ -900,11 +901,22 @@ namespace DeveMazeGeneratorGui
             this.button45.UseVisualStyleBackColor = true;
             this.button45.Click += new System.EventHandler(this.button45_Click);
             // 
+            // checkBoxSplitImage
+            // 
+            this.checkBoxSplitImage.AutoSize = true;
+            this.checkBoxSplitImage.Location = new System.Drawing.Point(970, 490);
+            this.checkBoxSplitImage.Name = "checkBoxSplitImage";
+            this.checkBoxSplitImage.Size = new System.Drawing.Size(78, 17);
+            this.checkBoxSplitImage.TabIndex = 85;
+            this.checkBoxSplitImage.Text = "Split Image";
+            this.checkBoxSplitImage.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1100, 724);
+            this.Controls.Add(this.checkBoxSplitImage);
             this.Controls.Add(this.button45);
             this.Controls.Add(this.button38);
             this.Controls.Add(this.label19);
@@ -1067,6 +1079,7 @@ namespace DeveMazeGeneratorGui
         private System.Windows.Forms.Label label19;
         private System.Windows.Forms.Button button38;
         private System.Windows.Forms.Button button45;
+        private System.Windows.Forms.CheckBox checkBoxSplitImage;
     }
 }
 
