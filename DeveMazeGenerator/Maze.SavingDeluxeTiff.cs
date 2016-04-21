@@ -701,7 +701,7 @@ namespace DeveMazeGenerator
 
                         }
 
-                        var fileNamePart = $"{startY / tiffTileSize}_{startX / tiffTileSize}.tiff";
+                        var fileNamePart = $"{startX / tiffTileSize}_{startY / tiffTileSize}.tiff";
                         var completeFileName = Path.Combine(folderName, fileNamePart);
 
                         SaveTiffImage(completeFileName, color_ptr, tiffTileSize, tiffTileSize);

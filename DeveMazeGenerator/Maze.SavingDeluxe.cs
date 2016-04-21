@@ -145,7 +145,6 @@ namespace DeveMazeGenerator
                 }
                 else if (saveAsSplittedImages)
                 {
-                    SaveMazeAsImageDeluxeTiffWithDynamicallyGeneratedPathWithAnalysis(fileName, dynamicallyGeneratedPath, lineSavingProgress, debugMessageCallback);
                     SaveMazeAsImageDeluxeTiffWithDynamicallyGeneratedPathWithAnalysisAndSplitImages(Path.GetFileNameWithoutExtension(fileName), dynamicallyGeneratedPath, lineSavingProgress, debugMessageCallback);
                 }
                 else
