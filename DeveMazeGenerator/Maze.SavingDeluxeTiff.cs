@@ -1,20 +1,10 @@
 ﻿using BitMiracle.LibTiff.Classic;
-using DeveMazeGenerator.Generators;
 using DeveMazeGenerator.InnerMaps;
-using Hjg.Pngcs;
-using Hjg.Pngcs.Chunks;
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DeveMazeGenerator
 {
@@ -711,7 +701,7 @@ namespace DeveMazeGenerator
 
                         }
 
-                        var fileNamePart = $"{startY / tiffTileSize}_{startX / tiffTileSize}.png";
+                        var fileNamePart = $"{startY / tiffTileSize}_{startX / tiffTileSize}.tiff";
                         var completeFileName = Path.Combine(folderName, fileNamePart);
 
                         SaveTiffImage(completeFileName, color_ptr, tiffTileSize, tiffTileSize);
