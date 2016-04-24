@@ -131,6 +131,10 @@ namespace DeveMazeGenerator
                 {
                     SaveMazeAsImageDeluxePngWithDynamicallyGeneratedPath(fileName, dynamicallyGeneratedPath, lineSavingProgress);
                 }
+                else if (useTiles == true)
+                {
+                    SaveMazeAsImageDeluxePngWithDynamicallyGeneratedPathWithAnalysis(fileName, dynamicallyGeneratedPath, lineSavingProgress, debugMessageCallback);
+                }
                 else
                 {
                     //No other modes are supported here
