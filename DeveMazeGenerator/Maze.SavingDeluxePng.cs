@@ -305,10 +305,10 @@ namespace DeveMazeGenerator
 
                     for (int startX = 0; startX < this.Width - 1; startX += tiffTileSize)
                     {
-                        int xMax = Math.Min(this.Width - 1 - startX, tiffTileSize);
-                        int yMax = Math.Min(this.Height - 1 - startY, tiffTileSize);
+                        int yStart = startY - yChunkStart;
+                        int yEnd = yStart + tiffTileSize;
 
-                        for (int y = startY, othery = 0; othery < tiffTileSize; y++, othery++)
+                        for (int y = startY, othery = yStart; othery < yEnd; y++, othery++)
                         {
                             for (int x = startX, otherx = 0; otherx < tiffTileSize; x++, otherx++)
                             {
@@ -353,7 +353,7 @@ namespace DeveMazeGenerator
                         if (curpos < pathPointsHere.Count)
                         {
                             curPathPos = pathPointsHere[curpos];
-                            if (curPathPos.X == x && curPathPos.Y == y)
+                            if (curPathPos.X == x && curPathPos.Y == startY)
                             {
                                 r = curPathPos.RelativePos;
                                 g = (byte)(255 - curPathPos.RelativePos);
@@ -387,8 +387,8 @@ namespace DeveMazeGenerator
                     //Result should not be -1
 
                     //lineSavingProgress((int)Math.Min((tileNumber + 1L) * tiffTileSize / tilesInWidth, this.Height - 2), this.Height - 2);
-                    png.WriteRow(iline, y);
-                    lineSavingProgress(y, this.Height - 2);
+                    png.WriteRow(iline, y + yChunkStart);
+                    lineSavingProgress(y + yChunkStart, this.Height - 2);
                 }
 
 
@@ -418,6 +418,7 @@ namespace DeveMazeGenerator
                 GC.Collect();
             }
 
+            png.End();
 
             //    tif.FlushData();
             //}
