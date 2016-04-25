@@ -405,7 +405,7 @@ namespace DeveMazeGenerator
                     Math.Round(wSort.Elapsed.TotalSeconds, 2),
                     Math.Round(wGmemorifiedPieceOpMap.Elapsed.TotalSeconds, 2),
                     Math.Round(wSaveAsImage.Elapsed.TotalSeconds, 2),
-                    Math.Round(wObtainPathPart.Elapsed.TotalSeconds + wSort.Elapsed.TotalSeconds + wSaveAsImage.Elapsed.TotalSeconds, 2),
+                    Math.Round(wObtainPathPart.Elapsed.TotalSeconds + wSort.Elapsed.TotalSeconds + wGmemorifiedPieceOpMap.Elapsed.TotalSeconds + wSaveAsImage.Elapsed.TotalSeconds, 2),
                     Math.Round(pathPointsHere.Count * 9.0 / 1024.0 / 1024.0, 3)));
                 partNumber++;
 
