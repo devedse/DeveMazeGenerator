@@ -353,7 +353,7 @@ namespace DeveMazeGenerator
                         if (curpos < pathPointsHere.Count)
                         {
                             curPathPos = pathPointsHere[curpos];
-                            if (curPathPos.X == x && curPathPos.Y == y)
+                            if (curPathPos.X == x && curPathPos.Y == startY)
                             {
                                 r = curPathPos.RelativePos;
                                 g = (byte)(255 - curPathPos.RelativePos);
