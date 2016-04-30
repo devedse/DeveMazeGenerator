@@ -3,6 +3,7 @@ using Hjg.Pngcs;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,6 +12,14 @@ namespace DeveMazeGenerator
 {
     public partial class Maze
     {
+        private PngWriter CreatePngWriter(string fileName, ImageInfo imgInfo)
+        {
+            //var stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.Read, 4096, FileOptions.WriteThrough);
+            var stream = new FileStream(fileName, FileMode.Create);
+            return new PngWriter(stream, imgInfo, fileName);
+        }
+
+
         private void SaveMazeAsImageDeluxePng(String fileName, List<MazePointPos> pathPosjes, Action<int, int> lineSavingProgress)
         {
             pathPosjes.Sort((first, second) =>
@@ -28,7 +37,7 @@ namespace DeveMazeGenerator
 
             ImageInfo imi = new ImageInfo(this.Width - 1, this.Height - 1, 8, false); // 8 bits per channel, no alpha 
             // open image for writing 
-            PngWriter png = FileHelper.CreatePngWriter(fileName, imi, true);
+            PngWriter png = CreatePngWriter(fileName, imi);
             // add some optional metadata (chunks)
             png.GetMetadata().SetDpi(100.0);
             png.GetMetadata().SetTimeNow(0); // 0 seconds fron now = now
@@ -89,7 +98,7 @@ namespace DeveMazeGenerator
         {
             ImageInfo imi = new ImageInfo(this.Width - 1, this.Height - 1, 8, false); // 8 bits per channel, no alpha 
             // open image for writing 
-            PngWriter png = FileHelper.CreatePngWriter(fileName, imi, true);
+            PngWriter png = CreatePngWriter(fileName, imi);
             // add some optional metadata (chunks)
             png.GetMetadata().SetDpi(100.0);
             png.GetMetadata().SetTimeNow(0); // 0 seconds fron now = now
@@ -230,7 +239,7 @@ namespace DeveMazeGenerator
 
             ImageInfo imi = new ImageInfo(this.Width - 1, this.Height - 1, 8, false); // 8 bits per channel, no alpha 
             // open image for writing 
-            PngWriter png = FileHelper.CreatePngWriter(fileName, imi, true);
+            PngWriter png = CreatePngWriter(fileName, imi);
             // add some optional metadata (chunks)
             png.GetMetadata().SetDpi(100.0);
             png.GetMetadata().SetTimeNow(0); // 0 seconds fron now = now

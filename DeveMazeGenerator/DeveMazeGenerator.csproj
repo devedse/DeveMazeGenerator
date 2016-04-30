@@ -136,9 +136,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Hjg.Pngcs\Hjg.Pngcs.csproj">
-      <Project>{fd3b0d50-46b3-4a83-9a6d-c641569142cf}</Project>
-      <Name>Hjg.Pngcs</Name>
+    <ProjectReference Include="..\Hjg.Pngcs.Portable\Hjg.Pngcs.Portable.csproj">
+      <Project>{ccf5e155-ecf0-4dbc-bc7c-69fe1aaaf235}</Project>
+      <Name>Hjg.Pngcs.Portable</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

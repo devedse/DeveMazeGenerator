@@ -21,9 +21,13 @@ namespace Hjg.Pngcs {
             if (size < 8) throw new PngjException("bad size for ProgressiveOutputStream: " + size);
         }
 
+#if PORTABLE
+        public virtual void Close() {
+#else
         public override void Close() {
+#endif
             Flush();
-            base.Close();
+            base.Dispose();
         }
 
         public override void Flush() {
@@ -49,7 +53,11 @@ namespace Hjg.Pngcs {
         ///
         private void CheckFlushBuffer(bool forced) {
             int count = (int)Position;
+#if PORTABLE
+            byte[] buf = ToArray();
+#else
             byte[] buf = GetBuffer();
+#endif
             while (forced || count >= size) {
                 int nb = size;
                 if (nb > count)

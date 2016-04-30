@@ -1,8 +1,6 @@
 ﻿using BitMiracle.LibTiff.Classic;
 using DeveMazeGenerator.Generators;
 using DeveMazeGenerator.InnerMaps;
-using Hjg.Pngcs;
-using Hjg.Pngcs.Chunks;
 using System;
 using System.Collections;
 using System.Collections.Generic;

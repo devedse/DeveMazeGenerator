@@ -203,7 +203,7 @@ namespace Hjg.Pngcs {
 
         public static void Logdebug(String msg) {
             if (DEBUG)
-                System.Console.Out.WriteLine(msg);
+                System.Diagnostics.Debug.WriteLine(msg);
         }
 
 
@@ -215,5 +215,10 @@ namespace Hjg.Pngcs {
 		return pngr.GetCrctestVal();
 	}
 
+
+    internal static void Log(string p, Exception e)
+    {
+        System.Diagnostics.Debug.WriteLine(p);
+    }
     }
 }

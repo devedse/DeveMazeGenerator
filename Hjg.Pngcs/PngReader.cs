@@ -225,7 +225,7 @@ namespace Hjg.Pngcs {
         private void ReadLastAndClose() {
             if (CurrentChunkGroup < ChunksList.CHUNK_GROUP_5_AFTERIDAT) {
                 try {
-                    idatIstream.Close();
+                    idatIstream.Dispose();
                 } catch (Exception ) { }
                 ReadLastChunks();
             }
@@ -235,13 +235,13 @@ namespace Hjg.Pngcs {
         private void Close() {
             if (CurrentChunkGroup < ChunksList.CHUNK_GROUP_6_END) { // this could only happen if forced close
                 try {
-                    idatIstream.Close();
+                    idatIstream.Dispose();
                 } catch (Exception ) {
                 }
                 CurrentChunkGroup = ChunksList.CHUNK_GROUP_6_END;
             }
             if (ShouldCloseStream)
-                inputStream.Close();
+                inputStream.Dispose();
         }
 
 
@@ -275,7 +275,7 @@ namespace Hjg.Pngcs {
         private void UnfilterRowAverage(int nbytes) {
             int i, j, x;
             for (j = 1 - ImgInfo.BytesPixel, i = 1; i <= nbytes; i++, j++) {
-                x = (j > 0) ? rowb[j] : 0;
+                x = (j > 0) ? rowb[j] : (byte)0;
                 rowb[i] = (byte)(rowbfilter[i] + (x + (rowbprev[i] & 0xFF)) / 2);
             }
         }
@@ -289,8 +289,8 @@ namespace Hjg.Pngcs {
         private void UnfilterRowPaeth(int nbytes) {
             int i, j, x, y;
             for (j = 1 - ImgInfo.BytesPixel, i = 1; i <= nbytes; i++, j++) {
-                x = (j > 0) ? rowb[j] : 0;
-                y = (j > 0) ? rowbprev[j] : 0;
+                x = (j > 0) ? rowb[j] : (byte)0;
+                y = (j > 0) ? rowbprev[j] : (byte)0;
                 rowb[i] = (byte)(rowbfilter[i] + PngHelperInternal.FilterPaethPredictor(x, rowbprev[i], y));
             }
         }
@@ -432,7 +432,7 @@ namespace Hjg.Pngcs {
                 chunk.ReadChunkData(inputStream, crcEnabled || critical);
                 pngChunk = PngChunk.Factory(chunk, ImgInfo);
                 if (!pngChunk.Crit) {
-                    bytesChunksLoaded += chunk.Length;
+                    bytesChunksLoaded += chunk.Len;
                 }
 
             }
@@ -451,7 +451,7 @@ namespace Hjg.Pngcs {
         /// </remarks>
         /// <param name="warn"></param>
         internal void logWarn(String warn) {
-            Console.Error.WriteLine(warn);
+            System.Diagnostics.Debug.WriteLine(warn);
         }
 
         /// <summary>

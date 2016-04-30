@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -13,7 +13,7 @@
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>
     </TargetFrameworkProfile>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -63,14 +63,16 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ICSharpCode.SharpZipLib">
-      <HintPath>..\packages\ICSharpCode.SharpZipLib.dll.0.85.4.369\lib\net20\ICSharpCode.SharpZipLib.dll</HintPath>
+    <Reference Include="ICSharpCode.SharpZipLib" Condition=" '$(TargetFrameworkVersion)' == 'v2.0' ">
+      <HintPath>..\..\..\..\..\..\..\temp\ICSharpCode.SharpZipLib.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChunkReader.cs" />
+    <Compile Include="ChunkReaderMode.cs" />
     <Compile Include="Chunks\ChunkHelper.cs" />
     <Compile Include="Chunks\ChunksList.cs" />
     <Compile Include="Chunks\ChunkLoadBehaviour.cs" />
@@ -92,6 +94,8 @@
     <Compile Include="Chunks\PngChunkCHRM.cs" />
     <Compile Include="Chunks\PngChunkSBIT.cs" />
     <Compile Include="Chunks\PngChunkSRGB.cs" />
+    <Compile Include="BufferedStreamReader.cs" />
+    <Compile Include="IBytesConsumer.cs" />
     <Compile Include="ImageLines.cs" />
     <Compile Include="PngDeinterlacer.cs" />
     <Compile Include="PngjExceptionInternal.cs" />
@@ -143,9 +147,6 @@
     <Compile Include="Zlib\AZlibOutputStream.cs" />
     <Compile Include="Zlib\ZlibOutputStreamMs.cs" />
     <Compile Include="Zlib\ZlibStreamFactory.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
