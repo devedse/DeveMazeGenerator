@@ -10,7 +10,7 @@ namespace DeveMazeGenerator.InnerMaps.InnerMapHelpers
     class CompleteHDArray : IDisposable
     {
         private FileStream fileStream;
-        private String innerFileName;
+        private string innerFileName;
 
         public CompleteHDArray(long size)
         {
@@ -21,7 +21,7 @@ namespace DeveMazeGenerator.InnerMaps.InnerMapHelpers
                 Directory.CreateDirectory(tempFolderHere);
             }
             innerFileName = Path.Combine(tempFolderHere, GetRandomFileName());
-            fileStream = new FileStream(innerFileName, FileMode.Create, FileAccess.ReadWrite, FileShare.Read, 4096, FileOptions.DeleteOnClose | FileOptions.RandomAccess);
+            fileStream = new FileStream(innerFileName, FileMode.Create, FileAccess.ReadWrite, FileShare.Read, 4096, GlobalVars.FileFlagNoBuffering | FileOptions.WriteThrough);
             fileStream.SetLength(size);
         }
 
