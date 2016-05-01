@@ -33,7 +33,7 @@ namespace Hjg.Pngcs.Zlib {
             adler32.Update(array, offset, count);
         }
         
-        public void CloseStreams() {
+        public virtual void Close() {
 
             if (!initdone) doInit(); // can happen if never called write
             if (closed) return;
@@ -96,7 +96,7 @@ namespace Hjg.Pngcs.Zlib {
         {
             if (disposing)
             {
-                this.CloseStreams();
+                this.Close();
                 // Free any other managed objects here.
                 //
             }
