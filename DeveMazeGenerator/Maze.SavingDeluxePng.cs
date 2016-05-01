@@ -14,8 +14,8 @@ namespace DeveMazeGenerator
     {
         private PngWriter CreatePngWriter(string fileName, ImageInfo imgInfo)
         {
-            //var stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.Read, 4096, FileOptions.WriteThrough);
-            var stream = new FileStream(fileName, FileMode.Create);
+            var stream = new FileStream(fileName, FileMode.Create, FileAccess.Write, FileShare.Read, 4096, FileOptions.WriteThrough);
+            //var stream = new FileStream(fileName, FileMode.Create);
             return new PngWriter(stream, imgInfo, fileName);
         }
 
