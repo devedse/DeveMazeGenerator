@@ -7,7 +7,6 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
-using Microsoft.Xna.Framework.GamerServices;
 using DeveMazeGenerator;
 using DeveMazeGenerator.Generators;
 using DeveMazeGeneratorMonoGame.LineOfSight;
@@ -80,10 +79,10 @@ namespace DeveMazeGeneratorMonoGame
 
             //TargetElapsedTime = TimeSpan.FromTicks((long)10000000 / (long)500);
 
-            if (true)
+            if (false)
             {
-                graphics.PreferredBackBufferWidth = 1600;
-                graphics.PreferredBackBufferHeight = 800;
+                graphics.PreferredBackBufferWidth = 1920;
+                graphics.PreferredBackBufferHeight = 1080;
             }
             else
             {
